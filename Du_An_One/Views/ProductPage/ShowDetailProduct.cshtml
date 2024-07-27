@@ -1,0 +1,68 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Du_An_One.Models.SANPHAM
+@{
+    ViewData["Title"] = "ShowDetailProduct";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+}
+
+
+<div class="flex flex-wrap justify-evenly items-center my-4">
+    <a href="@Url.Content(Model.HinhAnh)" data-lightbox="product-images">
+        <img src="@Url.Content(Model.HinhAnh)"
+             alt="Main product image"
+             class="object-contain w-[500px] h-[500px] md:w-[500px] md:h-[500px]"
+             id="mainImage" />
+    </a>
+    <div class="flex flex-col space-y-4">
+        <div class="overflow-y-auto max-h-96 flex flex-col space-y-4">
+            @foreach (string aPicture in ViewBag.anhSanPham)
+            {
+                <a href="@Url.Content(aPicture)" data-lightbox="product-images">
+                    <img src="@Url.Content(aPicture)"
+                         class="object-contain w-[150px] h-[150px]" />
+                </a>
+            }
+        </div>
+    </div>
+    <div class="max-w-md space-y-4">
+        <p class="text-muted-foreground">@Model.DanhMucHang</p>
+        <h1 class="font-extrabold text-3xl">@Model.TenSP</h1>
+        <p>
+            @Model.MoTa
+        </p>
+        <p>Số lượng bán: @Model.SoLuongBan</p>
+        <button class="bg-black text-white border-none cursor-pointer px-4 py-2">
+            Add to Cart
+        </button>
+        <p>$@Model.DonGiaBan</p>
+    </div>
+</div>
+<h2 class="text-2xl font-bold mb-4 pt-2">
+    Danh sách sản phẩm liên quan</h2>
+@* View sản phẩm có overlayout-x auto *@
+<div class="grid grid-cols-1 overflow-x-auto py-2">
+    <div class="flex flex-nowrap">
+
+        @foreach (var oneProduct in ViewBag.ListRelateProducts)
+        {
+            var img = oneProduct.ldp.HinhAnh.Length < 10 ? "~/img/productImage/default.jpg" : "~/img/productImage/" + oneProduct.ldp.HinhAnh;
+
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                <div class="relative">
+                    @if (oneProduct.PhanTramKhuyenMai != 0)
+                    {
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-@oneProduct.PhanTramKhuyenMai%</span>
+                    }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                    <img src="@Url.Content(img)" alt="@oneProduct.ldp.TenSP" class="w-full h-40 object-cover rounded-md">
+                </div>
+                <h4 class="font-semibold mt-2">@oneProduct.ldp.TenSP</h4>
+                <div class="flex items-center mt-1">
+                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                </div>
+                <p class="text-lg font-bold mt-2">@Math.Round((double)@oneProduct.ldp.DonGiaBan * ((double)1 - (double)@oneProduct.PhanTramKhuyenMai / 100), 2)  VND</p>
+                <p class="line-through text-zinc-500">@oneProduct.ldp.DonGiaBan VND</p>
+
+            </a>
+        }
+    </div>
+</div>

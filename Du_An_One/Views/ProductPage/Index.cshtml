@@ -1,0 +1,114 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+}
+
+<div class="hero container-fluid py-5 bg-gradient-to-r from-black to-blue-600 text-white">
+    <div class="row align-items-center justify-content-center gap-40">
+        <div class="col-md-5">
+            <h1 class="display-4">New Jordan 6 Rings</h1>
+            <p class="lead">The Jordan 6 Rings Men's Shoes celebrate Michael Jordan's championship career with classic design elements from each of his shoes.</p>
+            <button class="btn btn-dark">Shop Collection</button>
+        </div>
+        <div class="col-md-5">
+            <img src="https://placehold.co/600x400" alt="New Jordan 6 Rings" class="img-fluid">
+        </div>
+    </div>
+</div>
+<h2 class="text-2xl font-bold mb-4 text-center pt-5">CÁC HÃNG SẢN PHẨM</h2>
+<!-- View cho hình ảnh sản phẩm để lọc -->
+<nav class="flex justify-around">
+    <figure class="text-center">
+        <figure>
+            <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/419db076-2e65-43f8-a2d8-243d24450548/Default_Render_a_highly_detailed_image_of_a_pair_of_sleek_mode_3.jpg"
+                 alt="TUFT"
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+        </figure>
+        <figcaption class="mt-2">TUFT</figcaption>
+    </figure>
+    <figure class="text-center">
+        <figure>
+            <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/ffb3ee67-f7e3-45e8-9540-bc2f8f4a73eb/Default_Create_a_highangle_welllit_and_intricately_detailed_im_3.jpg"
+                 alt="Adidas"
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+        </figure>
+        <figcaption class="mt-2">Adidas</figcaption>
+    </figure>
+    <figure class="text-center">
+        <figure>
+            <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/74e2a439-446e-4081-8855-86abeca4d7fd/Default_Create_an_image_of_a_pair_of_sleek_mens_sports_shoes_w_1.jpg"
+                 alt="Adidus"
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+        </figure>
+        <figcaption class="mt-2">Adidus</figcaption>
+    </figure>
+    <figure class="text-center">
+        <figure>
+            <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/089b4806-4854-4044-83b1-3d58e1ac2ddb/Default_Create_a_highly_detailed_photorealistic_image_of_a_pai_3.jpg"
+                 alt="Sirius"
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+        </figure>
+        <figcaption class="mt-2">Sirius</figcaption>
+    </figure>
+</nav>
+
+
+<!-- Section for displaying products -->
+<div class="container mx-auto px-4 py-16">
+    <h2 class="text-2xl font-bold mb-4">SẢN PHẨM KHUYẾN MÃI</h2>
+    @* View sản phẩm có overlayout-x auto *@
+    <div class="grid grid-cols-1 overflow-x-auto py-2">
+        <div class="flex flex-nowrap">
+
+            @foreach (var oneProduct in ViewBag.ListDiscountProducts)
+            {
+                var img = oneProduct.ldp.HinhAnh.Length < 10 ? "~/img/productImage/default.jpg" : "~/img/productImage/" + oneProduct.ldp.HinhAnh;
+
+                <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                    <div class="relative">
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-@oneProduct.PhanTramKhuyenMai%</span>
+                        <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                        <img src="@Url.Content(img)" alt="@oneProduct.ldp.TenSP" class="w-full h-40 object-cover rounded-md">
+                    </div>
+                    <h4 class="font-semibold mt-2">@oneProduct.ldp.TenSP</h4>
+                    <div class="flex items-center mt-1">
+                        <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@oneProduct.ldp.DonGiaBan * ((double)1 - (double)@oneProduct.PhanTramKhuyenMai / 100), 2)  VND</p>
+                    <p class="line-through text-zinc-500">@oneProduct.ldp.DonGiaBan VND</p>
+
+                </a>
+            }
+        </div>
+    </div>
+    @* View sản phẩm có xuống dòng *@
+    <div class="container mx-auto p-4">
+        <h2 class="text-2xl font-bold mb-4">SẢN PHẨM ĐỀ CỬ</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @foreach (var aProduct in ViewBag.ListNewProducts)
+            {
+                var img = aProduct.ldp.HinhAnh.Length < 10 ? "~/img/productImage/default.jpg" : "~/img/productImage/" + aProduct.ldp.HinhAnh;
+
+                <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.ldp.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction: column;">
+                    <div class="relative">
+                        @if (@aProduct.PhanTramKhuyenMai != 0)
+                        {
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-@aProduct.PhanTramKhuyenMai%</span>
+                        }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                        <img src="@Url.Content(img)" alt="@aProduct.ldp.TenSP" class="w-full h-40 object-cover rounded-md">
+                    </div>
+                    <h4 class="font-semibold mt-2">@aProduct.ldp.TenSP</h4>
+                    <div class="flex items-center mt-1">
+                        <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.ldp.DonGiaBan * ((double)1 - (double)@aProduct.PhanTramKhuyenMai / 100), 2) VND</p>
+                    <p class="line-through text-zinc-500">@aProduct.ldp.DonGiaBan VND</p>
+                </a>
+            }
+
+
+
+        </div>
+    </div>
+</div>

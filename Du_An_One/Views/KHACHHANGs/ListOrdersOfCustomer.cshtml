@@ -1,0 +1,176 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Du_An_One.Models.HOADON>
+@{
+    ViewData["Title"] = "ListOrdersOfCustomer";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+    string idUser = ViewBag.IdUser as string;
+}
+
+@section head {
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+}
+
+<div class="flex ">
+    <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
+     @* @Html.Partial("~/View/Shared/_NavCustomer.cshtml", Model); *@
+    <div class="max-w-4xl mx-auto p-6 bg-card text-card-foreground w-full">
+
+        <div class="min-h-screen bg-background text-foreground">
+            <div class="flex justify-center border-b border-border">
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == null ? "border-b-2 border-primary" : "")">Tất cả</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Chờ thanh toán" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ thanh toán" ? "border-b-2 border-primary" : "")">Chờ thanh toán</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Chuẩn bị hàng" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chuẩn bị hàng" ? "border-b-2 border-primary" : "")">Chuẩn bị hàng</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Đang giao hàng" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đang giao hàng" ? "border-b-2 border-primary" : "")">Đang giao hàng</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Chờ giao hàng" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ giao hàng" ? "border-b-2 border-primary" : "")">Chờ giao hàng</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Đã thanh toán" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đã thanh toán" ? "border-b-2 border-primary" : "")">Đã thanh toán</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Đã hủy" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đã hủy" ? "border-b-2 border-primary" : "")">Đã hủy</a>
+                <a asp-action="ListOrdersOfCustomer" asp-route-statusOrder="Hoàn trả/Hoàn tiền" asp-route-idUser="@idUser"
+                   class="px-4 py-2 @(ViewBag.StatusOrder == "Hoàn trả/Hoàn tiền" ? "border-b-2 border-primary" : "")">Hoàn trả/Hoàn tiền</a>
+            </div>
+
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl font-bold">Tìm kiếm</h1>
+                <button id="filterButton" class="bg-secondary text-secondary-foreground px-4 py-2 rounded hover:bg-secondary/80" style="color:white;">
+                    Filter
+                </button>
+            </div>
+            <div id="filterBoard" class="hidden bg-card p-4 rounded shadow-md mb-4">
+                <div class="container px-5">
+                    <form id="filterForm" method="get" asp-action="ShowListProductsByFirm">
+                        <nav class="row justify-content-around text-center">
+                            <div class="col-md-2">
+                                <input type="checkbox" id="tuft" name="firms" value="TUFT">
+                                <label for="tuft">TUFT</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="adius" name="firms" value="Adius">
+                                <label for="adius">Adius</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="surius" name="firms" value="Surius">
+                                <label for="surius">Surius</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="checkbox" id="adidas" name="firms" value="Adidas">
+                                <label for="adidas">Adidas</label>
+                            </div>
+                        </nav>
+                        <nav class="row justify-content-around text-center">
+                            <select name="quantitySold" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                                <option value="" selected>Select Quantity Sold</option>
+                                <option value="1-50">1 - 50</option>
+                                <option value="51-100">51 - 100</option>
+                                <option value="101-200">101 - 200</option>
+                                <option value="201+">201+</option>
+                            </select>
+                            <select name="price" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                                <option value="" selected>Select Product Price</option>
+                                <option value="0-100000">0 - 100.000 VND</option>
+                                <option value="100001-200000">100.001 - 200.000 VND</option>
+                                <option value="200001-500000">200.001 - 500.000 VND</option>
+                                <option value="500001+">500.001 VND+</option>
+                            </select>
+
+                            <input type="text"
+                                   name="searchText"
+                                   placeholder="Search Product Info"
+                                   class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2" />
+                            <button type="submit" class="bg-primary text-primary-foreground p-2 rounded-lg ml-2 hover:bg-primary/80">
+                                Search
+                            </button>
+                        </nav>
+                    </form>
+                </div>
+            </div>
+            <div class="flex justify-center p-4">
+                <form class="relative w-full max-w-lg">
+                    <input type="text" name="findOrder" placeholder="Bạn có thể tìm kiếm theo Id đơn hàng, tình trạng, hình thức thanh toán." class="w-full p-2 pl-10 border rounded bg-input border-border text-muted-foreground">
+                </form>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+                @if (!Model.Any())
+                {
+                    <img aria-hidden="true" alt="empty-orders" src="https://placehold.co/100x100.png?text=📋" class="mb-4" />
+                    <span class="text-muted-foreground">Không tìm thấy đơn hàng.</span>
+                }
+                else
+                {
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Ngày Đặt</th>
+                                <th>Tổng Giá Trị</th>
+                                <th>Trạng Thái</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var oneOrder in Model)
+                            {
+                                <tr>
+                                    <td>@oneOrder.MaHoaDon</td>
+                                    <td>@oneOrder.NgayTao.ToString("dd/MM/yyyy")</td>
+                                    <td>@(oneOrder.CHITIETHOADONs?.Sum(x => x.SoLuongMua * x.DonGia) ?? 0) VND</td>
+                                    <td>@oneOrder.TinhTrang</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Xem</button>
+                                        <button class="btn btn-info btn-sm">Xuất Hóa Đơn</button>
+                                        <button class="btn btn-danger btn-sm">Hủy Đơn</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+                    @Html.PagedListPager(Model, page => Url.Action("ListOrdersOfCustomer", new { page }), new PagedListRenderOptions
+           {
+               LiElementClasses = new List<string> { "page-item" },
+               PageClasses = new List<string> { "page-link" }
+           })
+                }
+            </div>
+
+            @* <div class="flex flex-col items-center justify-center">
+                @if (!Model.Any())
+                {
+                    <img aria-hidden="true" alt="empty-orders" src="https://placehold.co/100x100.png?text=📋" class="mb-4" />
+                    <span class="text-muted-foreground">Không tìm thấy đơn hàng.</span>
+                }
+                else
+                {
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full p-4">
+                        @foreach (var oneOrder in Model)
+                        {
+                            <div class="border p-4 rounded-lg">
+                                <h3 class="text-lg font-bold mb-2">Code @oneOrder.MaHoaDon</h3>
+                                <p>Tình trạng: @oneOrder.TinhTrang</p>
+                                <p>Price: @(oneOrder.CHITIETHOADONs?.Sum(x => x.SoLuongMua * x.DonGia) ?? 0)</p>
+                                <p>Thanh toán: @oneOrder.HTTT</p>
+                                <button class="bg-secondary text-secondary-foreground px-2 py-1 rounded mt-2">Detail</button>
+                            </div>
+                        }
+                    </div>
+
+                    @Html.PagedListPager(Model, page => Url.Action("ListOrdersOfCustomer", new { page }), new PagedListRenderOptions
+                {
+               LiElementClasses = new List<string> { "page-item" },
+               PageClasses = new List<string> { "page-link" }
+                })
+
+                }
+            </div> *@
+        </div>
+
+    </div>
+</div>

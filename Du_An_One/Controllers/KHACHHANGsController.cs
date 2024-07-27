@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Du_An_One.Data;
 using Du_An_One.Models;
 using Microsoft.AspNetCore.Authorization;
+using X.PagedList;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Du_An_One.Controllers
 {
@@ -85,8 +87,6 @@ namespace Du_An_One.Controllers
         }
 
         // POST: KHACHHANGs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MaKH,HoTen,NgaySinh,NoiSinh,DiaChi,CCCD,SDT,Email,TenTaiKhoan,MatKhau,TinhTrang")] KHACHHANG kHACHHANG)
@@ -156,6 +156,111 @@ namespace Du_An_One.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: KHACHHANGs/InfoCustomer/5
+        public async Task<IActionResult> InfoCustomer(string id)
+        {
+            if (id == null || _context.KHACHHANG == null)
+            {
+                return NotFound();
+            }
+
+            var kHACHHANG = await _context.KHACHHANG
+                .FirstOrDefaultAsync(m => m.MaKH == id);
+            if (kHACHHANG == null)
+            {
+                return NotFound();
+            }
+            ViewBag.IdUser = id;
+            return View(kHACHHANG);
+        }
+
+        // POST: KHACHHANGs/InfoCustomer/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> InfoCustomer( KHACHHANG kHACHHANG)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(kHACHHANG);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!KHACHHANGExists(kHACHHANG.MaKH))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                ViewBag.IdUser = kHACHHANG.MaKH;
+                return View(kHACHHANG);
+            }
+            return View(kHACHHANG);
+        }
+
+        // GET: KHACHHANGs/ListOrdersOfCustomer/5
+        public async Task<IActionResult> ListOrdersOfCustomer(int? page, string? idUser, string? statusOrder, string? findOrder)
+        {
+            // If idUser is null or empty, select the user with the most orders
+            idUser = String.IsNullOrEmpty(idUser) ?
+                _context.HOADON.GroupBy(x => x.MaKH)
+                          .OrderByDescending(g => g.Count())
+                          .Select(g => g.Key)
+                          .FirstOrDefault()
+                : idUser;
+
+            int pageSize = 16;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
+            // Retrieve orders for the specified user
+            IQueryable<Models.HOADON> listOrder = _context.HOADON.AsNoTracking().Where(x => x.MaKH == idUser);
+
+            // Filter by status if specified
+            if (!String.IsNullOrEmpty(statusOrder))
+            {
+                listOrder = listOrder.Where(x => x.TinhTrang == statusOrder);
+            }
+
+            // If findOrder is not null or empty, filter orders based on the findOrder parameter
+            if (!String.IsNullOrEmpty(findOrder))
+            {
+                listOrder = listOrder.Where(x =>
+                    x.MaHoaDon.Contains(findOrder) ||
+                    x.TinhTrang.Contains(findOrder) ||
+                    x.HTTT.Contains(findOrder));
+            }
+
+            ViewBag.StatusOrder = statusOrder;
+
+            // Apply pagination
+            PagedList<Models.HOADON> lstPaged = new PagedList<Models.HOADON>(listOrder, pageNumber, pageSize);
+
+            ViewBag.IdUser = idUser;
+            // Return the filtered list of orders to the view
+            return View(lstPaged);
+        }
+
+        // GET: KHACHHANGs/PrintCheckOrder/5
+        public async Task<IActionResult> PrintCheckOrder(string idCheck) { return View(); }
+
+        // GET: KHACHHANGs/ListProductsInBag/5
+        public async Task<IActionResult> ListProductsInBagOfCustomer(string idUser)
+        {
+            ViewBag.IdUser = idUser;
+            string codeBag = _context.HOADON.FirstOrDefault(hd => hd.MaKH == idUser && hd.TinhTrang == "Chờ thanh toán")?.MaHoaDon ?? "";
+            if (string.IsNullOrEmpty(codeBag))
+            {
+                return View(null);
+            }
+            var listProductInBag = _context.CHITIETHOADON.Where(ct => ct.MaHoaDon == codeBag);
+            return View(listProductInBag);
+        }
         private bool KHACHHANGExists(string id)
         {
           return (_context.KHACHHANG?.Any(e => e.MaKH == id)).GetValueOrDefault();

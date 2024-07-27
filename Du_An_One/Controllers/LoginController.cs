@@ -98,7 +98,7 @@ namespace Du_An_One.Controllers
 
                 claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "ProductPage");
             }
 
             TempData["SwalIcon"] = "error";

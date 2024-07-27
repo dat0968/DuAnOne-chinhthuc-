@@ -1,0 +1,50 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Du_An_One.Models.CHITIETHOADON>
+@{
+    ViewData["Title"] = "ListProductsInBagOfCustomer";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+    string idUser = ViewBag.IdUser as string;
+}
+
+<div class="flex ">
+    <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
+<div class="container mt-5">
+    <div class="cart-container">
+        <h1 class="cart-title">Giỏ Hàng</h1>
+        <input type="text" class="form-control mb-3" placeholder="Tìm kiếm sản phẩm trong giỏ hàng...">
+        <table class="cart-table w-full">
+            <thead>
+                <tr>
+                    <th>Sản Phẩm</th>
+                    <th>Giá</th>
+                    <th>Số Lượng</th>
+                    <th>Tổng</th>
+                    <th>Thao Tác</th>
+                </tr>
+            </thead>
+            @if (Model != null) {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.SANPHAM?.TenSP</td>
+                        <td>@String.Format("{0:0,0} VND", item.DonGia)</td>
+                        <td><input type="number" value="@item.SoLuongMua" class="form-control" disabled></td>
+                        <td>@String.Format("{0:0,0} VND", item.SoLuongMua * item.DonGia)</td>
+                        <td><button class="btn btn-danger" asp-action="RemoveFromCart" asp-route-id="@item.ID">Xóa</button></td>
+                    </tr>
+                }
+            </tbody>
+            }
+        </table>
+        @if (Model == null)
+        {
+            <p class="text-center">Không tìm thấy sản phẩm nào trong giỏ hàng của bạn.</p>
+        }
+        <div class="text-right">
+            <h4>Tổng: @String.Format("{0:0,0} VND", Model?.Sum(item => item.SoLuongMua * item.DonGia)??0)</h4>
+            <button class="btn btn-success" asp-action="Checkout">Thanh Toán</button>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,96 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Du_An_One.Models.KHACHHANG
+
+@{
+    ViewData["Title"] = "InfoCustomer";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+    string idUser = ViewBag.IdUser as string;
+}
+
+@section head {
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+}
+<div class="flex ">
+    <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
+    @* @Html.Partial("~/View/Shared/_NavCustomer.cshtml"); *@
+    <div class="max-w-4xl mx-auto p-6 bg-card text-card-foreground w-full">
+        <h2 class="text-2xl font-semibold">Hồ Sơ Của Tôi</h2>
+        <p class="text-muted-foreground">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+        <hr class="my-4 border-border" />
+        <form method="post" asp-action="InfoCustomer">
+            @Html.HiddenFor(model => model.MatKhau)
+            @Html.HiddenFor(model => model.MaKH)
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="flex-1">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="username">Tên đăng nhập</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="username" asp-for="TenTaiKhoan" readonly />
+                        <p class="text-muted-foreground text-sm">Tên Đăng nhập chỉ có thể thay đổi một lần.</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="name">Tên</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="name" asp-for="HoTen" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="email">Email</label>
+                        <div class="flex items-center">
+                            <input class="w-full p-2 border border-input rounded" type="text" id="email" asp-for="Email" readonly />
+                            <a href="#" class="text-primary ml-2">Thay Đổi</a>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="phone">Số điện thoại</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="phone" asp-for="SDT" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="address">Địa chỉ</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="address" asp-for="DiaChi" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="cccd">CCCD</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="cccd" asp-for="CCCD" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium" for="placeOfBirth">Nơi sinh</label>
+                        <input class="w-full p-2 border border-input rounded" type="text" id="placeOfBirth" asp-for="NoiSinh" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium">Ngày sinh</label>
+                        <div class="flex space-x-4">
+                            <select class="p-2 border border-input rounded" asp-for="NgaySinh.Value.Day">
+                                <option selected>@Model.NgaySinh?.Day</option>
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    <option>@i</option>
+                                }
+                            </select>
+                            <select class="p-2 border border-input rounded" asp-for="NgaySinh.Value.Month">
+                                <option selected>@Model.NgaySinh?.Month</option>
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    <option>Tháng @i</option>
+                                }
+                            </select>
+                            <select class="p-2 border border-input rounded" asp-for="NgaySinh.Value.Year">
+                                <option selected>@Model.NgaySinh?.Year</option>
+                                @for (int i = 1900; i <= DateTime.Now.Year; i++)
+                                {
+                                    <option>@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <h2 style="color:@(TempData["Message"] != null && TempData["Message"].ToString().Contains("bại") ? "red" : "blue")">@TempData["Message"]</h2>
+                    <button class="bg-primary text-primary-foreground px-4 py-2 rounded btn-success">Lưu</button>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-24 h-24 bg-purple-600 text-white rounded-full flex items-center justify-center text-3xl">T</div>
+                    <button class="mt-4 bg-secondary text-secondary-foreground px-4 py-2 rounded">Chọn Ảnh</button>
+                    <p class="text-muted-foreground text-sm mt-2">Dung lượng file tối đa 1 MB</p>
+                    <p class="text-muted-foreground text-sm">Định dạng: JPEG, PNG</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
