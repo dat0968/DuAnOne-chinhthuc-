@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Source\\Repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj": {}
+    "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Source\\Repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj": {
+    "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Source\\Repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj",
+        "projectUniqueName": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj",
         "projectName": "Du_An_One",
-        "projectPath": "C:\\Users\\ADMIN\\Source\\Repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj",
+        "projectPath": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\Du_An_One.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Source\\Repos\\DuAnOne-chinhthuc-\\Du_An_One\\obj\\",
+        "outputPath": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

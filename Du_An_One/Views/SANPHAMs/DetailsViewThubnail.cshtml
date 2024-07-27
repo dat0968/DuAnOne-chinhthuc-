@@ -6,27 +6,27 @@
 
 @section head {
 }
-<div class="card-body p-0 overflow-y-auto">
-    <h1>Chi Tiết Sản Phẩm</h1>
-    <div class="d-flex justify-content-center">
-        <div class="card w-50 bg-light p-3 rounded ">
+<div class="card-body p-0 overflow-y-auto h-75 rounded-2 box-shadow">
+    <div class="d-flex justify-content-center ">
+        <div class="card w-50 bg-light p-3 rounded  ">
+            @* <h1>Chi Tiết Sản Phẩm</h1> *@
             <div class="row overflow-y-auto">
                 <div class="col-md-6">
                     <h4 class="card-title">Hình ảnh sản phẩm</h4>
                     <hr />
                     <div class="container d-flex flex-wrap w-100 mx-auto">
-                        <img data-imgbigurl="@Url.Content(Model.HinhAnh)" src="@Url.Content(Model.HinhAnh)" alt="" class="img-fluid mb-3 justify-content-center w-auto" style="height:400px" onclick="
+                        <img data-imgbigurl="@Url.Content(Model.HinhAnh)" src="@Url.Content(Model.HinhAnh)" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_3.jpg'" alt="" class="img-fluid mb-3 justify-content-center w-auto" style="height:400px" onclick="
                                 const contentThumbnail = document.getElementById('myThumbnailImage');
                                 const modalImg = document.getElementById('img01');
-                                modalImg.src = this.getAttribute('data-imgbigurl');
+                                modalImg.src = this.getAttribute('src');
                                 contentThumbnail.classList.remove('d-none');" />
                         <div class="flex overflow-auto" style="gap: 10px;">
                             @foreach (var aImage in ViewBag.anhSanPham)
                             {
                                 <img data-imgbigurl="@Url.Content("~/img/productImage/" + aImage)" src="@Url.Content("~/img/productImage/" + aImage)" alt="Image 1" class="img-thumbnail m-1" onclick="const contentThumbnail = document.getElementById('myThumbnailImage');
-        const modalImg = document.getElementById('img01');
-        modalImg.src = this.getAttribute('data-imgbigurl');
-        contentThumbnail.classList.remove('d-none');" style="width: 300px; height: 400px; object-fit: contain; cursor: pointer;" />
+                                    const modalImg = document.getElementById('img01');
+                                    modalImg.src = this.getAttribute('src');
+                                    contentThumbnail.classList.remove('d-none');" style="width: 300px; height: 400px; object-fit: contain; cursor: pointer;" />
                             }
                         </div>
                     </div>

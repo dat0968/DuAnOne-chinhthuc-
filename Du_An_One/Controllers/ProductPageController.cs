@@ -1,5 +1,6 @@
 ﻿using Du_An_One.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SixLabors.Fonts;
 
 namespace Du_An_One.Controllers
@@ -66,5 +67,60 @@ namespace Du_An_One.Controllers
                                                     }); 
             return View(sanPham);
         }
+        public async Task<IActionResult> ToolFindProduct(List<string> firms, string? quantitySold, string? price, string? searchText)
+        {
+            var listProducts = _context.SANPHAM.AsQueryable();
+
+
+            if (firms != null && firms.Count > 0)
+            {
+                listProducts = listProducts.Where(x => firms.Contains(x.DanhMucHang));
+            }
+
+            if (!String.IsNullOrEmpty(quantitySold))
+            {
+                switch (quantitySold)
+                {
+                    case "1-50":
+                        listProducts = listProducts.Where(x => x.SoLuongBan >= 1 && x.SoLuongBan <= 50);
+                        break;
+                    case "51-100":
+                        listProducts = listProducts.Where(x => x.SoLuongBan >= 51 && x.SoLuongBan <= 100);
+                        break;
+                    case "101-200":
+                        listProducts = listProducts.Where(x => x.SoLuongBan >= 101 && x.SoLuongBan <= 200);
+                        break;
+                    case "201+":
+                        listProducts = listProducts.Where(x => x.SoLuongBan > 200);
+                        break;
+                }
+            }
+
+            if (!String.IsNullOrEmpty(price))
+            {
+                switch (price)
+                {
+                    case "0-100000":
+                        listProducts = listProducts.Where(x => x.DonGiaBan >= 0 && x.DonGiaBan <= 100000);
+                        break;
+                    case "100001-200000":
+                        listProducts = listProducts.Where(x => x.DonGiaBan >= 100001 && x.DonGiaBan <= 200000);
+                        break;
+                    case "200001-500000":
+                        listProducts = listProducts.Where(x => x.DonGiaBan >= 200001 && x.DonGiaBan <= 500000);
+                        break;
+                    case "500001+":
+                        listProducts = listProducts.Where(x => x.DonGiaBan > 500001);
+                        break;
+                }
+            }
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                listProducts = listProducts.Where(x => (x.TenSP??"").Contains(searchText));
+            }
+            var listProductsByFirm = listProducts.ToList();
+            return View(listProductsByFirm);
+        }
+
     }
 }
