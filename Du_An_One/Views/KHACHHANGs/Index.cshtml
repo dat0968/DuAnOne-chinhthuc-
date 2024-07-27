@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Du_An_One.Models.KHACHHANG>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoiSinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaChi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CCCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenTaiKhoan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatKhau)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TinhTrang)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HoTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgaySinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoiSinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaChi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CCCD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SDT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenTaiKhoan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatKhau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TinhTrang)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaKH">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaKH">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaKH">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="page-inner">
+
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">KHÁCH HÀNG</h1>
+</div>
+<div class="row">
+
+    <div class="col-md-9">
+
+        <a class="btn btn-primary" href="KHACHHANGS/Create">Thêm khách hàng</a>
+        <div class="row">
+
+            <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover" style="width:135%;">
+            <thead>
+                <tr style="font-size:.9em">
+                    <th class="text-center" style="width:auto">Mã KH</th>
+                    <th class="text-center" style="width:auto">Tên khách hàng</th>
+                    <th class="text-center" style="width:auto">Địa chỉ</th>
+                    <th class="text-center" style="width:auto">CCCD</th>
+                    <th class="text-center" style="width:auto">Số điện thoại</th>
+                    <th class="text-center" style="width:auto">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var khachhang in Model)
+                {
+                    <tr style="font-size:.9em">
+                        <td name="DisplayMaKhachHang">@khachhang.MaKH</td>
+                        <td>@khachhang.HoTen</td>
+                        <td>@khachhang.DiaChi</td>
+                        <td>@khachhang.CCCD</td>
+                        <td>@khachhang.SDT</td>
+                        <td>@khachhang.Email</td>
+
+
+                        <!-- Sửa -->
+
+                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@khachhang.MaKH"><i class="bi bi-pencil"></i></a></td>
+
+                        <!-- Xóa -->
+                         <td>
+                                <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@khachhang.MaKH">Delete</a>
+                         </td>
+
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>

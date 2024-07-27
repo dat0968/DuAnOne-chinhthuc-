@@ -1,0 +1,139 @@
+﻿@model Du_An_One.Models.SANPHAM
+
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+@section head {
+    <style>
+        .gallery {
+            display: flex;
+            overflow-x: auto;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+            .gallery img {
+                width: 300px;
+                height: 400px;
+                object-fit: contain;
+                cursor: pointer;
+            }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            height: 100%;
+            object-fit: contain;
+            max-width: 700px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: #bbb;
+                text-decoration: none;
+                cursor: pointer;
+            }
+    </style>
+}
+
+<h1>Chi Tiết Sản Phẩm</h1>
+<div class="card-body p-0">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="card-title">Sản Phẩm</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">Mã Sản Phẩm</dt>
+                <dd class="col-sm-8">@Model.MaSP</dd>
+                <dt class="col-sm-4">Tên Sản Phẩm</dt>
+                <dd class="col-sm-8">@Model.TenSP</dd>
+                <dt class="col-sm-4">Số Lượng Bán</dt>
+                <dd class="col-sm-8">@Model.SoLuongBan</dd>
+                <dt class="col-sm-4">Đơn Giá Bán</dt>
+                <dd class="col-sm-8">@Model.DonGiaBan</dd>
+                <dt class="col-sm-4">Ngày Nhập</dt>
+                <dd class="col-sm-8">@Model.NgayNhap.ToString("dd/MM/yyyy")</dd>
+                <dt class="col-sm-4">Danh Mục Hàng</dt>
+                <dd class="col-sm-8">@Model.DanhMucHang</dd>
+                <dt class="col-sm-4">Kích cỡ</dt>
+                <dd class="col-sm-8">@Model.KichCo</dd>
+                <dt class="col-sm-4">Mô Tả</dt>
+                <dd class="col-sm-8">@Model.MoTa</dd>
+                <!-- Bạn có thể thêm các trường khác tương ứng với các thuộc tính của Sanpham -->
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <h4 class="card-title">Hình ảnh sản phẩm</h4>
+            <hr />
+
+            <div class="container" style="
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 100%;
+                    margin: 0 auto;">
+
+                <img data-imgbigurl="@Url.Content(Model.HinhAnh)" src="@Url.Content(Model.HinhAnh)" alt="" class="img-fluid mb-3" style="
+                    width: 100%;
+                    height: auto;" onclick="openModal(this)">
+                <div class="gallery">
+                    @foreach (var aImage in ViewBag.anhSanPham)
+                    {
+                        <img data-imgbigurl="@Url.Content("~/img/productImage/" + aImage)" src="@Url.Content("~/img/productImage/" + aImage)" alt="Image 1" class="img-thumbnail m-1" onclick="openModal(this)">
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal" onclick="closeModal(event)">
+    @* <span class="close" onclick="closeModal()">&times;</span> *@
+    <img class="modal-content" id="img01">
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal(element) {
+            var modal = document.getElementById("myModal");
+            modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = element.src;
+        }
+
+        function closeModal(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target.tagName.toLowerCase() === 'img' || event.target.classList.contains('modal-content')) {
+                return;
+            }
+            modal.style.display = "none";
+        }
+    </script>
+}

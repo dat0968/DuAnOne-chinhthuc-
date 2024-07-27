@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Du_An_One.props" />
+</Project>

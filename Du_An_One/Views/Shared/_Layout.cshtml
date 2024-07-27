@@ -1,0 +1,218 @@
+﻿@using System.Security.Claims;
+@using Du_An_One.Data
+@{
+    var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
+    var MaNguoiDung = User.FindFirst(ClaimTypes.Surname)?.Value;
+}
+@inject Du_An_OneContext _db;
+<!DOCTYPE html>
+<html lang="en" style="
+    scroll-snap-type: y mandatory;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WA_TryShoesWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js"
+            defer
+            init></script>
+</head>
+<body>
+    <header>
+        <div class="px-16 py-3 flex"
+             style="
+          position: fixed;
+          background-color: white;
+          justify-content: space-between;
+          width: 100%;
+        ">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WA_TryShoesWeb</a>
+            <ul class="flex">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="px-4" style="display:grid;align-items:center;">Hello, @User.Identity.Name</li>
+                    <li class="px-4">
+                        <form asp-controller="Login" asp-action="LogOut" method="post" class="form-inline">
+                            <button type="submit" class="btn btn-link nav-link text-dark">Đăng xuất</button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="px-4"><a asp-controller="Login" asp-action="Index" style="cursor: pointer;">Đăng nhập</a></li>
+                    <li class="px-4"><a asp-controller="Login" asp-action="Register" style="cursor: pointer;">Đăng ký</a></li>
+                }
+            </ul>
+        </div>
+    </header>
+    <main>
+        <div class="bg-gradient-to-r from-black to-blue-600 text-white pt-32 pb-16">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2">
+                        <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/f7c2a48b-bd66-4285-8d90-de53e66b0f8d/Default_create_images_that_represent_the_content_of_the_modern_3.jpg"
+                             alt="Illustration of a person working on a funnel"
+                             class="mx-auto md:mx-0"
+                             style="height: 300px; width: 400px; object-fit: center" />
+                    </div>
+                    <div class="md:w-1/2 mt-8 md:mt-0 text-center md:text-left">
+                        <h1 class="text-4xl font-bold mb-4">Giày Thể Thao Nam TUFT</h1>
+                        <p class="text-xl mb-6">Bộ sưu tập giày thể thao nam hiện đại</p>
+                        <p class="mb-6">
+                            Chúng tôi cung cấp các mẫu giày thể thao nam thời trang, chất
+                            lượng cao, phù hợp với mọi phong cách và hoạt động thể thao.
+                        </p>
+                        <a asp-controller="Login" asp-action="Index" style="cursor: pointer;" class="bg-primary text-primary-foreground hover:bg-primary/80 py-2 px-4 rounded-lg">
+                            Mua ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="mb-4" style="font-size: 50px; text-align: center">🪙</p>
+                    <h3 class="text-2xl font-semibold mb-2">Giá cả hợp lý</h3>
+                    <p>
+                        Cung cấp giày thể thao nam chất lượng cao với giá cả phải chăng,
+                        phù hợp với mọi đối tượng khách hàng.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <!-- <img
+                      src="https://placehold.co/50x50"
+                      alt="Icon for feature 2"
+                      class="mb-4"
+                    /> -->
+                    <p class="mb-4" style="font-size: 50px; text-align: center">🛒</p>
+                    <h3 class="text-2xl font-semibold mb-2">Dễ dàng mua sắm</h3>
+                    <p>
+                        Giao diện thân thiện và quá trình mua sắm đơn giản, giúp bạn dễ
+                        dàng tìm kiếm và mua sắm các sản phẩm yêu thích.
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="mb-4" style="font-size: 50px; text-align: center">✔️</p>
+                    <h3 class="text-2xl font-semibold mb-2">Chất lượng đỉnh cao</h3>
+                    <p>
+                        Chúng tôi cam kết cung cấp những sản phẩm chất lượng cao, bền bỉ
+                        và thoải mái cho người sử dụng.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Section for displaying products -->
+        <div class="container mx-auto px-4 py-16">
+            <h2 class="text-3xl font-bold mb-8 text-center">Sản Phẩm Mới Nhất</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="container mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex flex-col items-center md:items-start">
+                    <h2 class="text-3xl font-bold mb-4">
+                        Bộ sưu tập giày thể thao nam phong cách
+                    </h2>
+                    <p class="mb-6">
+                        Khám phá các mẫu giày thể thao nam mới nhất của chúng tôi, từ các
+                        thiết kế cổ điển đến hiện đại, phù hợp với mọi phong cách.
+                    </p>
+                    <ul class="list-disc list-inside mb-6">
+                        <li>Thiết kế thời trang</li>
+                        <li>Dễ dàng kết hợp trang phục</li>
+                        <li>Chất liệu cao cấp</li>
+                    </ul>
+                </div>
+                <div>
+                    <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/96d8fbd9-f2b5-4b3e-8804-1070d5142bf5/Default_create_images_that_represent_the_content_of_the_modern_3.jpg"
+                         alt="Illustration of people working on a website"
+                         class="mx-auto"
+                         style="height: 300px; width: 400px; object-fit: center" />
+                </div>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/f3e70b76-47b5-4df3-9cf3-d8255d2fea53/Default_vibrant_highcontrast_images_of_sleek_sports_shoe_produ_3.jpg"
+                         alt="Illustration of people integrating tools"
+                         class="mx-auto"
+                         style="height: 300px; width: 400px; object-fit: center" />
+                </div>
+                <div class="flex flex-col items-center md:items-start">
+                    <h2 class="text-3xl font-bold mb-4">
+                        Ưu đãi đặc biệt cho các sản phẩm mới
+                    </h2>
+                    <p class="mb-6">
+                        Nhận ngay các ưu đãi đặc biệt khi mua các sản phẩm mới nhất của
+                        chúng tôi. Đừng bỏ lỡ cơ hội sở hữu những đôi giày thể thao nam
+                        đẳng cấp.
+                    </p>
+                    <ul class="list-disc list-inside mb-6">
+                        <li>Giảm giá lên đến 20%</li>
+                        <li>Miễn phí vận chuyển</li>
+                        <li>Bảo hành 1 năm</li>
+                    </ul>
+                    <a asp-controller="Product" asp-action="Index" style="cursor: pointer;" class="bg-primary text-primary-foreground hover:bg-primary/80 py-2 px-4 rounded-lg">
+                        Xem thêm
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="bg-zinc-100 py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">
+                    Hơn 1000 khách hàng hài lòng
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p class="mb-4">
+                            "Giày thể thao TUFT thật tuyệt vời. Chất lượng tốt và dịch vụ
+                            hoàn hảo."
+                        </p>
+                        <p class="font-semibold">Hoàng Ng, CEO</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p class="mb-4">
+                            "Tôi đã tìm thấy đôi giày hoàn hảo cho hoạt động thể thao của
+                            mình tại TUFT."
+                        </p>
+                        <p class="font-semibold">Trung Nguyễn, Marketing Manager</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p class="mb-4">
+                            "Giày thể thao của TUFT không chỉ đẹp mà còn rất bền và thoải
+                            mái."
+                        </p>
+                        <p class="font-semibold">Hạnh P, Developer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-black to-blue-500 text-white py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold mb-4">
+                    TUFT - Không chỉ là giày thể thao
+                </h2>
+                <button class="bg-primary text-primary-foreground hover:bg-primary/80 py-2 px-4 rounded-lg">
+                    Mua ngay
+                </button>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-dark text-white py-4 ">
+        <div class="container mx-auto px-4 text-center">
+            &copy; @DateTime.Now.Year - WA_TryShoesWeb. All rights reserved.
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("head", required: false)
+</body>
+</html>

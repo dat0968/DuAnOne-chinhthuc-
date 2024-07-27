@@ -1,0 +1,83 @@
+﻿@model Du_An_One.Models.KHACHHANG
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/style_LRF.css" asp-append-version="true" />
+</head>
+<div class="form-wrapper">
+    <h2>Đăng ký</h2>
+    <form asp-action="register" method="post" id="registrationForm">
+        <div class="form-control">
+            <input asp-for="HoTen" type="text" id="form3example1c" class="form-control" required />
+            <label class="form-label" for="form3example1c">Tên đầy đủ</label>
+        </div>
+        <div class="form-control">
+            <input asp-for="SDT" type="tel" id="form3example3c" class="form-control" required oninput="validateTelInput(this)" />
+            <label class="form-label" for="form3example3c">Số điện thoại</label>
+        </div>
+        <div class="form-control">
+            <input asp-for="Email" type="email" id="form3example3c" class="form-control" required />
+            <label class="form-label" for="form3example3c">Email</label>
+        </div>
+        <div class="form-control">
+            <input asp-for="TenTaiKhoan" type="text" id="form3example3d" class="form-control" required oninput="validateUsernameInput(this)" />
+            <label class="form-label" for="form3example3d">Username</label>
+        </div>
+        <div class="form-control">
+            <input asp-for="MatKhau" type="password" id="form3example4c" class="form-control" required />
+            <label class="form-label" for="form3example4c">Mật khẩu</label>
+            <i class="fa fa-eye" id="togglePassword" style="position: absolute; top: 50%; right: 10px; cursor: pointer; transform: translateY(-50%); color: white;"
+               onclick="togglePasswordVisibility(this)"></i>
+        </div>
+        <div class="form-control">
+            <input asp-for="CCCD" type="text" id="form3example4d" class="form-control" required />
+            <label class="form-label" for="form3example4d">CCCD</label>
+        </div>
+        <div class="form-control">
+            <input name="rePass" type="password" id="form3example4cd" class="form-control" required />
+            <label class="form-label" for="form3example4cd">Nhập lại mật khẩu</label>
+            <i class="fa fa-eye" id="togglePassword" style="position: absolute; top: 50%; right: 10px; cursor: pointer; transform: translateY(-50%); color: white;"
+               onclick="togglePasswordVisibility(this)"></i>
+        </div>
+        <div class="">
+            <input class="form-check-input" type="checkbox" id="checkLisence" required />
+            <label class="form-check-label" for="checkLisence">Tôi đồng ý với các <a href="#">điều khoản</a>.</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+    </form>
+    <p>
+        Bạn đã có tài khoản
+        <a asp-action="Index">Đăng nhập ngay</a>
+    </p>
+    <small>
+        Trang web này được bảo vệ bởi Google reCAPTCHA để đảm bảo bạn không phải là bot
+        <a href="#">Tìm hiểu.</a>
+    </small>
+</div>
+
+<script>
+    function togglePasswordVisibility(element) {
+        const fieldPassword = element.parentNode.querySelector('input');
+        const isText = fieldPassword.getAttribute('type') === 'text';
+        fieldPassword.setAttribute('type', isText ? 'password' : 'text');
+        element.classList.toggle('fa-eye-slash', !isText);
+        element.classList.toggle('fa-eye', isText);
+    }
+    document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        const password = document.getElementById('form3example4c').value;
+        const rePassword = document.getElementById('form3example4cd').value;
+
+        if (password !== rePassword) {
+            e.preventDefault(); // Prevent form submission
+            alert('Mật khẩu nhập lại không khớp. Vui lòng kiểm tra lại.');
+        }
+    });
+    function validateTelInput(input) {
+        input.value = input.value.replace(/[^0-9+-]/g, '');
+    }
+    function validateUsernameInput(input) {
+        input.value = input.value.replace(/[^0-9a-zA-Z_]/g, '');
+    }
+</script>

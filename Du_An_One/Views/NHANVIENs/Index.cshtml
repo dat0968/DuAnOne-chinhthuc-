@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Du_An_One.Models.NHANVIEN>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="page-inner">
+
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nhân viên</h1>
+</div>
+<div class="row">
+
+    <div class="col-md-9">
+
+        <a class="btn btn-primary" href="NHANVIENS/Create">Thêm nhân viên</a>
+        <div class="row">
+
+            <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover" style="width:135%;">
+            <thead>
+                <tr style="font-size:.9em">
+                    <th class="text-center" style="width:auto">Mã NV</th>
+                    <th class="text-center" style="width:auto">Tên nhân viên</th>
+
+                    <th class="text-center" style="width:auto">CCCD</th>
+                    <th class="text-center" style="width:auto">Số điện thoại</th>
+                    <th class="text-center" style="width:auto">Email</th>
+
+                    <th class="text-center" style="width:auto">Ngày vào làm</th>
+                    <th class="text-center" style="width:auto">Lương</th>
+                    <th class="text-center" style="width:auto">Vài trò</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var nhanvien in Model)
+                {
+                    <tr style="font-size:.9em">
+                        <td name="DisplayMaNhanVien">@nhanvien.MaNV</td>
+                        <td>@nhanvien.HoTen</td>
+
+                        <td>@nhanvien.CCCD</td>
+                        <td>@nhanvien.SDT</td>
+                        <td>@nhanvien.Email</td>
+                        <td>@nhanvien.NgayVaoLam.ToShortDateString()</td>
+                        <td>@nhanvien.Luong</td>
+                        <td>@nhanvien.VaiTro</td
+
+
+                        <!-- Sửa -->
+
+                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@nhanvien.MaNV"><i class="bi bi-pencil"></i></a></td>
+
+                        <!-- Xóa -->
+                         <td>
+                            <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@nhanvien.MaNV">Delete</a>
+                         </td>
+        
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>

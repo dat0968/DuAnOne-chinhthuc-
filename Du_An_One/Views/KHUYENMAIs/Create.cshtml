@@ -1,0 +1,49 @@
+﻿@model Du_An_One.Models.KHUYENMAI
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>KHUYENMAI</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaKhuyenMai" class="control-label"></label>
+                <input asp-for="MaKhuyenMai" class="form-control" />
+                <span asp-validation-for="MaKhuyenMai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhanTramKhuyenMai" class="control-label"></label>
+                <input asp-for="PhanTramKhuyenMai" class="form-control" />
+                <span asp-validation-for="PhanTramKhuyenMai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThoiGianStart" class="control-label"></label>
+                <input asp-for="ThoiGianStart" class="form-control" />
+                <span asp-validation-for="ThoiGianStart" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThoiGianEnd" class="control-label"></label>
+                <input asp-for="ThoiGianEnd" class="form-control" />
+                <span asp-validation-for="ThoiGianEnd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,153 @@
+﻿@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Du_An_One.Models.SANPHAM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h2 style="color:@(TempData["Message"] != null && TempData["Message"].ToString().Contains("Không xóa") ? "red" : "blue")">@TempData["Message"]</h2>
+
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+    <div class="card-header">
+        <div class="card-head-row">
+            <div class="card-title">Quản lý danh mục sản phẩm</div>
+            <div class="card-tools">
+                <a href="@Url.Action("Create")" class="btn btn-label-success btn-round btn-sm me-2">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                    Tạo mới
+                </a>
+                <a href="@Url.Action("ExportProductsToExcel")" class="btn btn-label-success btn-round btn-sm me-2">
+                    <span class="btn-label">
+                        <i class="fa fa-download"></i>
+                    </span>
+                    Xuất danh sách sản phẩm
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body p-0">
+    <form action="@Url.Action("Index", "SANPHAMs")" method="get" class="mb-4">
+        <fieldset class="border p-2" style="display:flex;justify-content:space-between;flex-wrap:wrap;">
+            <div class="form-group">
+                <label for="brand" class="sr-only">Chọn hãng</label>
+                <select name="brand" id="brand" class="form-control mr-2">
+                    <option value="" selected>Chọn hãng</option>
+                    <option value="TUFT">TUFT</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Adius">Adius</option>
+                    <option value="Surius">Surius</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantitySold" class="sr-only">Chọn phạm vi số lượng</label>
+                <select name="quantitySold" id="quantitySold" class="form-control mr-2">
+                    <option value="" selected>Chọn phạm vi số lượng</option>
+                    <option value="1-50">1 - 50</option>
+                    <option value="51-100">51 - 100</option>
+                    <option value="101-200">101 - 200</option>
+                    <option value="201+">201+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price" class="sr-only">Chọn phạm vi giá</label>
+                <select name="price" id="price" class="form-control mr-2">
+                    <option value="" selected>Chọn phạm vi giá</option>
+                    <option value="0-100000">0 - 100.000 VND</option>
+                    <option value="100001-200000">100.001 - 200.000 VND</option>
+                    <option value="200001-500000">200.001 - 500.000 VND</option>
+                    <option value="500001+">500.001 VND+</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="maSanPham" class="sr-only">Tìm kiếm</label>
+                <input type="text" name="maSanPham" id="maSanPham" placeholder="Tìm kiếm..." class="form-control mr-2" />
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </fieldset>
+    </form>
+
+    @if (Model.Count != 0)
+    {
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng bán</th>
+                    <th>Đơn giá bán</th>
+                    <th>Ngày nhập</th>
+                    <th>Danh mục hàng</th>
+                    <th>Hình ảnh</th>
+                    <th>Mô tả</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var img = item.HinhAnh == null ? "~/img/productImage/default.jpg" : "~/img/productImage/" + item.HinhAnh;
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoLuongBan)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonGiaBan)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayNhap)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DanhMucHang)</td>
+                        <td>
+                            <img data-imgbigurl="@Url.Content(img)" src="@Url.Content(img)" alt="No Image🖼" style="width: 100px; height: auto;" />
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-MaSP="@item.MaSP" class="btn btn-sm btn-info">Sửa</a> |
+                            <a asp-route-MaSP="@item.MaSP" id="@item.MaSP" class="btn btn-sm btn-primary showDetailsButton">Chi tiết</a> |
+                            <a asp-action="Delete" asp-route-id="@item.MaSP" class="btn btn-sm btn-danger"> Xóa</a>
+                        </td>
+                        @* <-- asp-action="Details" --> *@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="text-center">Không tìm thấy sản phẩm.</p>
+    }
+</div>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string> { "page-item" },
+    PageClasses = new List<string> { "page-link" }
+})
+<div id="contentThumbnail" class="justify-content-center align-items-center position-fixed w-100 h-100" style="display: none; z-index: 1000; top: 0; overflow: auto; background-color: rgba(0, 0, 0, 0.8);" onclick="if(event.target == this) document.getElementById('contentThumbnail').style.display = 'none'">
+</div>
+@section Scripts {
+    <script>
+        // Bắt sự kiện click của nút và gửi yêu cầu AJAX
+        document.querySelectorAll(".showDetailsButton").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+
+                // Gửi yêu cầu AJAX để lấy nội dung của trang detailsthumbnail
+                var xhr = new XMLHttpRequest();
+                var ourMaSPValue = this.getAttribute("id");
+                xhr.open("GET", `/SANPHAMs/DetailsViewThubnail?MaSP=${ourMaSPValue}`, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            // Nếu yêu cầu thành công, thay đổi nội dung của một phần tử có ID là "contentThumbnail" bằng nội dung trả về từ trang detailsthumbnail
+                            document.getElementById("contentThumbnail").innerHTML = xhr.responseText;
+                            document.getElementById("contentThumbnail").style.display = 'grid';
+                        }
+                    }
+                };
+                xhr.send();
+            });
+        });
+    </script>
+}

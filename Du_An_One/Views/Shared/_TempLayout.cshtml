@@ -1,0 +1,603 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en" style="
+    scroll-snap-type: y mandatory;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WA_TryShoesWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js"
+            defer
+            init></script>
+</head>
+<body>
+    <header id="mainHeader" class="container p-1 sticky">
+        <div class="row " style="align-items:center">
+            <div class="col-md-3 text-center">
+                <img src="https://banner2.cleanpng.com/lnd/20240725/aoo/ak6ya8an1.webp" alt="No Image🖼️" class="img-fluid rounded-circle" width="80" height="80">
+            </div>
+            <div class="col-md-6">
+                <ul class="d-flex justify-content-center gap-40">
+                    <li><a class="font-bold text-1xl" href="#">Index</a></li>
+                    <li><a class="font-bold text-1xl" href="#">Products</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul class="d-flex justify-content-around ">
+                    <li><a class="font-bold text-1xl" href="#">Bag</a></li>
+                    <li id="tst-dropitems" class="dropdown">
+                        <a class="font-bold text-1xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" asp-area="Customer" asp-controller="DataCustomer" asp-action="InfoCustomer">Account</a></li>
+                            <li><a class="dropdown-item" asp-area="Admin" asp-controller="DashboardAdmin" asp-action="Dashboard">Manager</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="hero container-fluid py-5 bg-gradient-to-r from-black to-blue-600 text-white">
+            <div class="row align-items-center justify-content-center gap-40">
+                <div class="col-md-5">
+                    <h1 class="display-4">New Jordan 6 Rings</h1>
+                    <p class="lead">The Jordan 6 Rings Men's Shoes celebrate Michael Jordan's championship career with classic design elements from each of his shoes.</p>
+                    <button class="btn btn-dark">Shop Collection</button>
+                </div>
+                <div class="col-md-5">
+                    <img src="https://placehold.co/600x400" alt="New Jordan 6 Rings" class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <!-- Section for displaying products -->
+        <div class="container mx-auto px-4 py-16">
+            @* View sản phẩm có overlayout-x auto *@
+            <div class="grid grid-cols-1 overflow-x-auto">
+                <div class="flex flex-nowrap">
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div><div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div><div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div><div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div><div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div><div class="bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+
+                </div>
+            </div>
+            @* View sản phẩm có xuống dòng *@
+            <h2 class="text-3xl font-bold mb-8 text-center">Sản Phẩm Mới Nhất</h2>
+            <div class="container mx-auto p-4">
+                <h2 class="text-2xl font-bold mb-4">DISCOUNT</h2>
+                <h3 class="text-lg text-muted-foreground mb-6">SẢN PHẨM KHUYẾN MÃI</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction:column">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction:column">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction:column">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction:column">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction:column">
+                        <div class="relative">
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-18%</span>
+                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                            <img src="https://placehold.co/300x200" alt="Nike Pegasus 40" class="w-full h-40 object-cover rounded-md">
+                        </div>
+                        <h4 class="font-semibold mt-2">NIKE PEGASUS 40</h4>
+                        <div class="flex items-center mt-1">
+                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="text-lg font-bold mt-2">3,200,000 ₫</p>
+                        <p class="line-through text-zinc-500">3,900,000 ₫</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-8">
+                @* md:grid-cols-3 *@
+                 @* Giao diện thông tin người dùng *@
+                <div class="flex pt-16">
+                    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                        <div class="sidebar-content">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xl">T</div>
+                                <div class="ml-4">
+                                    <div class="font-bold">tuft</div>
+                                    <button class="text-sm text-muted-foreground">Sửa Hồ Sơ</button>
+                                </div>
+                            </div>
+                            <nav class="space-y-2">
+                                <ul class="nav nav-pills flex-column mb-auto">
+                                    <li class="nav-item">
+                                        <a href="#" class="flex items-center text-secondary p-2 rounded hover:bg-secondary/10">
+                                            <i class="fa fa-fire mr-2"></i>
+                                            <span>Ưu Đãi Dành Riêng Cho Bạn</span>
+                                            <span class="ml-auto bg-destructive text-destructive-foreground text-xs px-2 py-1 rounded">New</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="flex items-center text-secondary p-2 rounded hover:bg-secondary/10">
+                                            <i class="fa fa-user mr-2"></i>
+                                            <span>Tài Khoản Của Tôi</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="flex items-center text-primary p-2 rounded hover:bg-primary/10">
+                                            <i class="fa fa-shopping-cart mr-2"></i>
+                                            <span>Đơn Mua</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="flex items-center text-secondary p-2 rounded hover:bg-secondary/10">
+                                            <i class="fa fa-bell mr-2"></i>
+                                            <span>Thông Báo</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="flex-1 p-6 bg-background">
+                         @* Giao diện danh sách đơn hàng *@
+                        <div class="container mt-5">
+                            <div class="orders-container">
+                                <h1 class="orders-title">Danh Sách Đơn Hàng</h1>
+                                <table class="orders-table w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã Đơn Hàng</th>
+                                            <th>Ngày Đặt</th>
+                                            <th>Tổng Giá Trị</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Đơn hàng mẫu -->
+                                        <tr>
+                                            <td>DH001</td>
+                                            <td>01/07/2024</td>
+                                            <td>3.000.000 VND</td>
+                                            <td>Đang xử lý</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm">Xem</button>
+                                                <button class="btn btn-info btn-sm">Xuất Hóa Đơn</button>
+                                                <button class="btn btn-danger btn-sm">Hủy Đơn</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Kết thúc đơn hàng mẫu -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         @* Giao diện cho giỏ hàng *@
+                        <div class="container mt-5">
+                            <div class="cart-container">
+                                <h1 class="cart-title">Giỏ Hàng</h1>
+                                <input type="text" class="form-control mb-3" placeholder="Tìm kiếm sản phẩm trong giỏ hàng...">
+                                <table class="cart-table w-full">
+                                    <thead>
+                                        <tr>
+                                            <th>Sản Phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số Lượng</th>
+                                            <th>Tổng</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Sản phẩm trong giỏ hàng -->
+                                        <tr>
+                                            <td>Tên Sản Phẩm</td>
+                                            <td>1.000.000 VND</td>
+                                            <td><input type="number" value="1" class="form-control"></td>
+                                            <td>1.000.000 VND</td>
+                                            <td><button class="btn btn-danger">Xóa</button></td>
+                                        </tr>
+                                        <!-- Kết thúc sản phẩm trong giỏ hàng -->
+                                    </tbody>
+                                </table>
+                                <div class="text-right">
+                                    <h4>Tổng: 1.000.000 VND</h4>
+                                    <button class="btn btn-success">Thanh Toán</button>
+                                </div>
+                            </div>
+                        </div>
+                        @* Giao diện đơn hàng cho khách *@
+
+                         <div class="min-h-screen bg-background text-foreground">
+                            <div class="flex justify-center border-b border-border">
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder=""
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == null ? "border-b-2 border-primary" : "")">Tất cả</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Chờ thanh toán"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ thanh toán" ? "border-b-2 border-primary" : "")">Chờ thanh toán</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Chuẩn bị hàng"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chuẩn bị hàng" ? "border-b-2 border-primary" : "")">Chuẩn bị hàng</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Đang giao hàng"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đang giao hàng" ? "border-b-2 border-primary" : "")">Đang giao hàng</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Chờ giao hàng"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ giao hàng" ? "border-b-2 border-primary" : "")">Chờ giao hàng</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Đã thanh toán"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đã thanh toán" ? "border-b-2 border-primary" : "")">Đã thanh toán</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Đã hủy"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Đã hủy" ? "border-b-2 border-primary" : "")">Đã hủy</a>
+                                <a asp-action="CustomerListOrder" asp-route-statusOrder="Hoàn trả/Hoàn tiền"
+                                   class="px-4 py-2 @(ViewBag.StatusOrder == "Hoàn trả/Hoàn tiền" ? "border-b-2 border-primary" : "")">Hoàn trả/Hoàn tiền</a>
+                            </div>
+
+
+
+                            <div class="flex justify-between items-center mb-4">
+                                <h1 class="text-2xl font-bold">Tìm kiếm</h1>
+                                <button id="filterButton" class="bg-secondary text-secondary-foreground px-4 py-2 rounded hover:bg-secondary/80" style="color:white;">
+                                    Filter
+                                </button>
+                            </div>
+                            <div id="filterBoard" class="hidden bg-card p-4 rounded shadow-md mb-4">
+                                <!-- Begin Nav Negavation to Type Product -->
+                                <div class="container px-5">
+                                    <form id="filterForm" method="get" asp-action="ShowListProductsByFirm">
+                                        <nav class="row justify-content-around text-center">
+                                            <div class="col-md-2">
+                                                <input type="checkbox" id="tuft" name="firms" value="TUFT">
+                                                <label for="tuft">TUFT</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="checkbox" id="adius" name="firms" value="Adius">
+                                                <label for="adius">Adius</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="checkbox" id="surius" name="firms" value="Surius">
+                                                <label for="surius">Surius</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="checkbox" id="adidas" name="firms" value="Adidas">
+                                                <label for="adidas">Adidas</label>
+                                            </div>
+                                        </nav>
+                                        <nav class="row justify-content-around text-center">
+                                            <select name="quantitySold" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                                                <option value="" selected>Select Quantity Sold</option>
+                                                <option value="1-50">1 - 50</option>
+                                                <option value="51-100">51 - 100</option>
+                                                <option value="101-200">101 - 200</option>
+                                                <option value="201+">201+</option>
+                                            </select>
+                                            <select name="price" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                                                <option value="" selected>Select Product Price</option>
+                                                <option value="0-100000">0 - 100.000 VND</option>
+                                                <option value="100001-200000">100.001 - 200.000 VND</option>
+                                                <option value="200001-500000">200.001 - 500.000 VND</option>
+                                                <option value="500001+">500.001 VND+</option>
+                                            </select>
+
+                                            <input type="text"
+                                                   name="searchText"
+                                                   placeholder="Search Product Info"
+                                                   class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2" />
+                                            <button type="submit" class="bg-primary text-primary-foreground p-2 rounded-lg ml-2 hover:bg-primary/80">
+                                                Search
+                                            </button>
+                                        </nav>
+                                    </form>
+                                </div>
+                                <!-- End Nav Negavation to Type Product -->
+                                <p class="text-muted-foreground">Filter options will be here.</p>
+                            </div>
+                            <div class="flex justify-center p-4">
+                                <form class="relative w-full max-w-lg">
+                                    <input type="text" name="findOrder" placeholder="Bạn có thể tìm kiếm theo Id đơn hàng, tình trạng, hình thức thanh toán." class="w-full p-2 pl-10 border rounded bg-input border-border text-muted-foreground">
+                                </form>
+                            </div>
+
+                            <div class="flex flex-col items-center justify-center">
+                               @*  @if (!Model.Any())
+                                {
+                                    <img aria-hidden="true" alt="empty-orders" src="https://placehold.co/100x100.png?text=📋" class="mb-4" />
+                                    <span class="text-muted-foreground">Không tìm thấy đơn hàng.</span>
+                                }
+                                else
+                                {
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full p-4">
+                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+                                        @foreach (var oneOrder in Model)
+                                        {
+                                            <div class="border p-4 rounded-lg">
+                                                <h3 class="text-lg font-bold mb-2">Code @oneOrder.MaHoaDon</h3>
+                                                <p>Tình trạng: @oneOrder.TinhTrang</p>
+                                                <p>Price: @oneOrder.Chitiethoadons.Sum(x => x.SoLuongMua * x.DonGia)</p>
+                                                <p>Thanh toán: @oneOrder.Httt</p>
+                                                <button class="bg-secondary text-secondary-foreground px-2 py-1 rounded mt-2">Detail</button>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    @Html.PagedListPager(Model, page => Url.Action("CustomerListOrder", new { page }), new PagedListRenderOptions
+                           {
+                               LiElementClasses = new List<string> { "page-item" },
+                               PageClasses = new List<string> { "page-link" }
+                           })
+
+<div class="min-h-screen bg-background text-foreground">
+    <div class="flex justify-center border-b border-border">
+        <a asp-action="CustomerListOrder" asp-route-statusOrder=""
+           class="px-4 py-2 @(ViewBag.StatusOrder == null ? "border-b-2 border-primary" : "")">Tất cả</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Chờ thanh toán"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ thanh toán" ? "border-b-2 border-primary" : "")">Chờ thanh toán</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Chuẩn bị hàng"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Chuẩn bị hàng" ? "border-b-2 border-primary" : "")">Chuẩn bị hàng</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Đang giao hàng"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Đang giao hàng" ? "border-b-2 border-primary" : "")">Đang giao hàng</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Chờ giao hàng"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Chờ giao hàng" ? "border-b-2 border-primary" : "")">Chờ giao hàng</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Đã thanh toán"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Đã thanh toán" ? "border-b-2 border-primary" : "")">Đã thanh toán</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Đã hủy"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Đã hủy" ? "border-b-2 border-primary" : "")">Đã hủy</a>
+        <a asp-action="CustomerListOrder" asp-route-statusOrder="Hoàn trả/Hoàn tiền"
+           class="px-4 py-2 @(ViewBag.StatusOrder == "Hoàn trả/Hoàn tiền" ? "border-b-2 border-primary" : "")">Hoàn trả/Hoàn tiền</a>
+    </div>
+
+
+
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Tìm kiếm</h1>
+        <button id="filterButton" class="bg-secondary text-secondary-foreground px-4 py-2 rounded hover:bg-secondary/80" style="color:white;">
+            Filter
+        </button>
+    </div>
+    <div id="filterBoard" class="hidden bg-card p-4 rounded shadow-md mb-4">
+        <!-- Begin Nav Negavation to Type Product -->
+        <div class="container px-5">
+            <form id="filterForm" method="get" asp-action="ShowListProductsByFirm">
+                <nav class="row justify-content-around text-center">
+                    <div class="col-md-2">
+                        <input type="checkbox" id="tuft" name="firms" value="TUFT">
+                        <label for="tuft">TUFT</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" id="adius" name="firms" value="Adius">
+                        <label for="adius">Adius</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" id="surius" name="firms" value="Surius">
+                        <label for="surius">Surius</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" id="adidas" name="firms" value="Adidas">
+                        <label for="adidas">Adidas</label>
+                    </div>
+                </nav>
+                <nav class="row justify-content-around text-center">
+                    <select name="quantitySold" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                        <option value="" selected>Select Quantity Sold</option>
+                        <option value="1-50">1 - 50</option>
+                        <option value="51-100">51 - 100</option>
+                        <option value="101-200">101 - 200</option>
+                        <option value="201+">201+</option>
+                    </select>
+                    <select name="price" class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2">
+                        <option value="" selected>Select Product Price</option>
+                        <option value="0-100000">0 - 100.000 VND</option>
+                        <option value="100001-200000">100.001 - 200.000 VND</option>
+                        <option value="200001-500000">200.001 - 500.000 VND</option>
+                        <option value="500001+">500.001 VND+</option>
+                    </select>
+
+                    <input type="text"
+                           name="searchText"
+                           placeholder="Search Product Info"
+                           class="bg-input text-primary-foreground dark:text-primary p-2 rounded ml-2" />
+                    <button type="submit" class="bg-primary text-primary-foreground p-2 rounded-lg ml-2 hover:bg-primary/80">
+                        Search
+                    </button>
+                </nav>
+            </form>
+        </div>
+        <!-- End Nav Negavation to Type Product -->
+        <p class="text-muted-foreground">Filter options will be here.</p>
+    </div>
+    <div class="flex justify-center p-4">
+        <form class="relative w-full max-w-lg">
+            <input type="text" name="findOrder" placeholder="Bạn có thể tìm kiếm theo Id đơn hàng, tình trạng, hình thức thanh toán." class="w-full p-2 pl-10 border rounded bg-input border-border text-muted-foreground">
+        </form>
+    </div>
+
+
+                                } *@
+                            </div>
+                        </div>
+ 
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-black text-white py-8">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    <img src="https://banner2.cleanpng.com/lnd/20240725/aoo/ak6ya8an1.webp"
+                         alt="No Image🖼️"
+                         style="border-radius: 50%; width: 100px; height: 100px" />
+                </div>
+                <div class="col">
+                    <ul>
+                        <li class="text-white">Info</li>
+                        <li><a href="#">Find a store</a></li>
+                        <li><a href="#">Gift</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Become a member</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li class="text-white">Shop</li>
+                        <li><a href="#">TUFT</a></li>
+                        <li><a href="#">Sirius</a></li>
+                        <li><a href="#">Collections</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li class="text-white">About</li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul style="display: flex; justify-content: space-around">
+                        <li>
+                            <a href="#"><i class="fi fi-brands-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-twitter-alt-circle"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-telegram"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    © 2019 NIKE <br />
+                    All Rights Reserved
+                </div>
+                <div>Private & Cookie Policy</div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("head", required: false)
+</body>
+</html>

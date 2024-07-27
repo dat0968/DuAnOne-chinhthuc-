@@ -1,0 +1,110 @@
+﻿@model Du_An_One.Models.NHANVIEN
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+<div class="page-inner">
+<h2>Sửa Nhân Viên</h2>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<form asp-action="Edit" method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="MaNhanVien">Mã Nhân Viên</label>
+                <input asp-for="MaNV" class="form-control" readonly />
+                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="TenNhanVien">Tên Nhân Viên</label>
+                <input asp-for="HoTen" class="form-control" maxlength="50" />
+                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="NgaySinh">Ngày sinh</label>
+                <input asp-for="NgaySinh" class="form-control" type="date" min="0" id="CCCDField" />
+                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="NoiSinh">Nơi sinh</label>
+                <input asp-for="NoiSinh" class="form-control" type="text" min="0" id="CCCDField" />
+                @Html.ValidationMessageFor(model => model.NoiSinh, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="DiaChi">Địa chỉ</label>
+                <input asp-for="DiaChi" type="text" class="form-control" />
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="CCCD">CCCD</label>
+                <input asp-for="CCCD" type="text" class="form-control" />
+                @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="DienThoai">Điện Thoại</label>
+                <input asp-for="SDT" class="form-control" type="number" min="0" id="SDTField" />
+                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-6">
+
+
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input asp-for="Email" class="form-control" type="email" />
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="NgayVaoLam">Ngày vào làm</label>
+                <input asp-for="NgayVaoLam" class="form-control" type="date" />
+                @Html.ValidationMessageFor(model => model.NgayVaoLam, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="Luong">Lương</label>
+                <input asp-for="Luong" type="text" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Luong, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="VaiTro">Vai trò</label>
+                    <div class="form-group">
+                        <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
+                            <option selected>Chọn vai trò</option>
+                            <option value="Quản lý">Quản lý</option>
+                            <option value="Nhân viên">Nhân viên</option>
+                        </select>
+                    </div>
+                @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="TenTaiKhoan">Tên tài khoản</label>
+                <input asp-for="TenTaiKhoan" type="text" class="form-control" />
+                @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="MatKhau">Mật khẩu</label>
+                <input asp-for="MatKhau" type="text" class="form-control" />
+                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="TinhTrang">Tình trạng</label>
+                    <div class="form-group">
+                        <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
+                            <option selected>Chọn tình trạng</option>
+                            <option value="Mở">Mở</option>
+                            <option value="Khóa">Khóa</option>
+                        </select>
+                    </div>
+                @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Sửa Nhân Viên" class="btn btn-primary" />
+    </div>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>

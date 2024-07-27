@@ -1,0 +1,132 @@
+﻿@model Du_An_One.Models.SANPHAM
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+<h1>Thêm sản phẩm mới</h1>
+
+<h4>Sản phẩm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
+                <input asp-for="MaSP" class="form-control" />
+                <span asp-validation-for="MaSP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
+                <input asp-for="TenSP" class="form-control" />
+                <span asp-validation-for="TenSP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
+                <input asp-for="SoLuongBan" class="form-control" min="0" />
+                <span asp-validation-for="SoLuongBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGiaBan" class="control-label">Đơn giá bán</label>
+                <input asp-for="DonGiaBan" class="form-control" />
+                <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
+                <input asp-for="NgayNhap" class="form-control" />
+                <span asp-validation-for="NgayNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DanhMucHang" class="control-label">Danh mục hãng</label>
+                @* <input asp-for="DanhMucHang" class="form-control" /> *@
+                <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
+                <span asp-validation-for="DanhMucHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KichCo" class="control-label">Kích cỡ</label>
+                <input asp-for="KichCo" class="form-control" />
+                <span asp-validation-for="KichCo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImage" class="control-label">Chọn hình ảnh chính</label>
+                <input asp-for="FileImage" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFile" />
+                <img src="" alt="" id="showImage" style="width: 100px; height: 100px;object-fit:contain" />
+                <span asp-validation-for="FileImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh</label>
+                <input asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFiles" multiple />
+                <div id="showImages" style="display:flex;gap:20px;"></div>
+                <span asp-validation-for="FileImages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label">Mô tả sản phẩm</label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKhuyenMai" class="control-label">Tỷ lệ giảm giá sản phẩm</label>
+                <select asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNV" class="control-label">Tên nhân viên</label>
+                <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNv"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const takeFile = document.querySelector("#takeFile");
+            const showImg = document.querySelector("#showImage");
+            takeFile.addEventListener("change", function () {
+                const file = takeFile.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    showImg.src = e.target.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+            const takeFiles = document.querySelector("#takeFiles");
+            const showImgs = document.querySelector("#showImages");
+            takeFiles.addEventListener("change", function () {
+                showImgs.innerHTML = "";
+                Array.from(takeFiles.files).forEach(file => {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.width = "100px";
+                        img.style.height = "100px";
+                        img.style.margin = "5px";
+                        img.style.objectFit = "contain";
+                        showImgs.appendChild(img);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

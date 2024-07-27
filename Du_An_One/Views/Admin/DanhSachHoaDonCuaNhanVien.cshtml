@@ -1,0 +1,70 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Du_An_One.Models.NHANVIEN
+@{
+    ViewData["Title"] = "DanhSachHoaDonCuaNhanVien";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+
+<h1>Thông tin cơ bản về nhân viên</h1>
+<div style="display:flex;justify-content:space-between;">
+    <h3>Mã: @Model.MaNV</h3>
+    <h3>Họ tên: @Model.HoTen</h3>
+    <h3>Tình trạng: @Model.TinhTrang</h3>
+    <h3><a onclick="alert('Không có giao diện cụ thể để đến đường dẫn thông tin chi tiết cho nhân viên này')">Chi tiết</a></h3>
+</div>
+<h1>Danh sách đơn hàng nhân viên đã làm</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ngày
+            </th>
+            <th>
+                Số lượng đơn
+            </th>
+            <th>
+                Tổng tiền
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.DuLieuHomNay)
+        {
+            <tr>
+                <td>
+                    Hôm nay
+                </td>
+                <td>
+                    @item.SoHoaDon
+                </td>
+                <td>
+                    @item.TongTien.ToString("C")
+                </td>
+            </tr>
+        }
+
+        @foreach (var item in ViewBag.DuLieuTruocDo)
+        {
+            <tr>
+                <td>
+                    @item.Ngay.Date
+                </td>
+                <td>
+                    @item.SoHoaDon
+                </td>
+                <td>
+                    @item.TongTien
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.DuLieuHomNay.Count == 0 || ViewBag.DuLieuTruocDo.Count == 0)
+{
+    <h4 style="text-align:center">Dữ liệu hiển thị đến đây là hết</h4>
+}
+
+
+<a asp-action="ThongKe" class="btn">Trở lại</a>

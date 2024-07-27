@@ -1,0 +1,119 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Du_An_One.Models.SANPHAM
+
+
+@section head {
+}
+<div class="card-body p-0 overflow-y-auto">
+    <h1>Chi Tiết Sản Phẩm</h1>
+    <div class="d-flex justify-content-center">
+        <div class="card w-50 bg-light p-3 rounded ">
+            <div class="row overflow-y-auto">
+                <div class="col-md-6">
+                    <h4 class="card-title">Hình ảnh sản phẩm</h4>
+                    <hr />
+                    <div class="container d-flex flex-wrap w-100 mx-auto">
+                        <img data-imgbigurl="@Url.Content(Model.HinhAnh)" src="@Url.Content(Model.HinhAnh)" alt="" class="img-fluid mb-3 justify-content-center w-auto" style="height:400px" onclick="
+                                const contentThumbnail = document.getElementById('myThumbnailImage');
+                                const modalImg = document.getElementById('img01');
+                                modalImg.src = this.getAttribute('data-imgbigurl');
+                                contentThumbnail.classList.remove('d-none');" />
+                        <div class="flex overflow-auto" style="gap: 10px;">
+                            @foreach (var aImage in ViewBag.anhSanPham)
+                            {
+                                <img data-imgbigurl="@Url.Content("~/img/productImage/" + aImage)" src="@Url.Content("~/img/productImage/" + aImage)" alt="Image 1" class="img-thumbnail m-1" onclick="const contentThumbnail = document.getElementById('myThumbnailImage');
+        const modalImg = document.getElementById('img01');
+        modalImg.src = this.getAttribute('data-imgbigurl');
+        contentThumbnail.classList.remove('d-none');" style="width: 300px; height: 400px; object-fit: contain; cursor: pointer;" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="card-title">Sản Phẩm</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">Mã Sản Phẩm</dt>
+                        <dd class="col-sm-8">@Model.MaSP</dd>
+                        <dt class="col-sm-4">Tên Sản Phẩm</dt>
+                        <dd class="col-sm-8">@Model.TenSP</dd>
+                        <dt class="col-sm-4">Số Lượng Bán</dt>
+                        <dd class="col-sm-8">@Model.SoLuongBan</dd>
+                        <dt class="col-sm-4">Đơn Giá Bán</dt>
+                        <dd class="col-sm-8">@Model.DonGiaBan</dd>
+                        <dt class="col-sm-4">Ngày Nhập</dt>
+                        <dd class="col-sm-8">@Model.NgayNhap.ToString("dd/MM/yyyy")</dd>
+                        <dt class="col-sm-4">Danh Mục Hàng</dt>
+                        <dd class="col-sm-8">@Model.DanhMucHang</dd>
+                        <dt class="col-sm-4">Kích cỡ</dt>
+                        <dd class="col-sm-8">@Model.KichCo</dd>
+                        <dt class="col-sm-4">Mô Tả</dt>
+                        <dd class="col-sm-8">@Model.MoTa</dd>
+                    </dl>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-primary" onclick="this.parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none'">Đóng</a>
+                @* asp-action="Index" *@                
+                 @* <a class="btn btn-secondary" onclick="this.closest('.card').style.display = 'none'">Đóng</a> *@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="myThumbnailImage" class="position-fixed modal d-none align-items-center justify-content-center" onclick="
+            const contentThumbnail = document.getElementById('myThumbnailImage');
+            if (event.target === contentThumbnail || event.target.classList.contains('close')) {
+                contentThumbnail.classList.add('d-none');
+            }">
+     @* <span class="close position-absolute text-white" onclick="closeModal()">&times;</span> *@
+    <img class="modal-content img-fluid" id="img01">
+</div>
+
+<style>
+    .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.8);
+        display: flex;
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-width: 700px;
+        object-fit: contain;
+    }
+
+    .close {
+        top: 15px;
+        right: 35px;
+        font-size: 40px;
+        font-weight: bold;
+        transition: color 0.3s;
+        cursor: pointer;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+</style>
+@section Scripts{
+    <script>
+        function closeModal(event) {
+        }
+    </script>
+}

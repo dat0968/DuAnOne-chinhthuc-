@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Du_An_One.Models.CHITIETNHAP>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+@* <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaNhaCC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaSP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuongNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGiaNhap)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaNhaCC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuongNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaNhap)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaChiTietNhap">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaChiTietNhap">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaChiTietNhap">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="page-inner">
+
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">PHIẾU NHẬP</h1>
+</div>
+<div class="row">
+
+    <div class="col-md-9">
+
+        <a class="btn btn-primary" href="CHITIETNHAPS/Create">Thêm phiếu nhập</a>
+        <div class="row">
+
+            <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover" style="width:135%;">
+            <thead>
+                <tr style="font-size:.9em">
+                    <th class="text-center" style="width:auto">Mã chi tiết nhập</th>
+                    <th class="text-center" style="width:auto">Mã nhà cung cấp</th>
+                    <th class="text-center" style="width:auto">Tên nhà cung cấp</th>
+                    <th class="text-center" style="width:auto">Mã sản phẩm</th>
+                    <th class="text-center" style="width:auto">Tên sản phẩm</th>
+                    <th class="text-center" style="width:auto">Số lượng nhập</th>
+                    <th class="text-center" style="width:auto">Đơn giá nhập</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var phieunhap in Model)
+                {
+                    <tr style="font-size:.9em">
+                        <td name="DisplayMaCTN">@phieunhap.MaChiTietNhap</td>
+                        <td>@phieunhap.MaNhaCC</td>
+                        <td>@phieunhap.NHACUNGCAP.TenNhaCC</td>
+                        <td>@phieunhap.MaSP</td>
+                        <td>@phieunhap.SANPHAM.TenSP</td>
+                        <td>@phieunhap.SoLuongNhap</td>
+                        <td>@phieunhap.DonGiaNhap</td>
+
+                        <!-- Sửa -->
+
+                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@phieunhap.MaChiTietNhap"><i class="bi bi-pencil"></i></a></td>
+
+                        <!-- Xóa -->
+                         <td>
+                            <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@phieunhap.MaChiTietNhap">Delete</a>
+                         </td>
+        
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>

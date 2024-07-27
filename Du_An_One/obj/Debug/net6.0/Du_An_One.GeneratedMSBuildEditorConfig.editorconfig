@@ -1,0 +1,263 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Du_An_One
+build_property.RootNamespace = Du_An_One
+build_property.ProjectDir = D:\DuAnOnenew\Du_An_One\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\DuAnOnenew\Du_An_One
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Admin/DanhSachHoaDonCuaNhanVien.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFuaFNhY2hIb2FEb25DdWFOaGFuVmllbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Admin/TongQuan.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVG9uZ1F1YW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETNHAPs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVE5IQVBzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETNHAPs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVE5IQVBzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETNHAPs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVE5IQVBzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETNHAPs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVE5IQVBzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/CHITIETNHAPs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVE5IQVBzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HINHANHs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSElOSEFOSHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HINHANHs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSElOSEFOSHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HINHANHs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSElOSEFOSHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HINHANHs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSElOSEFOSHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HINHANHs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSElOSEFOSHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HOADONs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSE9BRE9Oc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HOADONs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSE9BRE9Oc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HOADONs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSE9BRE9Oc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HOADONs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSE9BRE9Oc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/HOADONs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSE9BRE9Oc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Home/Temp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZW1wLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hVWUVOTUFJc1xDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hVWUVOTUFJc1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hVWUVOTUFJc1xEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hVWUVOTUFJc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hVWUVOTUFJc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Login/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRm9yZ290UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Login/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHACUNGCAPs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBQ1VOR0NBUHNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHACUNGCAPs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBQ1VOR0NBUHNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHACUNGCAPs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBQ1VOR0NBUHNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHACUNGCAPs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBQ1VOR0NBUHNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHACUNGCAPs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBQ1VOR0NBUHNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHANVIENs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHANVIENs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHANVIENs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHANVIENs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/NHANVIENs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/DetailsViewThubnail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcRGV0YWlsc1ZpZXdUaHVibmFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/SANPHAMs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/_LayoutAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX0xheW91dEFkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/DuAnOnenew/Du_An_One/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-ne8dwwbi1g
+
+[D:/DuAnOnenew/Du_An_One/Views/Shared/_TempLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UZW1wTGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = b-owt98wihp8

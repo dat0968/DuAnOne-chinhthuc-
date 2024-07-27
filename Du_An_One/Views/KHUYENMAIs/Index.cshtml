@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Du_An_One.Models.KHUYENMAI>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+@* <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhanTramKhuyenMai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGianStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGianEnd)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhanTramKhuyenMai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGianStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThoiGianEnd)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaKhuyenMai">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MaKhuyenMai">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaKhuyenMai">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<div class="page-inner">
+
+
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Khuyến mãi</h1>
+</div>
+<div class="row">
+
+    <div class="col-md-9">
+
+        <a class="btn btn-primary" href="KHUYENMAIS/Create">Thêm khuyến mãi</a>
+        <div class="row">
+
+            <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover" style="width:135%;">
+            <thead>
+                <tr style="font-size:.9em">
+                    <th class="text-center" style="width:auto">Mã KM</th>
+                    <th class="text-center" style="width:auto">Phần trăm khuyến mãi</th>
+
+                    <th class="text-center" style="width:auto">Thời gian bắt đầu</th>
+                    <th class="text-center" style="width:auto">Thời gian kết thúc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var khuyenmai in Model)
+                {
+                    <tr style="font-size:.9em">
+                        <td name="DisplayMaKhuyenMai">@khuyenmai.MaKhuyenMai</td>
+                        <td>@khuyenmai.PhanTramKhuyenMai</td>
+                            <td>@khuyenmai.ThoiGianStart.ToShortDateString()</td>
+                            <td>@khuyenmai.ThoiGianEnd.ToShortDateString()</td>
+
+                        <!-- Sửa -->
+
+                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@khuyenmai.MaKhuyenMai"><i class="bi bi-pencil"></i></a></td>
+
+                        <!-- Xóa -->
+                         <td>
+                            <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@khuyenmai.MaKhuyenMai">Delete</a>
+                         </td>
+        
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>

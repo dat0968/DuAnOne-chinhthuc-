@@ -1,0 +1,145 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Du_An_One.Models.SANPHAM
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+
+<h1>Sửa sản phẩm</h1>
+
+<h4>Sản phẩm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" readonly asp-for="MaSP" />
+            <div class="form-group">
+                <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
+                <input asp-for="TenSP" class="form-control" />
+                <span asp-validation-for="TenSP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
+                <input asp-for="SoLuongBan" class="form-control" min="0" />
+                <span asp-validation-for="SoLuongBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGiaBan" class="control-label">Đơn giá bán</label>
+                <input asp-for="DonGiaBan" class="form-control" />
+                <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
+                <input asp-for="NgayNhap" class="form-control" />
+                <span asp-validation-for="NgayNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DanhMucHang" class="control-label">Danh mục hãng</label>
+                <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
+                <span asp-validation-for="DanhMucHang" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KichCo" class="control-label">Kích cỡ</label>
+                <input asp-for="KichCo" class="form-control" />
+                <span asp-validation-for="KichCo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HinhAnh" class="control-label">Hình ảnh hiện tại</label>
+                @Html.HiddenFor(Model => Model.HinhAnh) 
+                <img data-imgbigurl="@Url.Content("~/img/productImage/" + Model.HinhAnh)" src="@Url.Content("~/img/productImage/"+Model.HinhAnh)" alt="No Image🖼" style="width: 100px; height: auto;" />
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImage" class="control-label">Chọn hình ảnh mới</label>
+                <input asp-for="FileImage" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFile" />
+                <span asp-validation-for="FileImage" class="text-danger"></span>
+                <img src="" alt="" id="showImage" style="width: 100px; height: 100px" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Các hình ảnh phụ hiển thị hiện tại</label>
+                <div style="display:flex;gap:10px;">
+                    @foreach (var aPartImage in ViewBag.PartImages)
+                    {
+                        <img data-imgbigurl="@Url.Content("~/img/productImage/" + aPartImage)" src="@Url.Content("~/img/productImage/"+aPartImage)" alt="No Image🖼" style="width: 100px; height: auto;" />
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImages" class="control-label">Chọn thay nhiều hình ảnh phụ</label>
+                <input asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFiles" multiple />
+                <div id="showImages"></div>
+                <span asp-validation-for="FileImages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTa" class="control-label">Mô tả</label>
+                <input asp-for="MoTa" class="form-control" />
+                <span asp-validation-for="MoTa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKhuyenMai" class="control-label">Tỷ lệ khuyến mãi</label>
+                <select asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai"></select>
+                <span asp-validation-for="MaKhuyenMai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaNV" class="control-label">Mã nhân viên</label>
+                <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNv"></select>
+                <span asp-validation-for="MaNV" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @* Show hình ảnh *@
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const takeFile = document.querySelector("#takeFile");
+            const showImg = document.querySelector("#showImage");
+            takeFile.addEventListener("change", function () {
+                const file = takeFile.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    showImg.src = e.target.result;
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+
+
+            const takeFiles = document.querySelector("#takeFiles");
+            const showImgs = document.querySelector("#showImages");
+            takeFiles.addEventListener("change", function () {
+                showImgs.innerHTML = "";
+                Array.from(takeFiles.files).forEach(file => {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+                        img.style.width = "100px";
+                        img.style.height = "100px";
+                        img.style.margin = "5px";
+                        img.style.objectFit = "contain";
+                        showImgs.appendChild(img);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

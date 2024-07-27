@@ -1,0 +1,93 @@
+﻿@model Du_An_One.Models.NHANVIEN
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
+}
+<div class="page-inner">
+<h1>Create</h1>
+
+<h4>NHANVIEN</h4>
+<hr />
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Mã nhân viên</label>
+        <input asp-for="MaNV" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Mã nhân viên">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Họ tên</label>
+        <input asp-for="HoTen" type="text" class="form-control" id="exampleInputPassword1" placeholder="Họ tên">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Ngày sinh</label>
+        <input asp-for="NgaySinh" type="date" class="form-control" id="exampleInputPassword1" placeholder="Ngày sinh">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Nơi sinh</label>
+        <input asp-for="NoiSinh" type="text" class="form-control" id="exampleInputPassword1" placeholder="Nơi sinh">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Địa chỉ</label>
+        <input asp-for="DiaChi" type="text" class="form-control" id="exampleInputPassword1" placeholder="Địa chỉ">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Căn cước công dân</label>
+        <input asp-for="CCCD" type="number" class="form-control" id="exampleInputPassword1" placeholder="CCCD">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Số điện thoại</label>
+        <input asp-for="SDT" type="text" class="form-control" id="exampleInputPassword1" placeholder="SDT">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Email</label>
+        <input asp-for="Email" type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Ngày vào làm</label>
+        <input asp-for="NgayVaoLam" type="date" class="form-control" id="exampleInputPassword1" placeholder="Ngày vào làm">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Lương</label>
+        <input asp-for="Luong" type="text" class="form-control" id="exampleInputPassword1" placeholder="Lương">
+    </div>
+
+    <div class="form-group">
+        <label>Vai trò</label>
+        <div class="form-group">
+            <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
+                <option selected>Chọn vai trò</option>
+                <option value="Quản lý">Quản lý</option>
+                <option value="Nhân viên">Nhân viên</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Tên tài khoản</label>
+        <input asp-for="TenTaiKhoan" type="text" class="form-control" id="exampleInputPassword1" placeholder="Tên tài khoản">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Mật khẩu</label>
+        <input asp-for="MatKhau" type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu">
+    </div>
+        <div class="form-group">
+            <label>Tình trạng</label>
+            <div class="form-group">
+                <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
+                    <option selected>Chọn tình trạng</option>
+                    <option value="Mở">Mở</option>
+                    <option value="Khóa">Khóa</option>
+                </select>
+            </div>
+        </div>
+
+
+    <button type="submit" class="btn btn-primary">Thêm nhân viên</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>
+
