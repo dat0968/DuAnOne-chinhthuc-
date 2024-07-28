@@ -2,54 +2,43 @@
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
+    ViewBag.ViewNow = "Index";
 }
 
-<div class="hero container-fluid py-5 bg-gradient-to-r from-black to-blue-600 text-white">
-    <div class="row align-items-center justify-content-center gap-40">
-        <div class="col-md-5">
-            <h1 class="display-4">New Jordan 6 Rings</h1>
-            <p class="lead">The Jordan 6 Rings Men's Shoes celebrate Michael Jordan's championship career with classic design elements from each of his shoes.</p>
-            <button class="btn btn-dark">Shop Collection</button>
-        </div>
-        <div class="col-md-5">
-            <img src="https://placehold.co/600x400" alt="New Jordan 6 Rings" class="img-fluid">
-        </div>
-    </div>
-</div>
-<h2 class="text-2xl font-bold mb-4 text-center pt-5">CÁC HÃNG SẢN PHẨM</h2>
+<h2 class="text-2xl font-bold mb-4 text-center pt-2">CÁC HÃNG SẢN PHẨM</h2>
 <!-- View cho hình ảnh sản phẩm để lọc -->
 <nav class="flex justify-around">
-    <a asp-action="ToolFindProduct" asp-route-firms="TUFT"class="text-center">
-        <figure>
+    <a asp-action="ToolFindProduct" asp-route-firms="TUFT" class="text-center">
+        <figure class="group border border-gray-300 rounded-lg p-4">
             <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/419db076-2e65-43f8-a2d8-243d24450548/Default_Render_a_highly_detailed_image_of_a_pair_of_sleek_mode_3.jpg"
                  alt="TUFT"
-                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 group-hover:opacity-90">
         </figure>
-        <figcaption class="mt-2">TUFT</figcaption>
+        <figcaption class="mt-2 font- text-gray-900 group-hover:text-blue-600">TUFT</figcaption>
     </a>
-    <a asp-action="ToolFindProduct" asp-route-firms="Adius"class="text-center">
-        <figure>
+    <a asp-action="ToolFindProduct" asp-route-firms="Adius" class="text-center">
+        <figure class="group border border-gray-300 rounded-lg p-4">
             <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/ffb3ee67-f7e3-45e8-9540-bc2f8f4a73eb/Default_Create_a_highangle_welllit_and_intricately_detailed_im_3.jpg"
                  alt="Adidas"
-                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 group-hover:opacity-90">
         </figure>
-        <figcaption class="mt-2">Adidas</figcaption>
+        <figcaption class="mt-2 font- text-gray-900 group-hover:text-blue-600">Adidas</figcaption>
     </a>
-    <a asp-action="ToolFindProduct" asp-route-firms="Surius"class="text-center">
-        <figure>
+    <a asp-action="ToolFindProduct" asp-route-firms="Surius" class="text-center">
+        <figure class="group border border-gray-300 rounded-lg p-4">
             <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/74e2a439-446e-4081-8855-86abeca4d7fd/Default_Create_an_image_of_a_pair_of_sleek_mens_sports_shoes_w_1.jpg"
                  alt="Adidus"
-                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 group-hover:opacity-90">
         </figure>
-        <figcaption class="mt-2">Adidus</figcaption>
+        <figcaption class="mt-2 font- text-gray-900 group-hover:text-blue-600">Adidus</figcaption>
     </a>
-    <a asp-action="ToolFindProduct" asp-route-firms="Adidas"class="text-center">
-        <figure>
+    <a asp-action="ToolFindProduct" asp-route-firms="Adidas" class="text-center">
+        <figure class="group border border-gray-300 rounded-lg p-4">
             <img src="https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/089b4806-4854-4044-83b1-3d58e1ac2ddb/Default_Create_a_highly_detailed_photorealistic_image_of_a_pai_3.jpg"
                  alt="Sirius"
-                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 hover:opacity-90">
+                 class="h-48 w-48 rounded-lg cursor-pointer transition-opacity duration-200 group-hover:opacity-90">
         </figure>
-        <figcaption class="mt-2">Sirius</figcaption>
+        <figcaption class="mt-2 font- text-gray-900 group-hover:text-blue-600">Sirius</figcaption>
     </a>
 </nav>
 

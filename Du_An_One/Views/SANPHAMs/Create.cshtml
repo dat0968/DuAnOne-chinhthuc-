@@ -1,70 +1,81 @@
 ﻿@model Du_An_One.Models.SANPHAM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tạo sản phẩm";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
 <h1>Thêm sản phẩm mới</h1>
 
-<h4>Sản phẩm</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @if (TempData["FailMessage"] != null)
+        {
+            <div class="alert alert-warning">
+                <span data-notify="icon">🟠</span>
+                <span data-notify="title">Lỗi tạo sản phẩm</span>
+                <span data-notify="message">@TempData["FailMessage"].</span>
+                <p class="btn btn-secondary cursor-default" onclick="" title="Vui lòng nhập lại Mã sản phẩm, mã có thể bị lặp.
+Thay đổi tên hình ảnh ngắn hơn 50 chữ, hình ảnh không lấy tên quá dài.">
+                    Chú thích
+                </p>
+            </div>
+        }
+
         <form method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
                 <input asp-for="MaSP" class="form-control" />
-                <span asp-validation-for="MaSP" class="text-danger"></span>
+                <span asp-validation-for="MaSP" class="text-danger">Mã sản phẩm</span>
             </div>
             <div class="form-group">
                 <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
                 <input asp-for="TenSP" class="form-control" />
-                <span asp-validation-for="TenSP" class="text-danger"></span>
+                <span asp-validation-for="TenSP" class="text-danger">Tên sản phẩm</span>
             </div>
             <div class="form-group">
                 <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
                 <input asp-for="SoLuongBan" class="form-control" min="0" />
-                <span asp-validation-for="SoLuongBan" class="text-danger"></span>
+                <span asp-validation-for="SoLuongBan" class="text-danger">Số lượng bán</span>
             </div>
             <div class="form-group">
                 <label asp-for="DonGiaBan" class="control-label">Đơn giá bán</label>
                 <input asp-for="DonGiaBan" class="form-control" />
-                <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+                <span asp-validation-for="DonGiaBan" class="text-danger">Đơn giá bán</span>
             </div>
             <div class="form-group">
                 <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
                 <input asp-for="NgayNhap" class="form-control" />
-                <span asp-validation-for="NgayNhap" class="text-danger"></span>
+                <span asp-validation-for="NgayNhap" class="text-danger">Ngày nhập</span>
             </div>
             <div class="form-group">
-                <label asp-for="DanhMucHang" class="control-label">Danh mục hãng</label>
-                @* <input asp-for="DanhMucHang" class="form-control" /> *@
+                <label asp-for="DanhMucHang" class="control-label">Hãng sản phẩm</label>
                 <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
-                <span asp-validation-for="DanhMucHang" class="text-danger"></span>
+                <span asp-validation-for="DanhMucHang" class="text-danger">Hãng sản phẩm</span>
             </div>
             <div class="form-group">
                 <label asp-for="KichCo" class="control-label">Kích cỡ</label>
                 <input asp-for="KichCo" class="form-control" />
-                <span asp-validation-for="KichCo" class="text-danger"></span>
+                <span asp-validation-for="KichCo" class="text-danger">Kích cỡ</span>
             </div>
             <div class="form-group">
                 <label asp-for="FileImage" class="control-label">Chọn hình ảnh chính</label>
                 <input asp-for="FileImage" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFile" />
                 <img src="" alt="" id="showImage" style="width: 100px; height: 100px;object-fit:contain" />
-                <span asp-validation-for="FileImage" class="text-danger"></span>
+                <span asp-validation-for="FileImage" class="text-danger">Chọn hình ảnh chính</span>
             </div>
             <div class="form-group">
-                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh</label>
+                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh phụ</label>
                 <input asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFiles" multiple />
                 <div id="showImages" style="display:flex;gap:20px;"></div>
-                <span asp-validation-for="FileImages" class="text-danger"></span>
+                <span asp-validation-for="FileImages" class="text-danger">Chọn nhiều hình ảnh phụ</span>
             </div>
             <div class="form-group">
                 <label asp-for="MoTa" class="control-label">Mô tả sản phẩm</label>
                 <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
+                <span asp-validation-for="MoTa" class="text-danger">Mô tả sản phẩm</span>
             </div>
             <div class="form-group">
                 <label asp-for="MaKhuyenMai" class="control-label">Tỷ lệ giảm giá sản phẩm</label>
@@ -84,6 +95,8 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
 
 @section Scripts {
     <script>
@@ -126,6 +139,20 @@
             });
         });
     </script>
+
+    <!--<script>
+        $(document).ready(function () {
+            var successAlert = $('#success-alert');
+            if (successAlert.length) {
+                successAlert.slideDown();
+
+                // Ẩn thanh thông báo sau 3 giây
+                setTimeout(function () {
+                    successAlert.slideUp();
+                }, 3000);
+            }
+        });
+    </script>-->
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

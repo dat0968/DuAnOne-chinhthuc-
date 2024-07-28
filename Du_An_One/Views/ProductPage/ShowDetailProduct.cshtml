@@ -45,7 +45,6 @@
 
         @foreach (var oneProduct in ViewBag.ListRelateProducts)
         {
-            var img = oneProduct.ldp.HinhAnh.Length < 10 ? "~/img/productImage/default.jpg" : "~/img/productImage/" + oneProduct.ldp.HinhAnh;
 
             <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
                 <div class="relative">
@@ -53,7 +52,7 @@
                     {
                         <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">-@oneProduct.PhanTramKhuyenMai%</span>
                     }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                    <img src="@Url.Content(img)" alt="@oneProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_3.jpg'" class="w-full h-40 object-cover rounded-md">
+                    <img src="@Url.Content("~/img/productImage/" + oneProduct.ldp.HinhAnh)" alt="@oneProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_3.jpg'" class="w-full h-40 object-cover rounded-md">
                 </div>
                 <h4 class="font-semibold mt-2">@oneProduct.ldp.TenSP</h4>
                 <div class="flex items-center mt-1">

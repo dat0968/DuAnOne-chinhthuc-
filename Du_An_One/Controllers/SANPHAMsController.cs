@@ -103,6 +103,7 @@ namespace Du_An_One.Controllers
             return View(sanPham);
         }
         #endregion
+        
         #region//Hiển thị thumbnail chi tiết sản phẩm
         public IActionResult DetailsViewThubnail(string MaSP)
         {
@@ -119,6 +120,7 @@ namespace Du_An_One.Controllers
             return PartialView(sanPham);
         }
         #endregion
+
         #region//Tạo sản phẩm
         // GET: SANPHAMs/Create
         public IActionResult Create()
@@ -183,12 +185,14 @@ namespace Du_An_One.Controllers
                         await _context.SaveChangesAsync();
                     }
 
+                    TempData["SuccessMessage"] = "Thêm sản phẩm thành công!";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     // Log the exception
                     Console.WriteLine($"Error: {ex.Message}");
+                    TempData["FailMessage"] = "Lỗi dữ liệu thêm vào";
                 }
             }
             else
@@ -201,6 +205,7 @@ namespace Du_An_One.Controllers
                         Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
                     }
                 }
+                TempData["FailMessage"] = "Vui lòng kiểm tra thông tin nhập vào.";
             }
 
             // Re-initialize SelectLists if ModelState is invalid
@@ -212,7 +217,6 @@ namespace Du_An_One.Controllers
 
             var nhanVienList = _context.NHANVIEN.ToList();
             ViewBag.MaNv = new SelectList(nhanVienList, "MaNV", "HoTen");
-
             return View(sanPham);
         }
         #endregion

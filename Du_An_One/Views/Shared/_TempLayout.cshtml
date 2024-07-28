@@ -3,7 +3,6 @@
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
     var MaNguoiDung = User.FindFirst(ClaimTypes.Surname)?.Value;
-    var VaiTro = User.FindFirst(ClaimTypes.Actor)?.Value;
 }
 <!DOCTYPE html>
 <html lang="en" style="
@@ -22,8 +21,9 @@
             init></script>
 </head>
 <body>
+    <!-- Main Header -->
     <header id="mainHeader" class="container sticky border-bottom fixed">
-        <div class="row " style="align-items:center">
+        <div class="row" style="align-items:center">
             <div class="col-md-3 text-center">
                 <img src="https://banner2.cleanpng.com/lnd/20240725/aoo/ak6ya8an1.webp" alt="No Image🖼️" class="img-fluid rounded-circle" width="80" height="80">
             </div>
@@ -34,15 +34,29 @@
                 </ul>
             </div>
             <div class="col-md-3">
-                <ul class="d-flex justify-content-around ">
+                <ul class="d-flex justify-content-around">
                     <li><a class="font-bold text-1xl" href="#">Bag</a></li>
                     <li id="tst-dropitems" class="dropdown">
                         <a class="font-bold text-1xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" asp-controller="KHACHHANGs" asp-action="InfoCustomer" asp-route-id="@MaNguoiDung">Account</a></li>
-                            @if (VaiTro == "Quản lý"){
-                                <li><a class="dropdown-item" asp-controller="DashboardAdmin" asp-action="Dashboard">Manager</a></li>
-}
+                            @if (String.IsNullOrEmpty(MaNguoiDung))
+                            {
+                                <li class="px-4"><a asp-controller="Login" asp-action="Index" style="cursor: pointer;">Đăng nhập</a></li>
+                            }
+                            else
+                            {
+                                @if (userRole == "Quản lý")
+                                {
+                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="TongQuan">Quản lý</a></li>
+                                }
+                                else
+                                {
+                                    <li><a class="dropdown-item" asp-controller="KHACHHANGs" asp-action="InfoCustomer" asp-route-id="@MaNguoiDung">Tài khoản</a></li>
+                                }
+                                <li>
+                                    <button type="submit" class="dropdown-item" onclick="document.getElementById('confirmLogout').style.display = ''">Đăng xuất</button>
+                                </li>
+                            }
                         </ul>
                     </li>
                 </ul>
@@ -50,28 +64,90 @@
         </div>
     </header>
 
-    <main class="h-100">
 
+    <main class="h-100">
+        @if (ViewBag.ViewNow == "Index")
+        {
+            <div class="container-fluid bg-gradient-to-r from-black to-blue-600 text-white">
+                <div class="row align-items-center justify-content-center gap-40">
+                    <div class="col-md-5">
+                        <h1 class="display-4">New Jordan 6 Rings</h1>
+                        <p class="lead">The Jordan 6 Rings Men's Shoes celebrate Michael Jordan's championship career with classic design elements from each of his shoes.</p>
+                        <button class="btn btn-dark">Shop Collection</button>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="https://placehold.co/600x400" alt="New Jordan 6 Rings" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+            
+        }
 
         <!-- Section for displaying products -->
         <div class="container mx-auto px-4 py-16">
             <div class="grid grid-cols-1 gap-8">
                 @* md:grid-cols-3 *@
                 @* Giao diện thông tin người dùng *@
-                <div class="flex">
-                    <div class="flex-1 p-6 bg-background">
-                        @* Giao diện danh sách đơn hàng *@
+                @* Giao diện danh sách đơn hàng *@
 
-                        @* Giao diện cho giỏ hàng *@
+                @* Giao diện cho giỏ hàng *@
                         
-                        @* Giao diện đơn hàng cho khách *@
+                @* Giao diện đơn hàng cho khách *@
 
-                        @RenderBody()
-                    </div>
-                </div>
+                @RenderBody()
             </div>
         </div>
     </main>
+    <!--Cách kiểu thông báo
+    <div class="alert alert-black">
+        <span data-notify="icon">⚫</span>
+        <span data-notify="title">Black Alert</span>
+        <span data-notify="message">This is a black alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-primary">
+        <span data-notify="icon">🔵</span>
+        <span data-notify="title">Primary Alert</span>
+        <span data-notify="message">This is a primary alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-secondary">
+        <span data-notify="icon">🟣</span>
+        <span data-notify="title">Secondary Alert</span>
+        <span data-notify="message">This is a secondary alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-info">
+        <span data-notify="icon">🔷</span>
+        <span data-notify="title">Info Alert</span>
+        <span data-notify="message">This is an info alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-success">
+        <span data-notify="icon">🟢</span>
+        <span data-notify="title">Success Alert</span>
+        <span data-notify="message">This is a success alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-warning">
+        <span data-notify="icon">🟠</span>
+        <span data-notify="title">Warning Alert</span>
+        <span data-notify="message">This is a warning alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+
+    <div class="alert alert-danger">
+        <span data-notify="icon">🔴</span>
+        <span data-notify="title">Danger Alert</span>
+        <span data-notify="message">This is a danger alert message.</span>
+        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
+    </div>
+    -->
     <footer class="bg-black text-white py-8">
         <div class="container">
             <div class="row justify-content-between">
@@ -134,9 +210,23 @@
             </div>
         </div>
     </footer>
+    <!-- Hộp thoại xác nhận đăng xuất -->
+    <div id="confirmLogout" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center" style="display:none;"
+         onclick="if(event.target == document.getElementById('confirmLogout')){document.getElementById('confirmLogout').style.display = 'none'}">
+        <div class="bg-white p-6 rounded shadow-lg w-80">
+            <h2 class="text-2xl font-bold mb-4 text-center">Xác nhận đăng xuất</h2>
+            <div class="flex justify-between">
+                <form asp-controller="Login" asp-action="LogOut" method="post" class="inline">
+                    <button type="submit" class="btn btn-danger">Xác nhận</button>
+                </form>
+                <button class="btn btn-secondary" onclick="document.getElementById('confirmLogout').style.display = 'none'">Hủy</button>
+            </div>
+        </div>
+    </div>
+    <script></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("head", required: false)
 </body>
