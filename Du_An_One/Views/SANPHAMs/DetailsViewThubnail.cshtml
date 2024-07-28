@@ -6,11 +6,11 @@
 
 @section head {
 }
-<div class="card-body p-0 overflow-y-auto h-75 rounded-2 box-shadow">
+<div class="card-body p-0 overflow-y-auto h-75 rounded-2 ">
     <div class="d-flex justify-content-center ">
         <div class="card w-50 bg-light p-3 rounded  ">
             @* <h1>Chi Tiết Sản Phẩm</h1> *@
-            <div class="row overflow-y-auto">
+            <div class="card-body row overflow-y-auto">
                 <div class="col-md-6">
                     <h4 class="card-title">Hình ảnh sản phẩm</h4>
                     <hr />
@@ -23,7 +23,8 @@
                         <div class="flex overflow-auto" style="gap: 10px;">
                             @foreach (var aImage in ViewBag.anhSanPham)
                             {
-                                <img data-imgbigurl="@Url.Content("~/img/productImage/" + aImage)" src="@Url.Content("~/img/productImage/" + aImage)" alt="Image 1" class="img-thumbnail m-1" onclick="const contentThumbnail = document.getElementById('myThumbnailImage');
+                                <img data-imgbigurl="@Url.Content("~/img/productImage/" + aImage)" src="@Url.Content("~/img/productImage/" + aImage)" alt="Image 1" class="img-thumbnail m-1" 
+                                onclick="const contentThumbnail = document.getElementById('myThumbnailImage');
                                     const modalImg = document.getElementById('img01');
                                     modalImg.src = this.getAttribute('src');
                                     contentThumbnail.classList.remove('d-none');" style="width: 300px; height: 400px; object-fit: contain; cursor: pointer;" />
@@ -32,27 +33,32 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h4 class="card-title">Sản Phẩm</h4>
-                    <hr />
-                    <dl class="row">
-                        <dt class="col-sm-4">Mã Sản Phẩm</dt>
-                        <dd class="col-sm-8">@Model.MaSP</dd>
-                        <dt class="col-sm-4">Tên Sản Phẩm</dt>
-                        <dd class="col-sm-8">@Model.TenSP</dd>
-                        <dt class="col-sm-4">Số Lượng Bán</dt>
-                        <dd class="col-sm-8">@Model.SoLuongBan</dd>
-                        <dt class="col-sm-4">Đơn Giá Bán</dt>
-                        <dd class="col-sm-8">@Model.DonGiaBan</dd>
-                        <dt class="col-sm-4">Ngày Nhập</dt>
-                        <dd class="col-sm-8">@Model.NgayNhap.ToString("dd/MM/yyyy")</dd>
-                        <dt class="col-sm-4">Danh Mục Hàng</dt>
-                        <dd class="col-sm-8">@Model.DanhMucHang</dd>
-                        <dt class="col-sm-4">Kích cỡ</dt>
-                        <dd class="col-sm-8">@Model.KichCo</dd>
-                        <dt class="col-sm-4">Mô Tả</dt>
-                        <dd class="col-sm-8">@Model.MoTa</dd>
-                    </dl>
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Sản Phẩm</h4>
+                            <hr />
+                            <dl class="row">
+                                <dt class="col-sm-4">Mã Sản Phẩm</dt>
+                                <dd class="col-sm-8">@Model.MaSP</dd>
+                                <dt class="col-sm-4">Tên Sản Phẩm</dt>
+                                <dd class="col-sm-8">@Model.TenSP</dd>
+                                <dt class="col-sm-4">Số Lượng Bán</dt>
+                                <dd class="col-sm-8">@Model.SoLuongBan</dd>
+                                <dt class="col-sm-4">Đơn Giá Bán</dt>
+                                <dd class="col-sm-8">@Model.DonGiaBan</dd>
+                                <dt class="col-sm-4">Ngày Nhập</dt>
+                                <dd class="col-sm-8">@Model.NgayNhap.ToString("dd/MM/yyyy")</dd>
+                                <dt class="col-sm-4">Danh Mục Hàng</dt>
+                                <dd class="col-sm-8">@Model.DanhMucHang</dd>
+                                <dt class="col-sm-4">Kích cỡ</dt>
+                                <dd class="col-sm-8">@Model.KichCo</dd>
+                                <dt class="col-sm-4">Mô Tả</dt>
+                                <dd class="col-sm-8">@Model.MoTa</dd>
+                            </dl>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <div>
                 <a class="btn btn-primary" onclick="this.parentNode.parentNode.parentNode.parentNode.parentNode.style.display = 'none'">Đóng</a>
@@ -96,15 +102,15 @@
         object-fit: contain;
     }
 
-    .close {
+    /* .close {
         top: 15px;
         right: 35px;
         font-size: 40px;
         font-weight: bold;
         transition: color 0.3s;
         cursor: pointer;
-    }
-
+    }   
+ */
         .close:hover,
         .close:focus {
             color: #bbb;

@@ -207,19 +207,21 @@ namespace Du_An_One.Controllers
         // GET: KHACHHANGs/ListOrdersOfCustomer/5
         public async Task<IActionResult> ListOrdersOfCustomer(int? page, string? idUser, string? statusOrder, string? findOrder)
         {
-            // If idUser is null or empty, select the user with the most orders
-            idUser = String.IsNullOrEmpty(idUser) ?
-                _context.HOADON.GroupBy(x => x.MaKH)
-                          .OrderByDescending(g => g.Count())
-                          .Select(g => g.Key)
-                          .FirstOrDefault()
+            idUser = String.IsNullOrEmpty(idUser)
+                ? _context.HOADON.GroupBy(x => x.MaKH)
+                      .OrderByDescending(g => g.Count())
+                      .Select(g => g.Key)
+                      .FirstOrDefault()
                 : idUser;
 
             int pageSize = 16;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
 
             // Retrieve orders for the specified user
-            IQueryable<Models.HOADON> listOrder = _context.HOADON.AsNoTracking().Where(x => x.MaKH == idUser);
+            IQueryable<Models.HOADON> listOrder = _context.HOADON
+                .AsNoTracking()
+                .Include(h => h.CHITIETHOADONs) // Include CHITIETHOADONs to ensure they are loaded
+                .Where(x => x.MaKH == idUser);
 
             // Filter by status if specified
             if (!String.IsNullOrEmpty(statusOrder))
@@ -250,15 +252,19 @@ namespace Du_An_One.Controllers
         public async Task<IActionResult> PrintCheckOrder(string idCheck) { return View(); }
 
         // GET: KHACHHANGs/ListProductsInBag/5
-        public async Task<IActionResult> ListProductsInBagOfCustomer(string idUser)
+        public async Task<IActionResult> ListProductsInBagOfCustomer(string idUser, string? textFind)
         {
             ViewBag.IdUser = idUser;
             string codeBag = _context.HOADON.FirstOrDefault(hd => hd.MaKH == idUser && hd.TinhTrang == "Chờ thanh toán")?.MaHoaDon ?? "";
             if (string.IsNullOrEmpty(codeBag))
             {
-                return View(null);
+                return View(new List<CHITIETHOADON>());
             }
-            var listProductInBag = _context.CHITIETHOADON.Where(ct => ct.MaHoaDon == codeBag);
+            var listProductInBag = _context.CHITIETHOADON.Include(sp => sp.SANPHAM).Where(ct => ct.MaHoaDon == codeBag).ToList();
+            if (!string.IsNullOrEmpty(textFind))
+            {
+                listProductInBag = listProductInBag.Where(ct => (ct.MaSP??"").Contains(textFind) && (ct.SANPHAM?.TenSP??"").Contains(textFind)).ToList();
+            }
             return View(listProductInBag);
         }
         private bool KHACHHANGExists(string id)
