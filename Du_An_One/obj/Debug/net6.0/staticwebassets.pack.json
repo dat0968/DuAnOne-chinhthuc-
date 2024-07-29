@@ -325,6 +325,10 @@
       "PackagePath": "staticwebassets\\img\\examples\\product8.jpg"
     },
     {
+      "Id": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\favicon.ico",
+      "PackagePath": "staticwebassets\\img\\favicon.ico"
+    },
+    {
       "Id": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\flags\\ad.png",
       "PackagePath": "staticwebassets\\img\\flags\\ad.png"
     },
@@ -1487,6 +1491,10 @@
     {
       "Id": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\productImage\\3d420df70ab544f1d393847c1e646bb6.jpg",
       "PackagePath": "staticwebassets\\img\\productImage\\3d420df70ab544f1d393847c1e646bb6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\productImage\\69cesp.jpg",
+      "PackagePath": "staticwebassets\\img\\productImage\\69cesp.jpg"
     },
     {
       "Id": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\productImage\\7db38f131ebc6dd3b2ce8ad23ca52d97.jpg",

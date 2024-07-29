@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fG0fofUNxLS5dbMIKC38/gHH6bOjvy20IJfvaXPsQ+0=",
+  "Hash": "bAoOE1x2kLGcfh2kv98msTDtv2dXBgb4ndpND17yIaE=",
   "Source": "Du_An_One",
   "BasePath": "_content/Du_An_One",
   "Mode": "Default",
@@ -1573,6 +1573,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\examples\\product8.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\favicon.ico",
+      "SourceId": "Du_An_One",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\",
+      "BasePath": "_content/Du_An_One",
+      "RelativePath": "img/favicon.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\favicon.ico"
     },
     {
       "Identity": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\flags\\ad.png",
@@ -7102,6 +7121,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\productImage\\3d420df70ab544f1d393847c1e646bb6.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\productImage\\69cesp.jpg",
+      "SourceId": "Du_An_One",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\",
+      "BasePath": "_content/Du_An_One",
+      "RelativePath": "img/productImage/69cesp.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\productImage\\69cesp.jpg"
     },
     {
       "Identity": "C:\\Users\\ADMIN\\source\\repos\\DuAnOne-chinhthuc-\\Du_An_One\\wwwroot\\img\\productImage\\7db38f131ebc6dd3b2ce8ad23ca52d97.jpg",

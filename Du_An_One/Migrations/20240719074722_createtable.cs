@@ -128,7 +128,7 @@ namespace Du_An_One.Migrations
                     DanhMucHang = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     KichCo = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     MoTa = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HinhAnh = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                   // HinhAnh = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     MaKhuyenMai = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
                     KHUYENMAIMaKhuyenMai = table.Column<string>(type: "nvarchar(5)", nullable: true),
                     MaNV = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
