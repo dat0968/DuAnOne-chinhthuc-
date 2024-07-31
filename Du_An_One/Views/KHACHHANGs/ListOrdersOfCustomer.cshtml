@@ -2,7 +2,7 @@
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<Du_An_One.Models.HOADON>
 @{
-    ViewData["Title"] = "ListOrdersOfCustomer";
+    ViewData["Title"] = "Danh sách đon hàng | TUFT";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
     string idUser = ViewBag.IdUser as string;
 }
@@ -15,7 +15,7 @@
 <div class="flex ">
     <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
      @* @Html.Partial("~/View/Shared/_NavCustomer.cshtml", Model); *@
-    <div class=" mx-auto p-6 bg-card text-card-foreground w-full">
+    <div class="max-w-6xl mx-auto p-6 bg-card text-card-foreground w-full">
         <!--max-w-4xl-->
 
         <div class="min-h-screen bg-background text-foreground">

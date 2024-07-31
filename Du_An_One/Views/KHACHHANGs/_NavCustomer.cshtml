@@ -1,5 +1,15 @@
 ﻿@model string
-<div class="sidebar-wrapper scrollbar scrollbar-inner border-right">
+<style>
+    .nav-item .active {
+        background-color: #f0f0f0; /* Màu nền khi active */
+        color: #007bff; /* Màu chữ khi active */
+    }
+
+        .nav-item .active .fa {
+            color: #007bff; /* Màu icon khi active */
+        }
+</style>
+<div class="sidebar-wrapper scrollbar scrollbar-inner" style="border-right:solid 2px black;">
     <div class="sidebar-content">
         <div class="flex items-center mb-6">
             <div class="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xl">T</div>
@@ -11,25 +21,25 @@
         <nav class="space-y-2">
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a asp-action="InfoCustomer" asp-route-id="@Model" class="flex items-center p-2 rounded hover:bg-secondary/10">
+                    <a asp-action="InfoCustomer" asp-route-id="@Model" class="flex items-center p-2 rounded hover:bg-secondary/10" data-action="InfoCustomer">
                         <i class="fa fa-user mr-2"></i>
                         <span>Tài Khoản Của Tôi</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-action="ListProductsInBagOfCustomer" asp-route-idUser="@Model" class="flex items-center text-secondary p-2 rounded hover:bg-primary/10">
+                    <a asp-action="ListProductsInBagOfCustomer" asp-route-idUser="@Model" class="flex items-center p-2 rounded hover:bg-secondary/10" data-action="ListProductsInBagOfCustomer">
                         <i class="fa fa-shopping-cart mr-2"></i>
                         <span>Giỏ hàng</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-action="ListOrdersOfCustomer" asp-route-idUser="@Model" class="flex items-center text-primary p-2 rounded hover:bg-primary/10">
+                    <a asp-action="ListOrdersOfCustomer" asp-route-idUser="@Model" class="flex items-center p-2 rounded hover:bg-secondary/10" data-action="ListOrdersOfCustomer">
                         <i class="fa fa-shopping-cart mr-2"></i>
                         <span>Đơn Mua</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="flex items-center text-secondary p-2 rounded hover:bg-secondary/10">
+                    <a href="#" class="flex items-center p-2 rounded hover:bg-secondary/10" data-action="Notifications">
                         <i class="fa fa-bell mr-2"></i>
                         <span>Thông Báo</span>
                     </a>
@@ -38,3 +48,15 @@
         </nav>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const currentAction = '@ViewContext.RouteData.Values["action"]';
+        const navItems = document.querySelectorAll(".nav-item a");
+
+        navItems.forEach(item => {
+            if (item.getAttribute("data-action") === currentAction) {
+                item.classList.add("active");
+            }
+        });
+    });
+</script>

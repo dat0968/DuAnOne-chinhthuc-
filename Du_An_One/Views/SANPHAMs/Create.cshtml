@@ -1,159 +1,140 @@
 ﻿@model Du_An_One.Models.SANPHAM
-
 @{
     ViewData["Title"] = "Tạo sản phẩm";
     Layout = "~/Views/_LayoutAdmin.cshtml";
+    // Layout = null;
 }
 
 <h1>Thêm sản phẩm mới</h1>
+<body>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @if (TempData["FailMessage"] != null)
+            {
+                <div class="alert alert-warning">
+                    <span data-notify="icon">🟠</span>
+                    <span data-notify="title">Lỗi tạo sản phẩm</span>
+                    <span data-notify="message">@TempData["FailMessage"].</span>
+                    <p class="btn btn-secondary cursor-default" onclick="" title="Vui lòng nhập lại Mã sản phẩm, mã có thể bị lặp. Thay đổi tên hình ảnh ngắn hơn 50 chữ, hình ảnh không lấy tên quá dài.">
+                        Chú thích
+                    </p>
+                </div>
+            }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @if (TempData["FailMessage"] != null)
-        {
-            <div class="alert alert-warning">
-                <span data-notify="icon">🟠</span>
-                <span data-notify="title">Lỗi tạo sản phẩm</span>
-                <span data-notify="message">@TempData["FailMessage"].</span>
-                <p class="btn btn-secondary cursor-default" onclick="" title="Vui lòng nhập lại Mã sản phẩm, mã có thể bị lặp.
-Thay đổi tên hình ảnh ngắn hơn 50 chữ, hình ảnh không lấy tên quá dài.">
-                    Chú thích
-                </p>
-            </div>
-        }
-
-        <form method="post" asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
-                <input asp-for="MaSP" class="form-control" />
-                <span asp-validation-for="MaSP" class="text-danger">Mã sản phẩm</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
-                <input asp-for="TenSP" class="form-control" />
-                <span asp-validation-for="TenSP" class="text-danger">Tên sản phẩm</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
-                <input asp-for="SoLuongBan" class="form-control" min="0" />
-                <span asp-validation-for="SoLuongBan" class="text-danger">Số lượng bán</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DonGiaBan" class="control-label">Đơn giá bán</label>
-                <input asp-for="DonGiaBan" class="form-control" />
-                <span asp-validation-for="DonGiaBan" class="text-danger">Đơn giá bán</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
-                <input asp-for="NgayNhap" class="form-control" />
-                <span asp-validation-for="NgayNhap" class="text-danger">Ngày nhập</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DanhMucHang" class="control-label">Hãng sản phẩm</label>
-                <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
-                <span asp-validation-for="DanhMucHang" class="text-danger">Hãng sản phẩm</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KichCo" class="control-label">Kích cỡ</label>
-                <input asp-for="KichCo" class="form-control" />
-                <span asp-validation-for="KichCo" class="text-danger">Kích cỡ</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FileImage" class="control-label">Chọn hình ảnh chính</label>
-                <input asp-for="FileImage" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFile" />
-                <img src="" alt="" id="showImage" style="width: 100px; height: 100px;object-fit:contain" />
-                <span asp-validation-for="FileImage" class="text-danger">Chọn hình ảnh chính</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh phụ</label>
-                <input asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFiles" multiple />
-                <div id="showImages" style="display:flex;gap:20px;"></div>
-                <span asp-validation-for="FileImages" class="text-danger">Chọn nhiều hình ảnh phụ</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label">Mô tả sản phẩm</label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger">Mô tả sản phẩm</span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaKhuyenMai" class="control-label">Tỷ lệ giảm giá sản phẩm</label>
-                <select asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaNV" class="control-label">Tên nhân viên</label>
-                <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNv"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+            <form method="post" asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label for="MaSP" class="control-label">Mã sản phẩm</label>
+                    <input id="MaSP" asp-for="MaSP" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="TenSP" class="control-label">Tên sản phẩm</label>
+                    <input id="TenSP" asp-for="TenSP" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="SoLuongBan" class="control-label">Số lượng bán</label>
+                    <input id="SoLuongBan" asp-for="SoLuongBan" class="form-control" required min="0" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="DonGiaBan" class="control-label">Đơn giá bán</label>
+                    <input id="DonGiaBan" asp-for="DonGiaBan" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="NgayNhap" class="control-label">Ngày nhập</label>
+                    <input id="NgayNhap" asp-for="NgayNhap" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="DanhMucHang" class="control-label">Hãng sản phẩm</label>
+                    <select id="DanhMucHang" asp-for="DanhMucHang" class="form-control" required asp-items="ViewBag.DanhMucHang"></select>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="KichCo" class="control-label">Kích cỡ</label>
+                    <input id="KichCo" asp-for="KichCo" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="takeFile" class="control-label">Chọn hình ảnh chính</label>
+                    <input id="takeFile" asp-for="FileImage" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" />
+                    <img src="" alt="" id="showImage" style="width: 100px; height: 100px; object-fit: contain" />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="takeFiles" class="control-label">Chọn nhiều hình ảnh phụ</label>
+                    <input id="takeFiles" asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" multiple />
+                    <div id="showImages" style="display: flex; gap: 20px;"></div>
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="MoTa" class="control-label">Mô tả sản phẩm</label>
+                    <input id="MoTa" asp-for="MoTa" class="form-control" required />
+                    <span class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="MaKhuyenMai" class="control-label">Tỷ lệ giảm giá sản phẩm</label>
+                    <select id="MaKhuyenMai" asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai"></select>
+                </div>
+                <div class="form-group">
+                    <label for="MaNV" class="control-label">Tên nhân viên</label>
+                    <select id="MaNV" asp-for="MaNV" class="form-control" required asp-items="ViewBag.MaNv"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-
-
-@section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const takeFile = document.querySelector("#takeFile");
-            const showImg = document.querySelector("#showImage");
-            takeFile.addEventListener("change", function () {
-                const file = takeFile.files[0];
-                const reader = new FileReader();
-
-                reader.onload = function (e) {
-                    showImg.src = e.target.result;
-                };
-
-                if (file) {
-                    reader.readAsDataURL(file);
-                }
-            });
-
-
-            const takeFiles = document.querySelector("#takeFiles");
-            const showImgs = document.querySelector("#showImages");
-            takeFiles.addEventListener("change", function () {
-                showImgs.innerHTML = "";
-                Array.from(takeFiles.files).forEach(file => {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                //Show main picture
+                const takeFile = document.querySelector("#takeFile");
+                const showImg = document.querySelector("#showImage");
+                takeFile.addEventListener("change", function () {
+                    const file = takeFile.files[0];
                     const reader = new FileReader();
 
                     reader.onload = function (e) {
-                        const img = document.createElement("img");
-                        img.src = e.target.result;
-                        img.style.width = "100px";
-                        img.style.height = "100px";
-                        img.style.margin = "5px";
-                        img.style.objectFit = "contain";
-                        showImgs.appendChild(img);
+                        showImg.src = e.target.result;
                     };
 
-                    reader.readAsDataURL(file);
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                //Show more extra-picture
+                const takeFiles = document.querySelector("#takeFiles");
+                const showImgs = document.querySelector("#showImages");
+                takeFiles.addEventListener("change", function () {
+                    showImgs.innerHTML = "";
+                    Array.from(takeFiles.files).forEach(file => {
+                        const reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            const img = document.createElement("img");
+                            img.src = e.target.result;
+                            img.style.width = "100px";
+                            img.style.height = "100px";
+                            img.style.margin = "5px";
+                            img.style.objectFit = "contain";
+                            showImgs.appendChild(img);
+                        };
+
+                        reader.readAsDataURL(file);
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
-    <!--<script>
-        $(document).ready(function () {
-            var successAlert = $('#success-alert');
-            if (successAlert.length) {
-                successAlert.slideDown();
-
-                // Ẩn thanh thông báo sau 3 giây
-                setTimeout(function () {
-                    successAlert.slideUp();
-                }, 3000);
-            }
-        });
-    </script>-->
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+</body>

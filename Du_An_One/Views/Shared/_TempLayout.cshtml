@@ -10,11 +10,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WA_TryShoesWeb</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <title>@ViewData["Title"] | TUFT</title>
+    <!-- Fonts and icons -->
+    <script src="~/js/plugin/webfont/webfont.min.js"></script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/plugins.min.css" />
+    <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
+    <link href="~/css//kaiadmin.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <link rel="icon"
+          href="~/img/kaiadmin/favicon.ico"
+          type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js"
             defer
@@ -22,50 +31,8 @@
 </head>
 <body>
     <!-- Main Header -->
-    <header id="mainHeader" class="container sticky border-bottom fixed">
-        <div class="row" style="align-items:center">
-            <div class="col-md-3 text-center">
-                <img src="https://banner2.cleanpng.com/lnd/20240725/aoo/ak6ya8an1.webp" alt="No Image🖼️" class="img-fluid rounded-circle" width="80" height="80">
-            </div>
-            <div class="col-md-6">
-                <ul class="d-flex justify-content-center gap-40">
-                    <li><a class="font-bold text-1xl" href="#">Index</a></li>
-                    <li><a class="font-bold text-1xl" href="#">Products</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <ul class="d-flex justify-content-around">
-                    <li><a class="font-bold text-1xl" href="#">Bag</a></li>
-                    <li id="tst-dropitems" class="dropdown">
-                        <a class="font-bold text-1xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @if (String.IsNullOrEmpty(MaNguoiDung))
-                            {
-                                <li class="px-4"><a asp-controller="Login" asp-action="Index" style="cursor: pointer;">Đăng nhập</a></li>
-                            }
-                            else
-                            {
-                                @if (userRole == "Quản lý")
-                                {
-                                    <li><a class="dropdown-item" asp-controller="Admin" asp-action="TongQuan">Quản lý</a></li>
-                                }
-                                else
-                                {
-                                    <li><a class="dropdown-item" asp-controller="KHACHHANGs" asp-action="InfoCustomer" asp-route-id="@MaNguoiDung">Tài khoản</a></li>
-                                }
-                                <li>
-                                    <button type="submit" class="dropdown-item" onclick="document.getElementById('confirmLogout').style.display = ''">Đăng xuất</button>
-                                </li>
-                            }
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-
-
-    <main class="h-100">
+    <partial name="_HeaderLayout.cshtml" />
+    <main style="min-height:100vh;max-height:100%">
         @if (ViewBag.ViewNow == "Index")
         {
             <div class="container-fluid bg-gradient-to-r from-black to-blue-600 text-white">
@@ -76,7 +43,7 @@
                         <button class="btn btn-dark">Shop Collection</button>
                     </div>
                     <div class="col-md-5">
-                        <img src="https://placehold.co/600x400" alt="New Jordan 6 Rings" class="img-fluid">
+                        <img src="~/img/examples/panel_Image.png" alt="New Jordan 6 Rings" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -84,8 +51,8 @@
         }
 
         <!-- Section for displaying products -->
-        <div class="container mx-auto px-4 py-16">
-            <div class="grid grid-cols-1 gap-8">
+        <div class="container mx-auto px-4 py-16 overflow-auto">
+            <div class="grid gap-8">
                 @* md:grid-cols-3 *@
                 @* Giao diện thông tin người dùng *@
                 @* Giao diện danh sách đơn hàng *@
@@ -98,135 +65,35 @@
             </div>
         </div>
     </main>
-    <!--Cách kiểu thông báo
-    <div class="alert alert-black">
-        <span data-notify="icon">⚫</span>
-        <span data-notify="title">Black Alert</span>
-        <span data-notify="message">This is a black alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
+    <partial name="_FooterLayout.cshtml" />
 
-    <div class="alert alert-primary">
-        <span data-notify="icon">🔵</span>
-        <span data-notify="title">Primary Alert</span>
-        <span data-notify="message">This is a primary alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-
-    <div class="alert alert-secondary">
-        <span data-notify="icon">🟣</span>
-        <span data-notify="title">Secondary Alert</span>
-        <span data-notify="message">This is a secondary alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-
-    <div class="alert alert-info">
-        <span data-notify="icon">🔷</span>
-        <span data-notify="title">Info Alert</span>
-        <span data-notify="message">This is an info alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-
-    <div class="alert alert-success">
-        <span data-notify="icon">🟢</span>
-        <span data-notify="title">Success Alert</span>
-        <span data-notify="message">This is a success alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-
-    <div class="alert alert-warning">
-        <span data-notify="icon">🟠</span>
-        <span data-notify="title">Warning Alert</span>
-        <span data-notify="message">This is a warning alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-
-    <div class="alert alert-danger">
-        <span data-notify="icon">🔴</span>
-        <span data-notify="title">Danger Alert</span>
-        <span data-notify="message">This is a danger alert message.</span>
-        <button class="close" onclick="this.parentElement.style.display='none'">&times;</button>
-    </div>
-    -->
-    <footer class="bg-black text-white py-8">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-md-4">
-                    <img src="https://banner2.cleanpng.com/lnd/20240725/aoo/ak6ya8an1.webp"
-                         alt="No Image🖼️"
-                         style="border-radius: 50%; width: 100px; height: 100px" />
-                </div>
-                <div class="col">
-                    <ul>
-                        <li class="text-white">Info</li>
-                        <li><a href="#">Find a store</a></li>
-                        <li><a href="#">Gift</a></li>
-                        <li><a href="#">Feedback</a></li>
-                        <li><a href="#">Become a member</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <ul>
-                        <li class="text-white">Shop</li>
-                        <li><a href="#">TUFT</a></li>
-                        <li><a href="#">Sirius</a></li>
-                        <li><a href="#">Collections</a></li>
-                        <li><a href="#">Contacts</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <ul>
-                        <li class="text-white">About</li>
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2">
-                    <ul style="display: flex; justify-content: space-around">
-                        <li>
-                            <a href="#"><i class="fi fi-brands-facebook"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fi fi-brands-twitter-alt-circle"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fi fi-brands-telegram"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fi fi-brands-youtube"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between">
-                <div>
-                    © 2019 NIKE <br />
-                    All Rights Reserved
-                </div>
-                <div>Private & Cookie Policy</div>
-            </div>
-        </div>
-    </footer>
-    <!-- Hộp thoại xác nhận đăng xuất -->
-    <div id="confirmLogout" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center" style="display:none;"
-         onclick="if(event.target == document.getElementById('confirmLogout')){document.getElementById('confirmLogout').style.display = 'none'}">
-        <div class="bg-white p-6 rounded shadow-lg w-80">
-            <h2 class="text-2xl font-bold mb-4 text-center">Xác nhận đăng xuất</h2>
-            <div class="flex justify-between">
-                <form asp-controller="Login" asp-action="LogOut" method="post" class="inline">
-                    <button type="submit" class="btn btn-danger">Xác nhận</button>
-                </form>
-                <button class="btn btn-secondary" onclick="document.getElementById('confirmLogout').style.display = 'none'">Hủy</button>
-            </div>
-        </div>
-    </div>
     <script></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!--   Core JS Files   -->
+    <script src="~/js/core/jquery-3.7.1.min.js"></script>
+    <script src="~/js/core/popper.min.js"></script>
+    <script src="~/js/core/bootstrap.min.js"></script>
+
+    <!-- jQuery Scrollbar -->
+    <script src="~/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="~/js/plugin/chart.js/chart.min.js"></script>
+
+    <!-- jQuery Sparkline -->
+    <script src="~/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+
+    <!-- Bootstrap Notify -->
+    <script src="~/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+
+    <!-- Sweet Alert -->
+    <script src="~/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
+    <script src="~/js/kaiadmin.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("head", required: false)
 </body>

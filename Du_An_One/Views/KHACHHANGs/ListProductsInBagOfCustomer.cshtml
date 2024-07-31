@@ -2,7 +2,7 @@
 @model IEnumerable<Du_An_One.Models.CHITIETHOADON>
 
 @{
-    ViewData["Title"] = "Danh sách sản phẩm trong giỏ hàng";
+    ViewData["Title"] = "Danh sách sản phẩm trong giỏ hàng | TUFT";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
     string idUser = ViewBag.IdUser as string;
 }
@@ -10,7 +10,7 @@
 <div class="flex ">
     <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
 
-    <div class="container mt-5">
+    <div class="max-w-6xl mx-auto p-6 bg-card text-card-foreground w-full">
         <div class="cart-container">
             <h1 class="cart-title">Giỏ Hàng</h1>
             <form asp-action="ListProductsInBagOfCustomer" method="get">

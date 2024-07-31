@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 var logoHeaderContent = $('.sidebar .logo-header').html();
 $('.main-header .logo-header').html(logoHeaderContent);

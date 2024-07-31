@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims;
+﻿@using Newtonsoft.Json;
+@using System.Security.Claims;
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
     var userName = User.FindFirst(ClaimTypes.UserData)?.Value;
@@ -13,16 +14,20 @@
 
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Trang chủ admin</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-          name="viewport" />
+    <title>@TempData["Title"] | TUFT</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     @await RenderSectionAsync("head", required: false)
-    <link rel="icon"
-          href="~/img/kaiadmin/favicon.ico"
-          type="image/x-icon" />
+    <link rel="icon" href="~/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- Sử dụng jQuery từ local hoặc CDN, không cả hai -->
+    <script src="~/js/core/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <!-- jQuery Validation -->
+    @* <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script> *@
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
@@ -35,18 +40,24 @@
     <link rel="stylesheet" href="~/css/plugins.min.css" />
     <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
 </head>
+<style>
+    /*True begin add*/
+        .sidebar-content .nav-item a h3 {
+            margin: 0 0 0 10px;
+            white-space: nowrap;
+        }
+    /*True end add*/</style>
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar" data-background-color="dark">
+        <div class="sidebar pt-4" data-background-color="dark">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="index.html" class="logo">
-                        <img src="~/img/kaiadmin/logo_light.svg"
+                    <a asp-controller="Home" asp-action="Index" class="logo">
+                        <img src="~/img/kaiadmin/logo_dark.png"
                              alt="navbar brand"
-                             class="navbar-brand"
-                             height="20" />
+                             class="navbar-brand w-100"/>
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -67,53 +78,52 @@
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a asp-controller="Admin" asp-action="TongQuan">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>TÔNG QUAN</h3>
+                                <i class="fas fa-tachometer-alt"></i>
+                                <h3>TỔNG QUAN</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Admin" asp-action="NHANVIENS">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-users"></i>
                                 <h3>QUẢN LÝ NHÂN VIÊN</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="KHACHHANGs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-user-friends"></i>
                                 <h3>QUẢN LÝ KHÁCH HÀNG</h3>
                             </a>
                         </li>
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a asp-controller="SANPHAMs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-shopping-bag"></i>
                                 <h3>QUẢN LÝ SẢN PHẨM</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="KHUYENMAIs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ KHYẾN MÃI</h3>
+                                <i class="fas fa-tags"></i>
+                                <h3>QUẢN LÝ KHUYẾN MÃI</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="HOADONs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-file-invoice"></i>
                                 <h3>QUẢN LÝ HÓA ĐƠN</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="NHACUNGCAPs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-truck"></i>
                                 <h3>QUẢN LÝ NHÀ CUNG CẤP</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="CHITIETNHAPs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
+                                <i class="fas fa-receipt"></i>
                                 <h3>QUẢN LÝ PHIẾU NHẬP</h3>
                             </a>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -128,8 +138,7 @@
                         <a href="index.html" class="logo">
                             <img src="~/img/kaiadmin/logo_light.svg"
                                  alt="navbar brand"
-                                 class="navbar-brand"
-                                 height="20" />
+                                 class="navbar-brand h-50" />
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -455,6 +464,74 @@
         </div>
         <!-- End Custom template -->
     </div>
+
+    
+    <!-- Thêm phần thanh thông báo -->
+    @{
+        var alertMessageJson = TempData["AlertMessage"] as string;
+        var alertMessage = alertMessageJson != null ? JsonConvert.DeserializeObject<dynamic>(alertMessageJson) : null;
+    }
+    @if (alertMessageJson != null)
+    {
+        <div id="action-alert" class="alert alert-@alertMessage.Type fixed text-center cursor-pointer" style="display: none; bottom: 0; right: 0;" onclick="this.style.display='none'">
+            <span data-notify="icon">
+                @{
+                    switch ((string)alertMessage.type)
+                    {
+                        case "success":
+                            @:🟢
+                        break;
+                        case "primary":
+                            @:🔵
+                        break;
+                        case "secondary":
+                            @:🟣
+                        break;
+                        case "info":
+                            @:🔷
+                        break;
+                        case "warning":
+                            @:🟠
+                        break;
+                        case "danger":
+                            @:🔴
+                        break;
+                        case "black":
+                            @:⚫
+                        break;
+                        default:
+                                @:ℹ️
+                            break;
+                    }
+                }
+            </span>
+            <span data-notify="title">@alertMessage.title</span>
+            <span data-notify="message">@alertMessage.message</span>
+        
+        </div>
+    }
+    <script>
+        $(document).ready(function () {
+            var alertDiv = $('#action-alert');
+
+            if (alertDiv.length) {
+                alertDiv.slideDown();
+                setTimeout(function () {
+                    alertDiv.slideUp(400, function () {
+                        alertDiv.remove();
+                    });
+                }, 3000);
+            }
+        });
+
+    </script>
+    @* <script>
+        document.querySelector('input[required]').addEventListener('invalid', function (event) { event.target.setCustomValidity('Vui lòng nhập ' + document.querySelector('label[for="' + event.target.id + '"]').textContent); });
+
+        document.querySelector('form').addEventListener('submit', function (event) { if (this.checkValidity()) { event.preventDefault(); } });
+
+    </script> *@
+
     <!--   Core JS Files   -->
     <script src="~/js/core/jquery-3.7.1.min.js"></script>
     <script src="~/js/core/popper.min.js"></script>
@@ -488,6 +565,25 @@
     <!-- Kaiadmin JS -->
     <script src="~/js/kaiadmin.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('input[required]').each(function () {
+                var $this = $(this);
+                $this.on('invalid', function () {
+                    this.setCustomValidity('Vui lòng nhập ' + $('label[for="' + $this.attr('id') + '"]').text());
+                }).on('input', function () {
+                    this.setCustomValidity('');
+                });
+            });
+
+            $('form').on('submit', function (event) {
+                if (this.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

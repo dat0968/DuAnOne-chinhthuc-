@@ -249,7 +249,71 @@ namespace Du_An_One.Controllers
         }
 
         // GET: KHACHHANGs/PrintCheckOrder/5
-        public async Task<IActionResult> PrintCheckOrder(string idCheck) { return View(); }
+        public async Task<IActionResult> PrintCheckOrder(string idCheck)
+        {/*
+            var order = db.Hoadons
+                .Include(o => o.MaKhNavigation) // Include the customer (MaKhNavigation) related to the order
+                .Include(o => o.Chitiethoadons) // Include the order details (Chitiethoadons)
+                .ThenInclude(od => od.MaSpNavigation) // Include the products (Sanphams) related to the order details
+                .FirstOrDefault(o => o.MaHoaDon == orderId); // Use 'o' instead of 'object' for the lambda parameter
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                var writer = new PdfWriter(stream);
+                var pdf = new PdfDocument(writer);
+                var document = new iText.Layout.Document(pdf);
+
+                // Add header
+                document.Add(new Paragraph("Invoice")
+                    .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
+                    .SetFontSize(20));
+
+                // Add order details
+                document.Add(new Paragraph($"Order ID: {order.MaHoaDon}"));
+                document.Add(new Paragraph($"Customer: {order.MaKhNavigation.HoTen}"));
+                document.Add(new Paragraph($"Address: {order.MaKhNavigation.DiaChi}"));
+                document.Add(new Paragraph($"Date: {order.NgayTao.ToString("d")}"));
+
+                // Add a line separator
+                document.Add(new LineSeparator(new SolidLine()));
+
+                // Add product table
+                var table = new Table(new float[] { 1, 3, 1, 1, 1 })
+                    .UseAllAvailableWidth();
+
+                table.AddHeaderCell("Product ID");
+                table.AddHeaderCell("Product Name");
+                table.AddHeaderCell("Quantity");
+                table.AddHeaderCell("Unit Price");
+                table.AddHeaderCell("Total");
+
+                foreach (var item in order.Chitiethoadons)
+                {
+                    table.AddCell(item.MaSp.ToString());
+                    table.AddCell(item.MaSpNavigation.TenSp);
+                    table.AddCell(item.SoLuongMua.ToString());
+                    table.AddCell(item.DonGia.ToString("C"));
+                    table.AddCell((item.SoLuongMua * item.DonGia).ToString("C"));
+                }
+
+                document.Add(table);
+
+                // Add footer
+                document.Add(new Paragraph("Thank you for your business!")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFontSize(12));
+
+                document.Close();
+                var bytes = stream.ToArray();
+                return File(bytes, "application/pdf", $"Invoice_{order.MaHoaDon}.pdf");
+            }*/
+            return View();
+        }
 
         // GET: KHACHHANGs/ListProductsInBag/5
         public async Task<IActionResult> ListProductsInBagOfCustomer(string idUser, string? textFind)

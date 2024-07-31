@@ -69,13 +69,16 @@ namespace Du_An_One.Controllers
         }
         public async Task<IActionResult> ToolFindProduct(List<string> firms, string? quantitySold, string? price, string? searchText)
         {
+
+            DateTime today = DateTime.Now;
+            var listDiscount = _context.KHUYENMAI
+                .Where(km => km.ThoiGianEnd >= today && km.ThoiGianStart <= today)
+                .Select(km => new { km.MaKhuyenMai, km.PhanTramKhuyenMai })
+                .ToList();
             var listProducts = _context.SANPHAM.AsQueryable();
 
 
-            if (firms != null && firms.Count > 0)
-            {
-                listProducts = listProducts.Where(x => firms.Contains(x.DanhMucHang));
-            }
+
 
             if (!String.IsNullOrEmpty(quantitySold))
             {
@@ -119,7 +122,17 @@ namespace Du_An_One.Controllers
                 listProducts = listProducts.Where(x => (x.TenSP??"").Contains(searchText));
             }
             var listProductsByFirm = listProducts.ToList();
-            return View(listProductsByFirm);
+
+            ViewBag.ListNewProducts = listProductsByFirm
+                                                    .AsEnumerable()
+                                                    .OrderByDescending(x => x.NgayNhap)
+                                                    .Select(ldp => new
+                                                    {
+                                                        ldp,
+                                                        PhanTramKhuyenMai = listDiscount.FirstOrDefault(ld => ld.MaKhuyenMai == ldp.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0
+                                                    })
+                                                    .ToList();
+            return View();
         }
 
     }

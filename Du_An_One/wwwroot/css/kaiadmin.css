@@ -54,7 +54,8 @@
    + Settings
 * Plugins
    + jQueryUI
-   + jQuery Scrollbar
+   + jQuery 
+
    + Toggle
    + Css Animate
    + Full Calendar
@@ -5820,6 +5821,7 @@ label.error {
     .sidebar .sidebar-wrapper .scroll-element.scroll-y {
       top: 0px !important; }
 
+
   .nav_open {
     overflow: hidden !important; }
     .nav_open .wrapper {
@@ -6911,3 +6913,20 @@ body {
     font-size: 18px !important; } }
 
 /*# sourceMappingURL=kaiadmin.css.map */
+
+
+@media (min-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .filter-open .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

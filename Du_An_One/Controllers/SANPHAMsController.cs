@@ -9,6 +9,7 @@ using Du_An_One.Data;
 using Du_An_One.Models;
 using X.PagedList;
 using ClosedXML.Excel;
+using Newtonsoft.Json;
 
 namespace Du_An_One.Controllers
 {
@@ -145,6 +146,10 @@ namespace Du_An_One.Controllers
             {
                 try
                 {
+                    if (await _context.SANPHAM.FindAsync(sanPham.MaSP) != null)
+                    {
+                        goto createAgain; //Chuyển lại đến mã tạo lại
+                    }
                     if (sanPham.FileImage != null)
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/productImage/", sanPham.FileImage.FileName);
@@ -184,15 +189,14 @@ namespace Du_An_One.Controllers
 
                         await _context.SaveChangesAsync();
                     }
-
-                    TempData["SuccessMessage"] = "Thêm sản phẩm thành công!";
+                    
+                    TempData["AlertMessage"] = JsonConvert.SerializeObject(new { type =  "success", title = "Thông báo", message = "Thêm thành công" });
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     // Log the exception
                     Console.WriteLine($"Error: {ex.Message}");
-                    TempData["FailMessage"] = "Lỗi dữ liệu thêm vào";
                 }
             }
             else
@@ -205,8 +209,9 @@ namespace Du_An_One.Controllers
                         Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
                     }
                 }
-                TempData["FailMessage"] = "Vui lòng kiểm tra thông tin nhập vào.";
             }
+            
+            createAgain: //Mã bắt đầu tạo lại
 
             // Re-initialize SelectLists if ModelState is invalid
             var danhMucHang = new List<string> { "TUFT", "Adidas", "Adius", "Surius" };
@@ -217,6 +222,9 @@ namespace Du_An_One.Controllers
 
             var nhanVienList = _context.NHANVIEN.ToList();
             ViewBag.MaNv = new SelectList(nhanVienList, "MaNV", "HoTen");
+
+            TempData["FailMessage"] = "Vui lòng kiểm tra thông tin nhập vào.";
+
             return View(sanPham);
         }
         #endregion
@@ -275,15 +283,16 @@ namespace Du_An_One.Controllers
                         // Cập nhật đường dẫn file ảnh vào thuộc tính HinhAnh
                         sanPham.HinhAnh = sanPham.FileImage.FileName;
                     }
+                    _context.Entry(sanPham).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                    TempData["AlertMessage"] = JsonConvert.SerializeObject(new { type = "info", title = "Thông báo", message = "Sửa thành công" });
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
                 }
 
-                _context.Entry(sanPham).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -296,6 +305,7 @@ namespace Du_An_One.Controllers
                     }
                 }
             }
+            TempData["AlertMessage"] = JsonConvert.SerializeObject(new { type = "warning", title = "Thông báo", message = "Sửa thất bại" });
 
             // Nạp lại ViewBag nếu ModelState không hợp lệ
             ViewBag.DanhMucHang = new SelectList(new string[] { "TUFT", "Adidas", "Adius", "Surius" });

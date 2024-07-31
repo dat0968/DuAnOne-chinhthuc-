@@ -68,9 +68,9 @@ namespace Du_An_One.Controllers
 
             ViewBag.WeekSales = new
             {
-                Today = _context.CHITIETHOADON
+                Today = Math.Round(_context.CHITIETHOADON
                     .Where(ct => listCodeOrderToday.Contains(ct.MaHoaDon))
-                    .Sum(ct => ct.SoLuongMua * ct.DonGia),
+                    .Sum(ct => ct.SoLuongMua * ct.DonGia),2),
                 Week = weekSales
             };
 

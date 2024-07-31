@@ -29,6 +29,21 @@ namespace Du_An_One.Controllers
             ClaimsPrincipal claimUser = HttpContext.User;
             if (claimUser.Identity.IsAuthenticated)
             {
+                // Kiểm tra vai trò của người dùng và điều hướng đến trang phù hợp
+                var role = claimUser.FindFirst(ClaimTypes.Role)?.Value;
+
+                if (role == "Nhân viên")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (role == "Quản lý")
+                {
+                    return RedirectToAction("TongQuan", "Admin");
+                }
+                else if (role == "Khách hàng")
+                {
+                    return RedirectToAction("Index", "ProductPage");
+                }
                 return RedirectToAction("Index", "Login");
 
             }
