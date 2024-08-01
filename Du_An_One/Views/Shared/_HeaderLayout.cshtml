@@ -9,20 +9,20 @@
     <header class="bg-background text-primary-foreground flex justify-between items-center py-8 px-16 fixed w-full" style="position: sticky;z-index:10;top: 0;backdrop-filter: blur(45px);">
         <div class="flex items-center space-x-2">
             <a asp-controller="Home" asp-action="Index">
-                <img src="~/img/kaiadmin/favicon.png" alt="No Image🖼️" class="w-10 h-10 object-fit-contain">
+                <img src="~/img/kaiadmin/favicon.png" alt="No Image🖼️" class="w-20 h-10 object-fit-contain">
             </a>
-            <span class="font-bold">Company Name</span>
+            <span class="font-bold text-2xl">T.U.F.T</span>
         </div>
         <div class="flex space-x-4 gap-3">
-            <a asp-controller="Home" asp-action="Index" class="hover:text-primary font-bold text-1xl">Trang chủ</a>
-            <a asp-controller="ProductPage" asp-action="Index" class="hover:text-primary font-bold text-1xl">Trang sản phẩm</a>
+            <a asp-controller="Home" asp-action="Index" class="hover:text-primary font-bold text-2xl">Trang chủ</a>
+            <a asp-controller="ProductPage" asp-action="Index" class="hover:text-primary font-bold text-2xl">Trang sản phẩm</a>
         </div>
         <div class="flex space-x-4 items-center">
             @if (User.Identity.IsAuthenticated)
             {
                 <span>Xin chào, @User.Identity.Name</span>
                 <div class="relative">
-                    <a class="hover:text-primary font-bold text-1xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Cài đặt</a>
+                    <a class="hover:text-primary font-bold text-2xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Cài đặt</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         @if (String.IsNullOrEmpty(MaNguoiDung))
                         {
@@ -36,7 +36,7 @@
                             }
                             else
                             {
-                                <li><a class="dropdown-item" asp-controller="KHACHHANGs" asp-action="InfoCustomer" asp-route-id="@MaNguoiDung">Tài khoản</a></li>
+                                <li><a class="dropdown-item" asp-controller="KHACHHANGs" asp-action="InfoCustomer" asp-route-id="@MaNguoiDung">Thông tin</a></li>
                             }
                             <li>
                                 <button type="submit" class="dropdown-item" onclick="document.getElementById('confirmLogout').style.display = ''">Đăng xuất</button>
@@ -47,8 +47,8 @@
             }
             else
             {
-                <a asp-controller="Login" asp-action="Index" class="hover:text-primary font-bold text-1xl" style="cursor: pointer;">Đăng nhập</a>
-                <a asp-controller="Login" asp-action="Register" class="hover:text-primary font-bold text-1xl" style="cursor: pointer;">Đăng ký</a>
+                <a asp-controller="Login" asp-action="Index" class="hover:text-primary font-bold text-2xl" style="cursor: pointer;">Đăng nhập</a>
+                <a asp-controller="Login" asp-action="Register" class="hover:text-primary font-bold text-2xl" style="cursor: pointer;">Đăng ký</a>
             }
         </div>
     </header>

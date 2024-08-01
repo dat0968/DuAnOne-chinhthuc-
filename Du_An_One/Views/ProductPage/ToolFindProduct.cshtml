@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Tìm kiếm";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
-    var productJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.ListNewProducts);
+    var productJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.ListProductsFind);
 }
 
 <div id="mainFindProduct" class="py-8">
@@ -77,18 +77,18 @@
         </div>
         <!-- End Nav Navigation to Type Product -->
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="productGrid">
-        @foreach (var aProduct in ViewBag.ListNewProducts)
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-3" id="productGrid">
+        @foreach (var aProduct in ViewBag.ListProductsFind)
         {
 
-            <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.ldp.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction: column;">
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.ldp.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
                 <div class="relative">
                     @if (@aProduct.PhanTramKhuyenMai != 0)
                     {
                         <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.PhanTramKhuyenMai% OFF</span>
                     }
                     <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                    <img src="@Url.Content("~/img/productImage/" + aProduct.ldp.HinhAnh)" alt="@aProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-48 object-cover rounded-md">
+                    <img src="@Url.Content("~/img/productImage/" + aProduct.ldp.HinhAnh)" alt="@aProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
                 </div>
                 <h4 class="font-semibold mt-2">@aProduct.ldp.TenSP</h4>
                 <div class="flex items-center mt-1">
@@ -130,23 +130,23 @@
                     const item = products[num].ldp;
                     const discountedPrice = Math.round(item.DonGiaBan * (1 - products[num].PhanTramKhuyenMai / 100) * 100) / 100;
 
-                    const productCard = `            
-                    <a asp-action="ShowDetailProduct" asp-route-idProduct="${item.MaSP}" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between" style="flex-direction: column;">
-                                <div class="relative">
-                                    ${products[num].PhanTramKhuyenMai !== 0 ? `<span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-${products[num].PhanTramKhuyenMai}% OFF</span>` : ""}
-                                    <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                                            <img src="${'~/img/productImage/' + item.HinhAnh}" alt="${item.TenSP}" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-48 object-cover rounded-md">
-                                </div>
-                                <h4 class="font-semibold mt-2">${item.TenSP}</h4>
-                                <div class="flex items-center mt-1">
-                                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
-                                </div>
-                                <p class="text-lg font-bold mt-2">${discountedPrice} VND</p>
-                                <p class="line-through text-zinc-500">${item.DonGiaBan} VND</p>
-                    </a>
-                            `;
+                    const productCard = `
+                            <a asp-action="ShowDetailProduct" asp-route-idProduct="${item.MaSP}" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+                                        <div class="relative">
+                                            ${products[num].PhanTramKhuyenMai !== 0 ? `<span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-${products[num].PhanTramKhuyenMai}% OFF</span>` : ""}
+                                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                                                    <img src="${'~/img/productImage/' + item.HinhAnh}" alt="${item.TenSP}" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
+                                        </div>
+                                        <h4 class="font-semibold mt-2">${item.TenSP}</h4>
+                                        <div class="flex items-center mt-1">
+                                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                                        </div>
+                                        <p class="text-lg font-bold mt-2">${discountedPrice} VND</p>
+                                        <p class="line-through text-zinc-500">${item.DonGiaBan} VND</p>
+                            </a>
+                                    `;
 
-                    productGrid.appendChild(productCard);
+                    productGrid.innerHTML += (productCard);
                     newItems.push(item);
                 }
             }

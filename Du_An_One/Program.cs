@@ -42,7 +42,19 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    // Ensure this route matches your controller and action names
+    endpoints.MapControllerRoute(
+        name: "ajaxFilter",
+        pattern: "{controller=ProductPage}/{action=ToolFindProductAjax}");
+});
+/*
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
 app.Run();

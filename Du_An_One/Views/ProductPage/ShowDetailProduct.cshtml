@@ -1,14 +1,14 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model Du_An_One.Models.SANPHAM
 @{
-    ViewData["Title"] = "ShowDetailProduct";
+    ViewData["Title"] = "Chi tiết sản phẩm";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
 }
 
 
-<div class="flex flex-wrap justify-evenly items-center my-4">
+<div class="flex flex-wrap justify-evenly items-center my-4 bg-white rounded-lg shadow-lg p-4">
     <a href="@Url.Content(Model.HinhAnh)" data-lightbox="product-images">
-        <img src="@Url.Content(Model.HinhAnh)"
+        <img src="@Url.Content("~/img/productImage/" + Model.HinhAnh)"
              alt="Main product image" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'"
              class="object-contain w-[500px] h-[500px] md:w-[500px] md:h-[500px]"
              id="mainImage" />
@@ -24,7 +24,7 @@
             }
         </div>
     </div>
-    <div class="max-w-md space-y-4">
+    <div class="max-w-md space-y-4 pl-5" style="border-left:1px solid gray">
         <p class="text-muted-foreground">@Model.DanhMucHang</p>
         <h1 class="font-extrabold text-3xl">@Model.TenSP</h1>
         <p>
@@ -40,19 +40,18 @@
 <h2 class="text-2xl font-bold mb-4 pt-2">
     Danh sách sản phẩm liên quan</h2>
 @* View sản phẩm có overlayout-x auto *@
-<div class="grid grid-cols-1 overflow-x-auto py-2">
+<div class="grid grid-cols-1 overflow-x-auto py-3">
     <div class="flex flex-nowrap">
 
         @foreach (var oneProduct in ViewBag.ListRelateProducts)
         {
-
-            <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-lg p-4 flex-shrink-0 mr-4" style="min-width: 300px;">
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-md p-4 hover:scale-105 overflow-hidden flex-shrink-0 mr-4" style="min-width: 300px;">
                 <div class="relative">
                     @if (oneProduct.PhanTramKhuyenMai != 0)
                     {
                         <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@oneProduct.PhanTramKhuyenMai% OFF</span>
                     }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                    <img src="@Url.Content("~/img/productImage/" + oneProduct.ldp.HinhAnh)" alt="@oneProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-48 object-cover rounded-md">
+                    <img src="@Url.Content("~/img/productImage/" + oneProduct.ldp.HinhAnh)" alt="@oneProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
                 </div>
                 <h4 class="font-semibold mt-2">@oneProduct.ldp.TenSP</h4>
                 <div class="flex items-center mt-1">

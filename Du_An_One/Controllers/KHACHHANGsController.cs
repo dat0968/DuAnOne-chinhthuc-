@@ -10,6 +10,7 @@ using Du_An_One.Models;
 using Microsoft.AspNetCore.Authorization;
 using X.PagedList;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using X.PagedList.Extensions;
 
 namespace Du_An_One.Controllers
 {
@@ -217,35 +218,54 @@ namespace Du_An_One.Controllers
             int pageSize = 16;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;
 
-            // Retrieve orders for the specified user
-            IQueryable<Models.HOADON> listOrder = _context.HOADON
-                .AsNoTracking()
-                .Include(h => h.CHITIETHOADONs) // Include CHITIETHOADONs to ensure they are loaded
-                .Where(x => x.MaKH == idUser);
+            var listOrder = _context.HOADON
+                .Where(x => x.MaKH == idUser)
+                .Join(
+                    _context.CHITIETHOADON,
+                    hd => hd.MaHoaDon,
+                    ct => ct.MaHoaDon,
+                    (hd, ct) => new
+                    {
+                        HOADON = hd,
+                        CHITIETHOADON = ct
+                    })
+                .AsQueryable();
 
             // Filter by status if specified
             if (!String.IsNullOrEmpty(statusOrder))
             {
-                listOrder = listOrder.Where(x => x.TinhTrang == statusOrder);
+                listOrder = listOrder.Where(x => x.HOADON.TinhTrang == statusOrder);
             }
 
             // If findOrder is not null or empty, filter orders based on the findOrder parameter
             if (!String.IsNullOrEmpty(findOrder))
             {
                 listOrder = listOrder.Where(x =>
-                    x.MaHoaDon.Contains(findOrder) ||
-                    x.TinhTrang.Contains(findOrder) ||
-                    x.HTTT.Contains(findOrder));
+                    x.HOADON.MaHoaDon.Contains(findOrder) ||
+                    x.HOADON.TinhTrang.Contains(findOrder) ||
+                    x.HOADON.HTTT.Contains(findOrder));
             }
 
             ViewBag.StatusOrder = statusOrder;
 
-            // Apply pagination
-            PagedList<Models.HOADON> lstPaged = new PagedList<Models.HOADON>(listOrder, pageNumber, pageSize);
+            var result = listOrder
+                .AsEnumerable()
+                .GroupBy(x => x.HOADON.MaHoaDon)
+                .Select(group => new HOADON
+                {
+                    MaHoaDon = group.Key,
+                    NgayTao = group.FirstOrDefault().HOADON.NgayTao,
+                    TinhTrang = group.FirstOrDefault().HOADON.TinhTrang,
+                    HTTT = group.FirstOrDefault().HOADON.HTTT,
+                    CHITIETHOADONs = group.Select(x => x.CHITIETHOADON).ToList()
+                })
+                .OrderBy(x => x.MaHoaDon)
+                .ToList()
+                .ToPagedList(pageNumber, pageSize);
 
             ViewBag.IdUser = idUser;
             // Return the filtered list of orders to the view
-            return View(lstPaged);
+            return View(result);
         }
 
         // GET: KHACHHANGs/PrintCheckOrder/5
@@ -324,12 +344,32 @@ namespace Du_An_One.Controllers
             {
                 return View(new List<CHITIETHOADON>());
             }
-            var listProductInBag = _context.CHITIETHOADON.Include(sp => sp.SANPHAM).Where(ct => ct.MaHoaDon == codeBag).ToList();
+            var listProductInBag = _context.CHITIETHOADON
+                .Where(ct => ct.MaHoaDon == codeBag)
+                .Join(_context.SANPHAM, ct => ct.MaSP, sp => sp.MaSP, (ct, sp) => new
+                {
+                    CHITIETHOADON = ct,
+                    SANPHAM = sp
+                })
+                .ToList();
             if (!string.IsNullOrEmpty(textFind))
             {
-                listProductInBag = listProductInBag.Where(ct => (ct.MaSP??"").Contains(textFind) && (ct.SANPHAM?.TenSP??"").Contains(textFind)).ToList();
+                listProductInBag = listProductInBag
+                    .Where(ct => (ct.CHITIETHOADON.MaSP ?? "").Contains(textFind) || (ct.SANPHAM.TenSP ?? "").Contains(textFind))
+                    .ToList();
             }
-            return View(listProductInBag);
+
+            var result = listProductInBag.Select(item => new CHITIETHOADON
+            {
+                ID = item.CHITIETHOADON.ID,
+                MaHoaDon = item.CHITIETHOADON.MaHoaDon,
+                MaSP = item.CHITIETHOADON.MaSP,
+                SoLuongMua = item.CHITIETHOADON.SoLuongMua,
+                DonGia = item.CHITIETHOADON.DonGia,
+                SANPHAM = item.SANPHAM
+            }).ToList();
+
+            return View(result);
         }
         private bool KHACHHANGExists(string id)
         {
