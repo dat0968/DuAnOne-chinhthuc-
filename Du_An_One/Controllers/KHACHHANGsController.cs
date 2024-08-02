@@ -366,7 +366,17 @@ namespace Du_An_One.Controllers
                 MaSP = item.CHITIETHOADON.MaSP,
                 SoLuongMua = item.CHITIETHOADON.SoLuongMua,
                 DonGia = item.CHITIETHOADON.DonGia,
-                SANPHAM = item.SANPHAM
+                SANPHAM = new SANPHAM
+                {
+                    MaSP = item.SANPHAM.MaSP,
+                    TenSP = item.SANPHAM.TenSP,
+                    DonGiaBan = item.SANPHAM.DonGiaBan,
+                    SoLuongBan = item.SANPHAM.SoLuongBan,
+                    KichCo = item.SANPHAM.KichCo,
+                    MoTa = item.SANPHAM.MoTa,
+                    DanhMucHang  = item.SANPHAM.DanhMucHang,
+                    KHUYENMAI = _context.KHUYENMAI.FirstOrDefault(km => km.MaKhuyenMai == item.SANPHAM.MaKhuyenMai)
+                }
             }).ToList();
 
             return View(result);

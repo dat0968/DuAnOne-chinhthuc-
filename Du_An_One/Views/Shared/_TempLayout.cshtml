@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims;
+﻿@using Newtonsoft.Json;
+@using System.Security.Claims;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
@@ -56,21 +57,46 @@
         <!-- Section for displaying products -->
         <div class="container mx-auto px-4 py-16 overflow-auto">
             <div class="grid gap-8">
-                @* md:grid-cols-3 *@
-                @* Giao diện thông tin người dùng *@
-                @* Giao diện danh sách đơn hàng *@
-
-                @* Giao diện cho giỏ hàng *@
-                        
-                @* Giao diện đơn hàng cho khách *@
-
                 @RenderBody()
             </div>
         </div>
     </main>
     <partial name="_FooterLayout.cshtml" />
+    @* Kiểm tra Controller CHITIETHOADONsController với IActionResult tên CustomerDelete để xem cách dùng *@
+    <script>
+        function showAlert(type, title, message) {
+            var alertDiv = $('<div class="alert alert-' + type + ' fixed text-center cursor-pointer" style="bottom: 0; right: 0;">' +
+                '<span data-notify="icon">' + getAlertIcon(type) + '</span>' +
+                '<span data-notify="title">' + title + '</span> ' +
+                '<span data-notify="message">' + message + '</span>' +
+                '</div>');
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            $('body').append(alertDiv);
+            alertDiv.slideDown();
+
+            setTimeout(function () {
+                alertDiv.slideUp(400, function () {
+                    alertDiv.remove();
+                });
+            }, 3000);
+
+            alertDiv.on('click', function () {
+                alertDiv.remove();
+            });
+        }
+
+        function getAlertIcon(type) {
+            switch (type) {
+                case "success": return "🟢";
+                case "primary": return "🔵";
+                case "secondary": return "🟣";
+                case "info": return "🔷";
+                case "warning": return "🟠";
+                case "danger": return "🔴";
+                case "black": return "⚫";
+                default: return "ℹ️";
+            }
+        }</script>
     <!--   Core JS Files   -->
     @* <script src="~/js/core/jquery-3.7.1.min.js"></script> *@
     <script src="~/js/core/popper.min.js"></script>

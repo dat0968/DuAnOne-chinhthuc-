@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Du_An_One.Data;
 using Du_An_One.Models;
+using Newtonsoft.Json;
 
 namespace Du_An_One.Controllers
 {
@@ -153,6 +154,32 @@ namespace Du_An_One.Controllers
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public async Task<IActionResult> CustomerDelete(int id)
+        {
+            if (_context.CHITIETHOADON == null)
+            {
+                return Json(new { success = false, message = "Entity set 'Du_An_OneContext.CHITIETHOADON' is null." });
+            }
+
+            var cHITIETHOADON = await _context.CHITIETHOADON.FindAsync(id);
+            if (cHITIETHOADON != null)
+            {
+                _context.CHITIETHOADON.Remove(cHITIETHOADON);
+                await _context.SaveChangesAsync();
+                return Json(new
+                {
+                    success = true,
+                    alert = new { type = "success", title = "Thông báo", message = "Đã xóa thành công" }
+                });
+            }
+
+            return Json(new
+            {
+                success = false,
+                alert = new { type = "info", title = "Thông báo", message = "Không tìm thấy sản phẩm" }
+            });
         }
 
         private bool CHITIETHOADONExists(int id)

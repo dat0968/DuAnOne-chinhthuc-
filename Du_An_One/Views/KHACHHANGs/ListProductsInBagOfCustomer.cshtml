@@ -22,44 +22,105 @@
             <div class="flex flex-col items-center justify-center">
                 @if (!Model.Any())
                 {
-                    <img aria-hidden="true" alt="empty-cart" src="https://placehold.co/100x100.png?text=🛒" class="mb-4" />
+                    <img aria-hidden="true" alt="empty-cart" src="https://ideogram.ai/assets/image/lossless/response/VjEwrgULQXK1ZVsoGxhMfw" class="mb-4 w-20 h-20" />
                     <span class="text-muted-foreground">Không tìm thấy sản phẩm nào trong giỏ hàng của bạn.</span>
                 }
                 else
                 {
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Sản Phẩm</th>
-                                <th>Giá</th>
-                                <th>Số Lượng</th>
-                                <th>Tổng</th>
-                                <th>Thao Tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.SANPHAM?.TenSP</td>
-                                    <td>@String.Format("{0:0,0} VND", item.DonGia)</td>
-                                    <td><input type="number" value="@item.SoLuongMua" class="form-control" disabled></td>
-                                    <td>@String.Format("{0:0,0} VND", item.SoLuongMua * item.DonGia)</td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm" asp-action="RemoveFromCart" asp-route-id="@item.ID">Xóa</button>
-                                        <a class="btn btn-info btn-sm" asp-controller="ProductPage" asp-action="ShowDetailProduct" asp-route-idProduct="@item.MaSP">Thông tin</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    @foreach (var item in Model)
+                    {
+                        <div class="flex items-center p-4 bg-background rounded-lg shadow-md mb-4 w-full">
+                            <div class="relative w-24 h-24">
+                                @if (item.SANPHAM.KHUYENMAI != null && item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai != 0 && DateTime.Now >= item.SANPHAM.KHUYENMAI.ThoiGianStart && DateTime.Now <= item.SANPHAM.KHUYENMAI.ThoiGianEnd)
+                                {
+                                    <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
+                                }
+                                <img src="@Url.Content("~/img/productImage/" + item.SANPHAM.HinhAnh)" alt="@item.SANPHAM.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-full object-cover rounded-md">
+                            </div>
+                            <div class="ml-4 flex-1">
+                                <h2 class="text-lg font-semibold text-foreground">@item.SANPHAM?.TenSP</h2>
+                                <p class="text-sm text-muted-foreground">@item.SANPHAM?.DanhMucHang / @item.SANPHAM?.KichCo</p>
+                                <div>
+                                    @if (item.SANPHAM.KHUYENMAI != null && item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai != 0 && DateTime.Now >= item.SANPHAM.KHUYENMAI.ThoiGianStart && DateTime.Now <= item.SANPHAM.KHUYENMAI.ThoiGianEnd)
+                                    {
+                                        <span class="text-pink-500 font-bold">
+                                            @String.Format("{0:0,0} VND", Math.Round((double)item.DonGia * ((double)1 - (double)item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai / 100), 2))
+                                        </span>
+                                        <span class="line-through text-zinc-500 ml-2">@String.Format("{0:0,0} VND", item.DonGia)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-pink-500 font-bold">
+                                            @String.Format("{0:0,0} VND", item.DonGia)
+                                        </span>
+                                    }
+                                </div>
+                                <div class="flex items-center mt-2">
+                                    <div class="flex items-center ml-auto">
+                                        <button class="quantity-btn bg-zinc-200 text-zinc-600 rounded-full p-2" data-action="decrement" data-id="@item.ID">-</button>
+                                        <input type="text" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="mx-3 quantity w-20 text-right" value="@item.SoLuongMua">
+                                        <button class="quantity-btn bg-zinc-200 text-zinc-600 rounded-full p-2" data-action="increment" data-id="@item.ID">+</button>
+                                    </div>
+                                    <div class="ml-4 flex">
+                                        <button class="btn btn-danger btn-sm" data-id="@item.ID" asp-controller="CHITIETHOADONs" asp-action="CustomerDelete" asp-route-id="@item.ID" onclick="deleteItem(this)">Xóa</button>
+                                        <a class="btn btn-info btn-sm ml-2" asp-controller="ProductPage" asp-action="ShowDetailProduct" asp-route-idProduct="@item.MaSP">Thông tin</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
 
                     <div class="text-right w-full mt-4">
-                        <h4>Tổng: @String.Format("{0:0,0} VND", Model.Sum(item => item.SoLuongMua * item.DonGia))</h4>
+                        <h4>Tổng: @String.Format("{0:0,0} VND", Model.Sum(item => item.SoLuongMua * Math.Round((double)item.DonGia * ((double)1 - (item.SANPHAM.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100.0), 2)))</h4>
                         <button class="btn btn-success" asp-action="Checkout">Thanh Toán</button>
                     </div>
                 }
             </div>
         </div>
+        <script>
+                  function deleteItem(button) {
+                      if (confirm("Bạn có chắc chắn muốn xóa mục này không?")) {
+                          var itemId = $(button).data('id');
+
+                          $.ajax({
+                              url: '/CHITIETHOADONs/CustomerDelete/' + itemId,
+                              type: 'POST',
+                              data: {
+                                  __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                              },
+                              success: function (response) {
+                                  if (response.success) {
+                                      // Remove the item from the DOM
+                                      $(button).closest('.flex.items-center.p-4').remove();
+                                  }
+                                  // Display alert message
+                                  showAlert(response.alert.type, response.alert.title, response.alert.message);
+                              },
+                              error: function () {
+                                  showAlert('danger', 'Lỗi', 'Có lỗi xảy ra khi xóa sản phẩm.');
+                              }
+                          });
+                      }
+                  }
+
+        </script>
+        <script>
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+            quantityBtns.forEach(btn => {
+              btn.addEventListener('click', () => {
+                const action = btn.getAttribute('data-action');
+                const quantityElement = btn.parentElement.querySelector('.quantity');
+                let currentQuantity = parseInt(quantityElement.value);
+
+                if (action === 'decrement' && currentQuantity > 1) {
+                    quantityElement.value = currentQuantity - 1;
+                } else if (action === 'increment') {
+                    quantityElement.value = currentQuantity + 1;
+                }
+              });
+            });
+        </script>
+
     </div>
 </div>
