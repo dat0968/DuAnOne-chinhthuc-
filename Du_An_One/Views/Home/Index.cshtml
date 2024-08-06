@@ -6,22 +6,29 @@
 
 
 
-
-@foreach (var oneProduct in Model)
+@foreach (var aProduct in Model)
 {
-
-    <div class="bg-white p-4 rounded-lg shadow-lg">
-        <img src="@Url.Content("~/img/productImage/" + oneProduct.HinhAnh)"
-             alt="@oneProduct.TenSP"
-             onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'"
-             alt="Product 1"
-             class="mb-4"
-             style="object-fit: cover; width: 100%; height: 300px" />
-        <h3 class="text-2xl font-semibold mb-2">@oneProduct.TenSP</h3>
-        <p class="mb-4">Giá: @oneProduct.DonGiaBan VND</p>
-        <a asp-controller="Login" asp-action="Index" class="bg-primary text-primary-foreground hover:bg-primary/80 py-2 px-4 rounded-lg text-white"
-           style="background-color: rgb(139, 97, 255);cursor: pointer;">
-            Mua ngay
-        </a>
-    </div>
+    <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+        <div class="relative">
+            @if ((@aProduct.KHUYENMAI?.PhanTramKhuyenMai) != 0)
+            {
+                <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
+            }
+            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+            <img src="@Url.Content("~/img/productImage/" + aProduct.HinhAnh)" alt="@aProduct.TenSP" class="w-full h-80 object-cover rounded-md">
+        </div>
+        <h4 class="font-semibold mt-2">@aProduct.TenSP</h4>
+        <div class="flex items-center mt-1">
+            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+        </div>
+        @if (@aProduct.KHUYENMAI.PhanTramKhuyenMai != 0)
+        {
+            <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.DonGiaBan * ((double)1 - (double)@aProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2) VND</p>
+            <p class="line-through text-zinc-500">@aProduct.DonGiaBan VND</p>
+        }
+        else
+        {
+            <p class="text-lg font-bold mt-2">@aProduct.DonGiaBan VND</p>
+        }
+    </a>
 }

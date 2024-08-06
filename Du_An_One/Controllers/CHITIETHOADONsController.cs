@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Du_An_One.Data;
 using Du_An_One.Models;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using static System.Net.WebRequestMethods;
 
 namespace Du_An_One.Controllers
 {
@@ -155,6 +157,7 @@ namespace Du_An_One.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         [HttpPost]
         public async Task<IActionResult> CustomerDelete(int id)
         {
@@ -181,10 +184,102 @@ namespace Du_An_One.Controllers
                 alert = new { type = "info", title = "Thông báo", message = "Không tìm thấy sản phẩm" }
             });
         }
+        public async Task<IActionResult> CustomerAdd(string MaSP)
+        {
+            if(!User.Identity.IsAuthenticated)
+            {
+                // Nếu người dùng chưa đăng nhập, trả về thông báo cảnh báo
+                return Json(new
+                {
+                    success = false,
+                    alert = new { type = "warning", title = "Thông báo", message = "Vui lòng đăng nhập để có thể mua hàng." }
+                });
+            }
+
+            DateTime today = DateTime.Now;
+            var MaNguoiDung = User.FindFirst(ClaimTypes.Surname)?.Value;
+            var Product = _context.SANPHAM.FirstOrDefault(sp => sp.MaSP == MaSP);
+
+            // Lấy danh sách khuyến mãi còn hiệu lực
+            var DanhSachMaKhuyenMai = _context.KHUYENMAI
+                .Where(km => km.ThoiGianStart <= today && km.ThoiGianEnd >= today)
+                .ToList();
+
+            // Kiểm tra xem giỏ hàng của khách hàng có tồn tại không
+            var CustomerBag = _context.HOADON
+                .FirstOrDefault(hd => hd.MaKH == MaNguoiDung && hd.TinhTrang == "Chờ thanh toán");
+
+            if (CustomerBag != null)
+            {
+                // Kiểm tra xem sản phẩm đã có trong chi tiết hóa đơn không
+                var existingDetail = _context.CHITIETHOADON
+                    .FirstOrDefault(cd => cd.MaHoaDon == CustomerBag.MaHoaDon && cd.MaSP == MaSP);
+
+                if (existingDetail != null)
+                {
+                    // Nếu sản phẩm đã có, tăng số lượng lên 1
+                    existingDetail.SoLuongMua++;
+                }
+                else
+                {
+                    // Nếu sản phẩm chưa có, thêm vào chi tiết hóa đơn
+                    var phanTramKhuyenMai = DanhSachMaKhuyenMai
+                        .FirstOrDefault(lkm => lkm.MaKhuyenMai == Product.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0;
+
+                    _context.CHITIETHOADON.Add(new CHITIETHOADON
+                    {
+                        MaHoaDon = CustomerBag.MaHoaDon,
+                        DonGia = Product.DonGiaBan * (1 - phanTramKhuyenMai / 100),
+                        MaSP = MaSP,
+                        SoLuongMua = 1
+                    });
+                }
+            }
+            else
+            {
+                // Nếu chưa có giỏ hàng, tạo mới giỏ hàng và thêm sản phẩm vào
+                Random rd = new Random();
+                const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+                var _newCheck = new HOADON
+                {
+                    MaHoaDon = String.Join("", Enumerable.Range(0, 5).Select(_ => chars[rd.Next(chars.Length)])),
+                    DiaChiNhanHang = "",
+                    NgayTao = today,
+                    HTTT = "Tiền mặt",
+                    MaKH = MaNguoiDung,
+                    TinhTrang = "Chờ thanh toán" // Cần thêm tình trạng cho hóa đơn mới
+                };
+
+                _context.HOADON.Add(_newCheck);
+                await _context.SaveChangesAsync(); // Lưu hóa đơn mới vào cơ sở dữ liệu
+
+                var phanTramKhuyenMai = DanhSachMaKhuyenMai
+                    .FirstOrDefault(lkm => lkm.MaKhuyenMai == Product.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0;
+
+                _context.CHITIETHOADON.Add(new CHITIETHOADON
+                {
+                    MaHoaDon = _newCheck.MaHoaDon,
+                    DonGia = Product.DonGiaBan * (1 - phanTramKhuyenMai / 100),
+                    SoLuongMua = 1
+                });
+            }
+
+            // Lưu tất cả thay đổi vào cơ sở dữ liệu
+            await _context.SaveChangesAsync();
+
+            // Trả về thông báo thành công
+            return Json(new
+            {
+                success = true,
+                alert = new { type = "success", title = "Thông báo", message = "Đã thêm sản phẩm vào giỏ hàng thành công." }
+            });
+        }
+
 
         private bool CHITIETHOADONExists(int id)
         {
-          return (_context.CHITIETHOADON?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.CHITIETHOADON?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

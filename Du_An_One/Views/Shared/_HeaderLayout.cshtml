@@ -5,6 +5,9 @@
     var MaNguoiDung = User.FindFirst(ClaimTypes.Surname)?.Value;
 }
 @inject Du_An_OneContext _db;
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
 <body>
     <header class="bg-background text-primary-foreground flex justify-between items-center py-8 px-16 fixed w-full" style="position: sticky; z-index: 10; top: 0; backdrop-filter: blur(45px);">
         <div class="flex w-1/3 items-center space-x-2">
@@ -22,7 +25,24 @@
         <div class="flex w-1/3 justify-end items-center space-x-4">
             @if (User.Identity.IsAuthenticated)
             {
-                <span>Xin chào, @User.Identity.Name</span>
+
+                @if (userRole != "Quản lý")
+                {
+                    var hd = _db.HOADON?.FirstOrDefault(hd => hd.MaKH == MaNguoiDung && hd.TinhTrang == "Chờ thanh toán")?.MaHoaDon;
+                    int numCarts = _db.CHITIETHOADON?.Count(ct => ct.MaHoaDon == hd) ?? 0;
+                    <a asp-controller="KHACHHANGs" asp-action="ListProductsInBagOfCustomer" asp-route-idUser="@MaNguoiDung" class="cart-icon relative d-inline-block px-4">
+                        <i class="fas fa-shopping-cart font-bold text-3xl"></i>
+                    <span class="cart-count absolute text-white font-bold bg-danger rounded-circle"
+                          style="
+                            padding: 1px 6px;
+                            top: -10px;
+                            right: 7px;">@numCarts</span>
+                    </a>
+                }
+                else
+                {
+                    <span class="hover:text-primary font-bold text-2xl px-4">Xin chào, @User.Identity.Name</span>
+                }
                 <div class="relative">
                     <a class="hover:text-primary font-bold text-2xl dropdown-toggle hidden-caret" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Tài khoản</a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">

@@ -1,14 +1,16 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Du_An_One.Models.SANPHAM>
+<!-- Fix: Correct the type to IEnumerable<SANPHAM> -->
 @{
     ViewData["Title"] = "Tìm kiếm";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
-    var productJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.ListProductsFind);
 }
 
 <div id="mainFindProduct" class="py-8">
     <div class="flex justify-between items-center mb-4" id="headerFind">
         <h1 class="text-2xl font-bold">Tìm kiếm</h1>
-        <button id="filterButton" class="bg-secondary text-secondary-foreground px-4 py-2 rounded hover:bg-secondary/80" style="color:white;">
+        <button id="filterButton" class="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/80" style="color:white;">
             Lọc sản phẩm
         </button>
     </div>
@@ -78,33 +80,48 @@
         <!-- End Nav Navigation to Type Product -->
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-3" id="productGrid">
-        @foreach (var aProduct in ViewBag.ListProductsFind)
+        @foreach (var aProduct in Model)
         {
-
-            <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.ldp.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
                 <div class="relative">
-                    @if (@aProduct.PhanTramKhuyenMai != 0)
+                    @if (@aProduct.KHUYENMAI?.PhanTramKhuyenMai != 0)
                     {
-                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.PhanTramKhuyenMai% OFF</span>
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
                     }
                     <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                    <img src="@Url.Content("~/img/productImage/" + aProduct.ldp.HinhAnh)" alt="@aProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
+                    <img src="@Url.Content("~/img/productImage/" + aProduct.HinhAnh)" alt="@aProduct.TenSP"  class="w-full h-80 object-cover rounded-md">
                 </div>
-                <h4 class="font-semibold mt-2">@aProduct.ldp.TenSP</h4>
+                <h4 class="font-semibold mt-2">@aProduct.TenSP</h4>
                 <div class="flex items-center mt-1">
                     <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
                 </div>
-                <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.ldp.DonGiaBan * ((double)1 - (double)@aProduct.PhanTramKhuyenMai / 100), 2) VND</p>
-                <p class="line-through text-zinc-500">@aProduct.ldp.DonGiaBan VND</p>
+                @if (@aProduct.KHUYENMAI.PhanTramKhuyenMai != 0)
+                {
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.DonGiaBan * ((double)1 - (double)@aProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2) VND</p>
+                    <p class="line-through text-zinc-500">@aProduct.DonGiaBan VND</p>
+                }
+                else
+                {
+                    <p class="text-lg font-bold mt-2">@aProduct.DonGiaBan VND</p>
+                }
             </a>
         }
     </div>
-    <div id="footerSeeMore" class="text-center mt-8">
+    @if (Model.Count() == 0)
+    {
+        <h1 class="text-lg font-bold mt-2 text-gray text-center">Không tìm thấy sản phẩm.</h1>
+    }
+    @Html.PagedListPager(Model, page => Url.Action("ToolFindProduct", new { page }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string> { "page-item" },
+    PageClasses = new List<string> { "page-link" }
+})
+    @* <div id="footerSeeMore" class="text-center mt-8">
         <button id="showMoreButton" class="bg-primary text-primary-foreground px-6 py-2 rounded hover:bg-primary/80" style="color:white;">
-            Show more
+            Nhiều hơn
         </button>
         <p id="hetSanPham" class="text-center text-danger font-weight-bold my-4" style="display:none;">Sản phẩm tìm kiếm đã hết</p>
-    </div>
+    </div> *@
 </div>
 
 @section Scripts {
@@ -114,7 +131,8 @@
             filterBoard.classList.toggle("hidden");
         });
 
-        const products = @Html.Raw(productJson); // Inject the serialized products list
+        // Serialize the products list into a JavaScript array
+        const products = @Html.Raw(Json.Serialize(Model));
         let numProduct = 0;
 
         document.getElementById("showMoreButton").addEventListener("click", function () {
@@ -127,26 +145,26 @@
                     document.getElementById('hetSanPham').style.display = '';
                     break;
                 } else {
-                    const item = products[num].ldp;
-                    const discountedPrice = Math.round(item.DonGiaBan * (1 - products[num].PhanTramKhuyenMai / 100) * 100) / 100;
+                    const item = products[num];
+                    const discountedPrice = Math.round(item.DonGiaBan * (1 - (item.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * 100) / 100;
 
                     const productCard = `
-                            <a asp-action="ShowDetailProduct" asp-route-idProduct="${item.MaSP}" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
-                                        <div class="relative">
-                                            ${products[num].PhanTramKhuyenMai !== 0 ? `<span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-${products[num].PhanTramKhuyenMai}% OFF</span>` : ""}
-                                            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                                                    <img src="${'~/img/productImage/' + item.HinhAnh}" alt="${item.TenSP}" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
-                                        </div>
-                                        <h4 class="font-semibold mt-2">${item.TenSP}</h4>
-                                        <div class="flex items-center mt-1">
-                                            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
-                                        </div>
-                                        <p class="text-lg font-bold mt-2">${discountedPrice} VND</p>
-                                        <p class="line-through text-zinc-500">${item.DonGiaBan} VND</p>
-                            </a>
-                                    `;
+                                    <a href="/ShowDetailProduct/${item.MaSP}" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+                                                <div class="relative">
+                                                            ${item.KHUYENMAI?.PhanTramKhuyenMai !== 0 ? `<span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-${item.KHUYENMAI.PhanTramKhuyenMai}% OFF</span>` : ""}
+                                                    <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                                                                    <img src="${'/img/productImage/' + item.HinhAnh}" alt="${item.TenSP}"  class="w-full h-80 object-cover rounded-md" onerror="this.src = 'https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'">
+                                                </div>
+                                                        <h4 class="font-semibold mt-2">${item.TenSP}</h4>
+                                                <div class="flex items-center mt-1">
+                                                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                                                </div>
+                                                <p class="text-lg font-bold mt-2">${discountedPrice} VND</p>
+                                                        <p class="line-through text-zinc-500">${item.DonGiaBan} VND</p>
+                                    </a>
+                                            `;
 
-                    productGrid.innerHTML += (productCard);
+                    productGrid.innerHTML += productCard;
                     newItems.push(item);
                 }
             }

@@ -11,6 +11,12 @@ using Microsoft.AspNetCore.Authorization;
 using X.PagedList;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using X.PagedList.Extensions;
+using iText.Kernel.Pdf;
+using iText.Layout.Element;
+using Table = iText.Layout.Element.Table;
+using iText.Layout.Properties;
+using static System.Net.WebRequestMethods;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace Du_An_One.Controllers
 {
@@ -158,6 +164,7 @@ namespace Du_An_One.Controllers
         }
 
         // GET: KHACHHANGs/InfoCustomer/5
+        [Authorize]
         public async Task<IActionResult> InfoCustomer(string id)
         {
             if (id == null || _context.KHACHHANG == null)
@@ -178,6 +185,7 @@ namespace Du_An_One.Controllers
         // POST: KHACHHANGs/InfoCustomer/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> InfoCustomer( KHACHHANG kHACHHANG)
         {
 
@@ -206,6 +214,7 @@ namespace Du_An_One.Controllers
         }
 
         // GET: KHACHHANGs/ListOrdersOfCustomer/5
+        [Authorize]
         public async Task<IActionResult> ListOrdersOfCustomer(int? page, string? idUser, string? statusOrder, string? findOrder)
         {
             idUser = String.IsNullOrEmpty(idUser)
@@ -268,14 +277,30 @@ namespace Du_An_One.Controllers
             return View(result);
         }
 
-        // GET: KHACHHANGs/PrintCheckOrder/5
-        public async Task<IActionResult> PrintCheckOrder(string idCheck)
-        {/*
-            var order = db.Hoadons
-                .Include(o => o.MaKhNavigation) // Include the customer (MaKhNavigation) related to the order
-                .Include(o => o.Chitiethoadons) // Include the order details (Chitiethoadons)
-                .ThenInclude(od => od.MaSpNavigation) // Include the products (Sanphams) related to the order details
-                .FirstOrDefault(o => o.MaHoaDon == orderId); // Use 'o' instead of 'object' for the lambda parameter
+        [Route("export-invoice/{orderId}")]
+        public async Task<IActionResult> PrintCheckOrder(string orderId)
+        {
+            var order = _context.HOADON
+                .Select(hd => new HOADON
+                {
+                    MaHoaDon = hd.MaHoaDon,
+                    MaKH = hd.MaKH,
+                    DiaChiNhanHang = hd.DiaChiNhanHang,
+                    NgayTao = hd.NgayTao,
+                    HTTT = hd.HTTT,
+                    TinhTrang = hd.TinhTrang,
+                    CHITIETHOADONs = _context.CHITIETHOADON.Where(x => x.MaHoaDon == orderId)
+                        .Select(ct => new CHITIETHOADON
+                        {
+                            MaHoaDon = ct.MaHoaDon,
+                            MaSP = ct.MaSP,
+                            SoLuongMua = ct.SoLuongMua,
+                            DonGia = ct.DonGia,
+                            SANPHAM = _context.SANPHAM.FirstOrDefault(sp => sp.MaSP == ct.MaSP)
+                        }).ToList(),
+                    KHACHHANG = _context.KHACHHANG.FirstOrDefault(kh => kh.MaKH == hd.MaKH)
+                })
+                .FirstOrDefault(o => o.MaHoaDon == orderId);
 
             if (order == null)
             {
@@ -289,33 +314,33 @@ namespace Du_An_One.Controllers
                 var document = new iText.Layout.Document(pdf);
 
                 // Add header
-                document.Add(new Paragraph("Invoice")
+                document.Add(new Paragraph("Hóa đơn")
                     .SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER)
                     .SetFontSize(20));
 
                 // Add order details
-                document.Add(new Paragraph($"Order ID: {order.MaHoaDon}"));
-                document.Add(new Paragraph($"Customer: {order.MaKhNavigation.HoTen}"));
-                document.Add(new Paragraph($"Address: {order.MaKhNavigation.DiaChi}"));
-                document.Add(new Paragraph($"Date: {order.NgayTao.ToString("d")}"));
+                document.Add(new Paragraph($"Mã đơn: {order.MaHoaDon}"));
+                document.Add(new Paragraph($"Khách hàng: {order.KHACHHANG.HoTen}"));
+                document.Add(new Paragraph($"Địa chỉ: {order.DiaChiNhanHang}"));
+                document.Add(new Paragraph($"Ngày tạo đơn: {order.NgayTao.ToString("d")}"));
 
                 // Add a line separator
-                document.Add(new LineSeparator(new SolidLine()));
+                document.Add(new LineSeparator(new iText.Kernel.Pdf.Canvas.Draw.SolidLine()));
 
                 // Add product table
                 var table = new Table(new float[] { 1, 3, 1, 1, 1 })
                     .UseAllAvailableWidth();
 
-                table.AddHeaderCell("Product ID");
-                table.AddHeaderCell("Product Name");
-                table.AddHeaderCell("Quantity");
-                table.AddHeaderCell("Unit Price");
-                table.AddHeaderCell("Total");
+                table.AddHeaderCell("Mã ID");
+                table.AddHeaderCell("Tên sản phẩm");
+                table.AddHeaderCell("Số lượng");
+                table.AddHeaderCell("Đơn vị giá");
+                table.AddHeaderCell("Tổng giá");
 
-                foreach (var item in order.Chitiethoadons)
+                foreach (var item in order.CHITIETHOADONs)
                 {
-                    table.AddCell(item.MaSp.ToString());
-                    table.AddCell(item.MaSpNavigation.TenSp);
+                    table.AddCell(item.MaSP.ToString());
+                    table.AddCell(item.SANPHAM.TenSP);
                     table.AddCell(item.SoLuongMua.ToString());
                     table.AddCell(item.DonGia.ToString("C"));
                     table.AddCell((item.SoLuongMua * item.DonGia).ToString("C"));
@@ -324,18 +349,18 @@ namespace Du_An_One.Controllers
                 document.Add(table);
 
                 // Add footer
-                document.Add(new Paragraph("Thank you for your business!")
+                document.Add(new Paragraph("Cảm ơn vì sự hỗ trợ của bạn!")
                     .SetTextAlignment(TextAlignment.CENTER)
                     .SetFontSize(12));
 
                 document.Close();
                 var bytes = stream.ToArray();
                 return File(bytes, "application/pdf", $"Invoice_{order.MaHoaDon}.pdf");
-            }*/
-            return View();
+            }
         }
 
         // GET: KHACHHANGs/ListProductsInBag/5
+        [Authorize]
         public async Task<IActionResult> ListProductsInBagOfCustomer(string idUser, string? textFind)
         {
             ViewBag.IdUser = idUser;
@@ -380,6 +405,41 @@ namespace Du_An_One.Controllers
             }).ToList();
 
             return View(result);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> UpdateNumberProductInCart(int? MaHoaDon, int valueChange)
+        {
+            if (MaHoaDon == null || _context.CHITIETHOADON == null)
+            {
+                return NotFound(new { message = "Không tìm thấy hóa đơn." });
+            }
+
+            var ChiTietHoaDon = await _context.CHITIETHOADON
+                .FirstOrDefaultAsync(m => m.ID == MaHoaDon);
+
+            if (ChiTietHoaDon == null)
+            {
+                return NotFound(new { message = "Chi tiết hóa đơn không tồn tại." });
+            }
+
+            // Kiểm tra số lượng mới không âm
+            if (valueChange < 0)
+            {
+                return BadRequest(new { message = "Số lượng không thể nhỏ hơn 0." });
+            }
+
+            ChiTietHoaDon.SoLuongMua = valueChange;
+            await _context.SaveChangesAsync();
+
+            return Json(ChiTietHoaDon);
+        }
+
+
+        public class UpdateQuantityRequest
+        {
+            public int Id { get; set; }
+            public int Quantity { get; set; }
         }
         private bool KHACHHANGExists(string id)
         {

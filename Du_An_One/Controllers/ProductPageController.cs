@@ -1,7 +1,9 @@
 ﻿using Du_An_One.Data;
+using Du_An_One.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SixLabors.Fonts;
+using X.PagedList;
 
 namespace Du_An_One.Controllers
 {
@@ -20,28 +22,53 @@ namespace Du_An_One.Controllers
                 .Where(km => km.ThoiGianEnd >= today && km.ThoiGianStart <= today)
                 .Select(km => new { km.MaKhuyenMai, km.PhanTramKhuyenMai })
                 .ToList();
-
-
-            ViewBag.ListNewProducts = _context.SANPHAM
-                                                    .AsEnumerable()
-                                                    .OrderByDescending(x => x.NgayNhap)
-                                                    .Select(ldp => new
-                                                    {
-                                                        ldp,
-                                                        PhanTramKhuyenMai = listDiscount.FirstOrDefault(ld => ld.MaKhuyenMai == ldp.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0
-                                                    })
-                                                    .Take(16)
-                                                    .ToList();
-            ViewBag.ListDiscountProducts = _context.SANPHAM
-                                                    .AsEnumerable()
-                                                    .Where(sp => listDiscount.Select(ld => ld.MaKhuyenMai).Contains(sp.MaKhuyenMai))
-                                                    .Take(6)    
-                                                    .Select(ldp => new
-                                                    {
-                                                        ldp,
-                                                        listDiscount.First(ld => ld.MaKhuyenMai == ldp.MaKhuyenMai).PhanTramKhuyenMai
-                                                    });
-            return View();
+            var twoListProduts = new List<List<SANPHAM>>
+            {
+                _context.SANPHAM
+                    .AsEnumerable()
+                    .OrderByDescending(x => x.NgayNhap)
+                    .Select(sp => new SANPHAM
+                    {
+                        MaSP = sp.MaSP,
+                        TenSP = sp.TenSP,
+                        SoLuongBan = sp.SoLuongBan,
+                        DonGiaBan = sp.DonGiaBan,
+                        DanhMucHang = sp.DanhMucHang,
+                        HinhAnh = sp.HinhAnh,
+                        KichCo = sp.KichCo,
+                        MoTa = sp.MoTa,
+                        MaKhuyenMai = sp.MaKhuyenMai,
+                        KHUYENMAI = _context.KHUYENMAI
+                                    .Where(km => km.MaKhuyenMai == sp.MaKhuyenMai)
+                                    .Select(km => new KHUYENMAI
+                                    {
+                                        MaKhuyenMai = km.MaKhuyenMai,
+                                        PhanTramKhuyenMai = (km.ThoiGianStart <= today && km.ThoiGianEnd >= today) ? km.PhanTramKhuyenMai : 0
+                                    })
+                                    .FirstOrDefault()
+                    })
+                    .Take(16)
+                    .ToList(),
+                _context.SANPHAM
+                    .AsEnumerable()
+                    .Where(sp => listDiscount.Select(ld => ld.MaKhuyenMai).Contains(sp.MaKhuyenMai))
+                    .Take(6)
+                    .Select(sp => new SANPHAM
+                    {
+                        MaSP = sp.MaSP,
+                        TenSP = sp.TenSP,
+                        SoLuongBan = sp.SoLuongBan,
+                        DonGiaBan = sp.DonGiaBan,
+                        DanhMucHang = sp.DanhMucHang,
+                        HinhAnh = sp.HinhAnh,
+                        KichCo = sp.KichCo,
+                        MoTa = sp.MoTa,
+                        MaKhuyenMai = sp.MaKhuyenMai,
+                        KHUYENMAI = _context.KHUYENMAI.FirstOrDefault(km => km.MaKhuyenMai == sp.MaKhuyenMai)
+                    })
+                    .ToList()
+            };
+            return View(twoListProduts);
         }
         public async Task<IActionResult> ShowDetailProduct(string idProduct)
         {
@@ -51,30 +78,89 @@ namespace Du_An_One.Controllers
                 .Select(km => new { km.MaKhuyenMai, km.PhanTramKhuyenMai })
                 .ToList();
 
-            var sanPham = _context.SANPHAM.SingleOrDefault(x => x.MaSP == idProduct);
+            var sanPham = _context.SANPHAM
+                .Select(sp => new SANPHAM
+                {
+                    MaSP = sp.MaSP,
+                    TenSP = sp.TenSP,
+                    SoLuongBan = sp.SoLuongBan,
+                    DonGiaBan = sp.DonGiaBan,
+                    DanhMucHang = sp.DanhMucHang,
+                    HinhAnh = sp.HinhAnh,
+                    KichCo = sp.KichCo,
+                    MoTa = sp.MoTa,
+                    MaKhuyenMai = sp.MaKhuyenMai,
+                    KHUYENMAI = _context.KHUYENMAI
+                                    .Where(km => km.MaKhuyenMai == sp.MaKhuyenMai)
+                                    .Select(km => new KHUYENMAI
+                                    {
+                                        MaKhuyenMai = km.MaKhuyenMai,
+                                        PhanTramKhuyenMai = (km.ThoiGianStart <= today && km.ThoiGianEnd >= today) ? km.PhanTramKhuyenMai : 0
+                                    })
+                                    .FirstOrDefault()
+                })
+                .SingleOrDefault(x => x.MaSP == idProduct);
             ViewBag.anhSanPham = (_context.HINHANH.Where(x => x.MaSP == idProduct).Select(x => x.HinhAnh.Length < 10 ? "~/img/productImage/default.jpg" : "~/img/productImage/" + x.HinhAnh));
             
-
-
-            ViewBag.ListRelateProducts = _context.SANPHAM
+            var listRelateProducts = _context.SANPHAM
                                                     .AsEnumerable()
                                                     .Where(sp => sp.DanhMucHang == sanPham.DanhMucHang)
                                                     .Take(6)
-                                                    .Select(ldp => new
+                                                    .Select(ldp => new SANPHAM
                                                     {
-                                                        ldp,
-                                                        PhanTramKhuyenMai = listDiscount.FirstOrDefault(ld => ld.MaKhuyenMai == ldp.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0
-                                                    }); 
-            return View(sanPham);
+                                                        MaSP = ldp.MaSP,
+                                                        TenSP = ldp.TenSP,
+                                                        SoLuongBan = ldp.SoLuongBan,
+                                                        DonGiaBan = ldp.DonGiaBan,
+                                                        DanhMucHang = ldp.DanhMucHang,
+                                                        HinhAnh = ldp.HinhAnh,
+                                                        KichCo = ldp.KichCo,
+                                                        MoTa = ldp.MoTa,
+                                                        KHUYENMAI = _context.KHUYENMAI
+                                                            .Where(km => km.MaKhuyenMai == ldp.MaKhuyenMai)
+                                                            .Select(km => new KHUYENMAI
+                                                            {
+                                                                MaKhuyenMai = km.MaKhuyenMai,
+                                                                PhanTramKhuyenMai = (km.ThoiGianStart <= today && km.ThoiGianEnd >= today) ? km.PhanTramKhuyenMai : 0
+                                                            })
+                                                            .FirstOrDefault()
+                                                    });
+
+            return View((sanPham, listRelateProducts ));
         }
-        public async Task<IActionResult> ToolFindProduct(List<string> firms, string? quantitySold, string? price, string? searchText)
+        public async Task<IActionResult> ToolFindProduct(int? page, List<string> firms, string? quantitySold, string? price, string? searchText)
         {
+            int pageSize = 16;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
             DateTime today = DateTime.Now;
             var listDiscount = _context.KHUYENMAI
+                .AsEnumerable()
                 .Where(km => km.ThoiGianEnd >= today && km.ThoiGianStart <= today)
                 .Select(km => new { km.MaKhuyenMai, km.PhanTramKhuyenMai })
                 .ToList();
-            var listProducts = _context.SANPHAM.AsQueryable();
+            IQueryable<SANPHAM> listProducts = _context.SANPHAM
+                .Select(sp => new SANPHAM
+                {
+                    MaSP = sp.MaSP,
+                    TenSP = sp.TenSP,
+                    SoLuongBan = sp.SoLuongBan,
+                    DonGiaBan = sp.DonGiaBan,
+                    DanhMucHang = sp.DanhMucHang,
+                    HinhAnh = sp.HinhAnh,
+                    KichCo = sp.KichCo,
+                    MoTa = sp.MoTa,
+                    MaKhuyenMai = sp.MaKhuyenMai,
+                    KHUYENMAI = _context.KHUYENMAI
+                                    .Where(km => km.MaKhuyenMai == sp.MaKhuyenMai)
+                                    .Select(km => new KHUYENMAI
+                                    {
+                                        MaKhuyenMai = km.MaKhuyenMai,
+                                        PhanTramKhuyenMai = (km.ThoiGianStart <= today && km.ThoiGianEnd >= today) ? km.PhanTramKhuyenMai : 0
+                                    })
+                                    .FirstOrDefault()
+                })
+                .AsQueryable();
 
             if (firms != null && firms.Count > 0)
             {
@@ -122,19 +208,10 @@ namespace Du_An_One.Controllers
             {
                 listProducts = listProducts.Where(x => (x.TenSP ?? "").Contains(searchText));
             }
-            var listProductsByFirm = listProducts.ToList();
 
-            var result = listProductsByFirm
-                                    .AsEnumerable()
-                                    .OrderByDescending(x => x.NgayNhap)
-                                    .Select(ldp => new
-                                    {
-                                        ldp,
-                                        PhanTramKhuyenMai = listDiscount.FirstOrDefault(ld => ld.MaKhuyenMai == ldp.MaKhuyenMai)?.PhanTramKhuyenMai ?? 0
-                                    })
-                                    .ToList();
-            ViewBag.ListProductsFind = result;
-            return View();
+            var productsList = await listProducts.ToListAsync();
+            PagedList<SANPHAM> lstPaged = new PagedList<SANPHAM>(productsList, pageNumber, pageSize);
+            return View(lstPaged);
         }
         [HttpPost]
         public async Task<IActionResult> ToolFindProductAJAX(List<string> firms, string? quantitySold, string? price, string? searchText)

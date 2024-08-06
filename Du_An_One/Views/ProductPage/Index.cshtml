@@ -1,4 +1,5 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<List<SANPHAM>>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_TempLayout.cshtml";
@@ -55,56 +56,63 @@
         </div>
     </a>
 
-</div>
+</nav>
 
 <!-- Section for displaying products -->
 <div class="container mx-auto px-4 py-16">
     <h2 class="text-2xl font-bold mb-4">SẢN PHẨM KHUYẾN MÃI</h2>
     @* View sản phẩm có overlayout-x auto *@
+    
+    @if (Model[1].Count() != 0) {
     <div class="grid grid-cols-1 overflow-x-auto py-3">
         <div class="flex flex-nowrap">
-
-            @foreach (var oneProduct in ViewBag.ListDiscountProducts)
+            @foreach (var oneProduct in Model[1])
             {
-
-                <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.ldp.MaSP" class="cursor-point bg-white rounded-lg shadow-md p-4 hover:scale-105 overflow-hidden flex-shrink-0 mr-4" style="min-width: 300px;">
+                <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.MaSP" class="cursor-point bg-white rounded-lg shadow-md p-4 hover:scale-105 overflow-hidden flex-shrink-0 mr-4" style="min-width: 300px;">
                     <div class="relative">
-                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@oneProduct.PhanTramKhuyenMai% OFF</span>
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@oneProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
                         <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                            <img src="@Url.Content("~/img/productImage/" + oneProduct.ldp.HinhAnh)" alt="@oneProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
+                            <img src="@Url.Content("~/img/productImage/" + oneProduct.HinhAnh)" alt="@oneProduct.TenSP"  class="w-full h-80 object-cover rounded-md">
                     </div>
-                    <h4 class="font-semibold mt-2">@oneProduct.ldp.TenSP</h4>
+                    <h4 class="font-semibold mt-2">@oneProduct.TenSP</h4>
                     <div class="flex items-center mt-1">
                         <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
                     </div>
-                    <p class="text-lg font-bold mt-2">@Math.Round((double)@oneProduct.ldp.DonGiaBan * ((double)1 - (double)@oneProduct.PhanTramKhuyenMai / 100), 2)  VND</p>
-                    <p class="line-through text-zinc-500">@oneProduct.ldp.DonGiaBan VND</p>
-
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@oneProduct.DonGiaBan * ((double)1 - (double)@oneProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2)  VND</p>
+                    <p class="line-through text-zinc-500">@oneProduct.DonGiaBan VND</p>
                 </a>
-            }
+                }
         </div>
     </div>
+    }
     @* View sản phẩm có xuống dòng *@
     <div class="container mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">SẢN PHẨM ĐỀ CỬ</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-3">
-            @foreach (var aProduct in ViewBag.ListNewProducts)
+            @foreach (var aProduct in Model[0])
             {
 
-                <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.ldp.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+                <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
                     <div class="relative">
-                        @if (@aProduct.PhanTramKhuyenMai != 0)
+                        @if (@aProduct.KHUYENMAI.PhanTramKhuyenMai != 0)
                         {
-                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.PhanTramKhuyenMai% OFF</span>
+                            <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
                         }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
-                            <img src="@Url.Content("~/img/productImage/" + aProduct.ldp.HinhAnh)" alt="@aProduct.ldp.TenSP" onerror="this.src='https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'" class="w-full h-80 object-cover rounded-md">
+                            <img src="@Url.Content("~/img/productImage/" + aProduct.HinhAnh)" alt="@aProduct.TenSP"  class="w-full h-80 object-cover rounded-md">
                     </div>
-                    <h4 class="font-semibold mt-2">@aProduct.ldp.TenSP</h4>
+                    <h4 class="font-semibold mt-2">@aProduct.TenSP</h4>
                     <div class="flex items-center mt-1">
                         <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
                     </div>
-                    <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.ldp.DonGiaBan * ((double)1 - (double)@aProduct.PhanTramKhuyenMai / 100), 2) VND</p>
-                    <p class="line-through text-zinc-500">@aProduct.ldp.DonGiaBan VND</p>
+
+                    @if (@aProduct.KHUYENMAI.PhanTramKhuyenMai != 0)
+                    {
+                        <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.DonGiaBan * ((double)1 - (double)@aProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2) VND</p>
+                        <p class="line-through text-zinc-500">@aProduct.DonGiaBan VND</p>
+                    } else
+                    {
+                        <p class="text-lg font-bold mt-2">@aProduct.DonGiaBan VND</p>
+                    }
                 </a>
             }
 
