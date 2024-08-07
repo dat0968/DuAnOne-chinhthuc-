@@ -6,22 +6,23 @@ namespace Du_An_One.Models
     public class HOADON
     {
         [Key]
-        [StringLength(5)]
+        [StringLength(5, ErrorMessage = "Mã hóa đơn phải có đúng 5 kí tự")]
+        [Required(ErrorMessage = "Mã hóa đơn không được để trống")]
         public string? MaHoaDon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Địa chỉ đơn hàng không được để trống")]
         [StringLength(200)]
         public string? DiaChiNhanHang { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Ngày tạo không được để trống")]
         public DateTime NgayTao { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="HTTT không được để trống")]
         [StringLength(25)]
         public string? HTTT { get; set; }
 
         [StringLength(30)]
-        public string? TinhTrang { get; set; } = "Chuẩn bị hàng";
+        public string? TinhTrang { get; set; } = null;
         [StringLength(5)]
         [ForeignKey("MaNV")]
         public string? MaNV { get; set; }

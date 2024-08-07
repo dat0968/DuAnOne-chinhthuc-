@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AcZAXHthv7A=",
+  "dgSpecHash": "4Z0O+s1ilmM=",
   "success": true,
   "projectFilePath": "D:\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\irony.netcore\\1.0.11\\irony.netcore.1.0.11.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\jquery\\1.6.3\\jquery.1.6.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
@@ -244,6 +245,7 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\toastr\\2.1.1\\toastr.2.1.1.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\x.pagedlist\\10.0.3\\x.pagedlist.10.0.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\x.pagedlist.mvc.core\\10.0.3\\x.pagedlist.mvc.core.10.0.3.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\xlparser\\1.5.2\\xlparser.1.5.2.nupkg.sha512"

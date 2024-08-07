@@ -5,54 +5,44 @@
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>XÓA THÔNG TIN HÓA ĐƠN</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>HOADON</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DiaChiNhanHang)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DiaChiNhanHang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NgayTao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NgayTao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HTTT)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HTTT)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TinhTrang)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TinhTrang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNV)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNV)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaKH)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaKH)
-        </dd>
-    </dl>
+<h3>Bạn có chắc chắn muốn xóa thông tin hóa đơn này?</h3>
+<form asp-action="Delete">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="MaHoaDon" class="control-label">Mã hóa đơn</label>
+        <input asp-for="MaHoaDon" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DiaChiNhanHang" class="control-label"> Địa chỉ nhận hàng</label>
+        <input asp-for="DiaChiNhanHang" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NgayTao" class="control-label">Ngày tạo</label>
+        <input asp-for="NgayTao" readonly type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="HTTT" class="control-label">HTTT</label>
+        <input asp-for="HTTT" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MaNV" class="control-label">Thu ngân</label>
+        <input asp-for="MaNV" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MaKH" class="control-label">Khách hàng</label>
+        <input asp-for="MaKH" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TinhTrang" class="control-label">Tình trạng</label>
+        <input asp-for="TinhTrang" readonly class="form-control" />
+    </div>
     
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaHoaDon" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div class="form-group">
+        <input type="submit" value="Xóa hóa đơn" class="btn btn-danger btn-sm" />
+    </div>
+</form>
+<div class="form-group">
+    <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
 </div>

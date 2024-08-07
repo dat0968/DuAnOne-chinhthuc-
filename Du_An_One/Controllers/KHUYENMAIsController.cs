@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Du_An_One.Data;
 using Du_An_One.Models;
-
+using X.PagedList;
+using X.PagedList.Extensions;
+using ClosedXML.Excel;
 namespace Du_An_One.Controllers
 {
     public class KHUYENMAIsController : Controller
@@ -20,13 +22,35 @@ namespace Du_An_One.Controllers
         }
 
         // GET: KHUYENMAIs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-              return _context.KHUYENMAI != null ? 
-                          View(await _context.KHUYENMAI.ToListAsync()) :
-                          Problem("Entity set 'Du_An_OneContext.KHUYENMAI'  is null.");
+            page = page < 1 ? 1 : page;
+            int pagesize = 10;
+            var khuyenmai = _context.KHUYENMAI.ToPagedList(page, pagesize);
+            return View(khuyenmai);
         }
+        [HttpPost]
+        public async Task<IActionResult> Index(string keywords, int page = 1)
+        {
+            if (keywords == null)
+            {
+                return RedirectToAction("Index", "KHUYENMAIs");
+            }
+            page = page < 1 ? 1 : page;
+            int pagesize = 10;
+            var query = _context.KHUYENMAI.AsQueryable();
+            query = query.Where(p => p.MaKhuyenMai.Contains(keywords));
+            var ketquatimkiem = query.ToPagedList(page, pagesize);
 
+            if (!ketquatimkiem.Any())
+            {
+                // Nếu không tìm thấy kết quả, trả về toàn bộ danh sách khách hàng
+                ketquatimkiem = _context.KHUYENMAI.ToPagedList(page, pagesize);
+                TempData["ErrorMessage"] = "Không tìm thấy mã khuyến mãi với từ khóa đã nhập.";
+            }
+
+            return View(ketquatimkiem);
+        }
         // GET: KHUYENMAIs/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -58,13 +82,39 @@ namespace Du_An_One.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaKhuyenMai,PhanTramKhuyenMai,ThoiGianStart,ThoiGianEnd")] KHUYENMAI kHUYENMAI)
         {
+            DateTime today = DateTime.Now;
             if (ModelState.IsValid)
             {
-                _context.Add(kHUYENMAI);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                bool exists = await _context.KHUYENMAI.AnyAsync(p => p.MaKhuyenMai == kHUYENMAI.MaKhuyenMai);
+                if (kHUYENMAI.ThoiGianStart <= today)
+                {
+                    ModelState.AddModelError("ThoiGianStart", "Thời gian bắt đầu tối thiểu phải hôm nay hoặc sau thời gian hôm nay.");
+                    return View(kHUYENMAI);
+                }
+                if (kHUYENMAI.ThoiGianStart >= kHUYENMAI.ThoiGianEnd)
+                {
+                    ModelState.AddModelError("ThoiGianEnd", "Thời gian kết thúc phải đi sau thời gian bắt đầu");
+                    return View(kHUYENMAI);
+                }
+                if (exists)
+                {
+                    ModelState.AddModelError("MaKhuyenMai", "Mã này đã tồn tại. Vui lòng nhập lại");
+                    return View(kHUYENMAI);
+                }
+                try
+                {
+                    _context.Add(kHUYENMAI);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Thêm khuyến mãi thành công";
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "Có lỗi xảy ra khi thêm khuyến mãi. Vui lòng thử lại.";
+                }
             }
-            return View(kHUYENMAI);
+            return View();
         }
 
         // GET: KHUYENMAIs/Edit/5
@@ -90,9 +140,21 @@ namespace Du_An_One.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("MaKhuyenMai,PhanTramKhuyenMai,ThoiGianStart,ThoiGianEnd")] KHUYENMAI kHUYENMAI)
         {
+            DateTime today = DateTime.Now;
             if (id != kHUYENMAI.MaKhuyenMai)
             {
                 return NotFound();
+            }
+
+            if (kHUYENMAI.ThoiGianStart <= today)
+            {
+                ModelState.AddModelError("ThoiGianStart", "Thời gian bắt đầu tối thiểu phải hôm nay hoặc sau thời gian hôm nay.");
+                return View(kHUYENMAI);
+            }
+            if (kHUYENMAI.ThoiGianStart >= kHUYENMAI.ThoiGianEnd)
+            {
+                ModelState.AddModelError("ThoiGianEnd", "Thời gian kết thúc phải đi sau thời gian bắt đầu");
+                return View(kHUYENMAI);
             }
 
             if (ModelState.IsValid)
@@ -101,21 +163,15 @@ namespace Du_An_One.Controllers
                 {
                     _context.Update(kHUYENMAI);
                     await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Sửa thông tin khuyến mãi thành công";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!KHUYENMAIExists(kHUYENMAI.MaKhuyenMai))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin khuyến mãi. Vui lòng thử lại.";
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(kHUYENMAI);
+            return View();
         }
 
         // GET: KHUYENMAIs/Delete/5
@@ -146,13 +202,22 @@ namespace Du_An_One.Controllers
                 return Problem("Entity set 'Du_An_OneContext.KHUYENMAI'  is null.");
             }
             var kHUYENMAI = await _context.KHUYENMAI.FindAsync(id);
-            if (kHUYENMAI != null)
+            try
             {
-                _context.KHUYENMAI.Remove(kHUYENMAI);
+                if (kHUYENMAI != null)
+                {
+                    _context.KHUYENMAI.Remove(kHUYENMAI);
+                }
+
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Xóa khuyến mãi thành công!";
+                return RedirectToAction(nameof(Index));
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa dữ liệu. Vui lòng thử lại.";
+            }
+            return View();
         }
 
         private bool KHUYENMAIExists(string id)

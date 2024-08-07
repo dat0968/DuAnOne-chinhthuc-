@@ -5,9 +5,8 @@
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Thêm sản phẩm mới</h1>
+<h1>THÊM SẢN PHẨM MỚI</h1>
 
-<h4>Sản phẩm</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
-                <input asp-for="SoLuongBan" class="form-control" min="0" />
+                <input asp-for="SoLuongBan" class="form-control" />
                 <span asp-validation-for="SoLuongBan" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -35,19 +34,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
-                <input asp-for="NgayNhap" class="form-control" />
+                <input asp-for="NgayNhap" type="date" class="form-control" />
                 <span asp-validation-for="NgayNhap" class="text-danger"></span>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label asp-for="DanhMucHang" class="control-label">Danh mục hãng</label>
-                @* <input asp-for="DanhMucHang" class="form-control" /> *@
+               
                 <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
                 <span asp-validation-for="DanhMucHang" class="text-danger"></span>
-            </div>
+            </div> 
+
             <div class="form-group">
-                <label asp-for="KichCo" class="control-label">Kích cỡ</label>
-                <input asp-for="KichCo" class="form-control" />
-                <span asp-validation-for="KichCo" class="text-danger"></span>
+                <label>Kích cỡ</label>
+                <select asp-for="KichCo" class="form-select" aria-label="Default select example">
+                    <option value="M" selected>M</option>
+                    <option value="L">L</option>
+                    <option value="S">S</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="FileImage" class="control-label">Chọn hình ảnh chính</label>
@@ -68,22 +73,27 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaKhuyenMai" class="control-label">Tỷ lệ giảm giá sản phẩm</label>
-                <select asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai"></select>
+                <select asp-for="MaKhuyenMai" class="form-control" asp-items="ViewBag.MaKhuyenMai">
+                    <option value="">Null</option>
+                    
+                </select>
+                
             </div>
             <div class="form-group">
-                <label asp-for="MaNV" class="control-label">Tên nhân viên</label>
+                <label asp-for="MaNV" class="control-label">Người nhập</label>
                 <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNv"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Thêm sản phẩm" class="btn btn-primary" />
             </div>
         </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     <script>

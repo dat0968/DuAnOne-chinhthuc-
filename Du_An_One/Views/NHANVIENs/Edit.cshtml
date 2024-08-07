@@ -1,110 +1,124 @@
 ﻿@model Du_An_One.Models.NHANVIEN
 
-@{
+ @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
-<div class="page-inner">
-<h2>Sửa Nhân Viên</h2>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<form asp-action="Edit" method="post">
-    <div class="row">
-        <div class="col-md-6">
+@* @if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@section EditNhanVienScripts {
+    <script>
+        // Chuyển hướng đến trang Index sau 2 giây nếu có thông báo thành công
+        if (@(ViewBag.SuccessMessage != null ? "true" : "false")) {
+            setTimeout(function() {
+                window.location.href = '@Url.Action("Index")';
+            }, 2000);
+        }
+    </script>
+}  *@
+<h4>SỬA THÔNG TIN NHÂN VIÊN</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
             <div class="form-group">
-                <label for="MaNhanVien">Mã Nhân Viên</label>
-                <input asp-for="MaNV" class="form-control" readonly />
-                @Html.ValidationMessageFor(model => model.MaNV, "", new { @class = "text-danger" })
+                <label asp-for="MaNV" class="control-label">Mã nhân viên</label>
+                <input asp-for="MaNV" readonly class="form-control" />
+                <span asp-validation-for="MaNV" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="TenNhanVien">Tên Nhân Viên</label>
-                <input asp-for="HoTen" class="form-control" maxlength="50" />
-                @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                <label asp-for="HoTen" class="control-label">Họ và tên</label>
+                <input asp-for="HoTen" class="form-control" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="NgaySinh">Ngày sinh</label>
-                <input asp-for="NgaySinh" class="form-control" type="date" min="0" id="CCCDField" />
-                @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                <label asp-for="NgaySinh" class="control-label">Ngày sinh</label>
+                <input asp-for="NgaySinh" type="date" class="form-control" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="NoiSinh">Nơi sinh</label>
-                <input asp-for="NoiSinh" class="form-control" type="text" min="0" id="CCCDField" />
-                @Html.ValidationMessageFor(model => model.NoiSinh, "", new { @class = "text-danger" })
+                <label asp-for="NoiSinh" class="control-label">Nơi sinh</label>
+                <input asp-for="NoiSinh" class="form-control" />
+                <span asp-validation-for="NoiSinh" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="DiaChi">Địa chỉ</label>
-                <input asp-for="DiaChi" type="text" class="form-control" />
-                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                <label asp-for="DiaChi" class="control-label">Địa chỉ</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="CCCD">CCCD</label>
-                <input asp-for="CCCD" type="text" class="form-control" />
-                @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+                <label asp-for="CCCD" class="control-label">CCCD</label>
+                <input asp-for="CCCD" class="form-control" />
+                <span asp-validation-for="CCCD" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="DienThoai">Điện Thoại</label>
-                <input asp-for="SDT" class="form-control" type="number" min="0" id="SDTField" />
-                @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-md-6">
-
-
-            <div class="form-group">
-                <label for="Email">Email</label>
-                <input asp-for="Email" class="form-control" type="email" />
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <label asp-for="SDT" class="control-label">SDT</label>
+                <input asp-for="SDT" class="form-control" />
+                <span asp-validation-for="SDT" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="NgayVaoLam">Ngày vào làm</label>
-                <input asp-for="NgayVaoLam" class="form-control" type="date" />
-                @Html.ValidationMessageFor(model => model.NgayVaoLam, "", new { @class = "text-danger" })
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Luong">Lương</label>
-                <input asp-for="Luong" type="text" class="form-control" />
-                @Html.ValidationMessageFor(model => model.Luong, "", new { @class = "text-danger" })
+                <label asp-for="NgayVaoLam" class="control-label">Ngày vào làm</label>
+                <input asp-for="NgayVaoLam" type="date" class="form-control" />
+                <span asp-validation-for="NgayVaoLam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="VaiTro">Vai trò</label>
-                    <div class="form-group">
-                        <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
-                            <option selected>Chọn vai trò</option>
-                            <option value="Quản lý">Quản lý</option>
-                            <option value="Nhân viên">Nhân viên</option>
-                        </select>
-                    </div>
-                @Html.ValidationMessageFor(model => model.VaiTro, "", new { @class = "text-danger" })
+                <label asp-for="Luong" class="control-label">Lương</label>
+                <input asp-for="Luong" class="form-control" />
+                <span asp-validation-for="Luong" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="TenTaiKhoan">Tên tài khoản</label>
-                <input asp-for="TenTaiKhoan" type="text" class="form-control" />
-                @Html.ValidationMessageFor(model => model.TenTaiKhoan, "", new { @class = "text-danger" })
+                <label>Vai trò</label>
+                <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
+                    <option value="Nhân viên" selected>Nhân viên</option>
+                    <option value="Quản lý">Quản lý</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="MatKhau">Mật khẩu</label>
-                <input asp-for="MatKhau" type="text" class="form-control" />
-                @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                <label asp-for="TenTaiKhoan" class="control-label">Tên tài khoản</label>
+                <input asp-for="TenTaiKhoan" class="form-control" />
+                <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="TinhTrang">Tình trạng</label>
-                    <div class="form-group">
-                        <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
-                            <option selected>Chọn tình trạng</option>
-                            <option value="Mở">Mở</option>
-                            <option value="Khóa">Khóa</option>
-                        </select>
-                    </div>
-                @Html.ValidationMessageFor(model => model.TinhTrang, "", new { @class = "text-danger" })
+                <label asp-for="MatKhau" class="control-label">Mật khẩu</label>
+                <input asp-for="MatKhau" class="form-control" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label>Tình trạng</label>
+                <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
+                    <option value="Mở" selected>Mở</option>
+                    <option value="Khóa">Khóa</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
         </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Sửa Nhân Viên" class="btn btn-primary" />
-    </div>
-</form>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
-</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

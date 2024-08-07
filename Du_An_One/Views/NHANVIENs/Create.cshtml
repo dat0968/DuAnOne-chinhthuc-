@@ -1,93 +1,259 @@
 ﻿@model Du_An_One.Models.NHANVIEN
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
-<div class="page-inner">
-<h1>Create</h1>
-
-<h4>NHANVIEN</h4>
+<h4>THÊM NHÂN VIÊN</h4>
+@* @if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@section AdditionalNhanVienScripts {
+    <script>
+        if (@(ViewBag.SuccessMessage != null ? "true" : "false")) {
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index")';
+            }, 2000);
+        }
+    </script>
+} *@
 <hr />
-
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="exampleInputEmail1">Mã nhân viên</label>
-        <input asp-for="MaNV" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Mã nhân viên">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Họ tên</label>
-        <input asp-for="HoTen" type="text" class="form-control" id="exampleInputPassword1" placeholder="Họ tên">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Ngày sinh</label>
-        <input asp-for="NgaySinh" type="date" class="form-control" id="exampleInputPassword1" placeholder="Ngày sinh">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Nơi sinh</label>
-        <input asp-for="NoiSinh" type="text" class="form-control" id="exampleInputPassword1" placeholder="Nơi sinh">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Địa chỉ</label>
-        <input asp-for="DiaChi" type="text" class="form-control" id="exampleInputPassword1" placeholder="Địa chỉ">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Căn cước công dân</label>
-        <input asp-for="CCCD" type="number" class="form-control" id="exampleInputPassword1" placeholder="CCCD">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Số điện thoại</label>
-        <input asp-for="SDT" type="text" class="form-control" id="exampleInputPassword1" placeholder="SDT">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Email</label>
-        <input asp-for="Email" type="email" class="form-control" id="exampleInputPassword1" placeholder="Email">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Ngày vào làm</label>
-        <input asp-for="NgayVaoLam" type="date" class="form-control" id="exampleInputPassword1" placeholder="Ngày vào làm">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Lương</label>
-        <input asp-for="Luong" type="text" class="form-control" id="exampleInputPassword1" placeholder="Lương">
-    </div>
-
-    <div class="form-group">
-        <label>Vai trò</label>
-        <div class="form-group">
-            <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
-                <option selected>Chọn vai trò</option>
-                <option value="Quản lý">Quản lý</option>
-                <option value="Nhân viên">Nhân viên</option>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Tên tài khoản</label>
-        <input asp-for="TenTaiKhoan" type="text" class="form-control" id="exampleInputPassword1" placeholder="Tên tài khoản">
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Mật khẩu</label>
-        <input asp-for="MatKhau" type="password" class="form-control" id="exampleInputPassword1" placeholder="Mật khẩu">
-    </div>
-        <div class="form-group">
-            <label>Tình trạng</label>
+<div class="row"> 
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="MaNV" class="control-label">Mã nhân viên</label>
+                <input asp-for="MaNV" class="form-control" />
+                <span asp-validation-for="MaNV" class="text-danger"></span>
+            </div> 
             <div class="form-group">
+                <label asp-for="HoTen" class="control-label"> Họ tên</label>
+                <input asp-for="HoTen" class="form-control" />
+                <span asp-validation-for="HoTen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySinh" class="control-label">Ngày sinh</label>
+                <input asp-for="NgaySinh" type="date" class="form-control" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoiSinh" class="control-label">Nơi sinh</label>
+                <input asp-for="NoiSinh" class="form-control" />
+                <span asp-validation-for="NoiSinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Địa chỉ</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CCCD" class="control-label">CCCD</label>
+                <input asp-for="CCCD" class="form-control" />
+                <span asp-validation-for="CCCD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SDT" class="control-label">SĐT</label>
+                <input asp-for="SDT" class="form-control" />
+                <span asp-validation-for="SDT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayVaoLam" class="control-label">Ngày vào làm</label>
+                <input asp-for="NgayVaoLam" type="date" class="form-control" />
+                <span asp-validation-for="NgayVaoLam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Luong" class="control-label">Lương</label>
+                <input asp-for="Luong" min="0" class="form-control" />
+                <span asp-validation-for="Luong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Vai trò</label>
+                <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
+                    <option value="Nhân viên" selected>Nhân viên</option>
+                    <option value="Quản lý">Quản lý</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenTaiKhoan" class="control-label">Tên tài khoản</label>
+                <input asp-for="TenTaiKhoan" class="form-control" />
+                <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label">Mật khẩu</label>
+                <input asp-for="MatKhau" class="form-control" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Tình trạng</label>
                 <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
-                    <option selected>Chọn tình trạng</option>
-                    <option value="Mở">Mở</option>
+                    <option value="Mở" selected>Mở</option>
                     <option value="Khóa">Khóa</option>
                 </select>
             </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm khách hàng" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
         </div>
-
-
-    <button type="submit" class="btn btn-primary">Thêm nhân viên</button>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    </div>
 </div>
 
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <h4>THÊM SẢN PHẨM</h4>
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@section AdditionalSanPhamScripts {
+    <script>
+        if (@(ViewBag.SuccessMessage != null ? "true" : "false")) {
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index")';
+            }, 2000);
+        }
+    </script>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
+                <input asp-for="MaSP" readonly class="form-control" />
+                <span asp-validation-for="MaSP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenSP" class="control-label"> Tên sản phẩm</label>
+                <input asp-for="TenSP" class="form-control" />
+                <span asp-validation-for="TenSP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongBan" class="control-label">Số lượng bán</label>
+                <input asp-for="SoLuongBan" min="0" class="form-control" />
+                <span asp-validation-for="SoLuongBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGiaBan" class="control-label">Đơn giá bán</label>
+                <input asp-for="DonGiaBan" min="0" class="form-control" />
+                <span asp-validation-for="DonGiaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
+                <input asp-for="NgayNhap" type="date" class="form-control" />
+                <span asp-validation-for="NgayNhap" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Danh mục hàng</label>
+                <select asp-for="DanhMucHang" class="form-select" aria-label="Default select example">
+                    <option selected>Chọn danh mục hàng</option>
+                    <option value="TUFT" selected>TUFT</option>
+                    <option value="Adidas">Adidas</option>
+                    <option value="Adidus">Adidus</option>
+                    <option value="Surius">Surius</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HinhAnh" class="control-label">Hình ảnh</label>
+                <input asp-for="HinhAnh" class="form-control" />
+                <span asp-validation-for="HinhAnh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayVaoLam" class="control-label">Ngày vào làm</label>
+                <input asp-for="NgayVaoLam" type="date" class="form-control" />
+                <span asp-validation-for="NgayVaoLam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Luong" class="control-label">Lương</label>
+                <input asp-for="Luong" min="0" class="form-control" />
+                <span asp-validation-for="Luong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Vai trò</label>
+                <select asp-for="VaiTro" class="form-select" aria-label="Default select example">
+                    <option selected>Chọn vai trò</option>
+                    <option value="Nhân viên" selected>Nhân viên</option>
+                    <option value="Quản lý">Quản lý</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenTaiKhoan" class="control-label">Tên tài khoản</label>
+                <input asp-for="TenTaiKhoan" class="form-control" />
+                <span asp-validation-for="TenTaiKhoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label">Mật khẩu</label>
+                <input asp-for="MatKhau" class="form-control" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Tình trạng</label>
+                <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
+                    <option selected>Chọn tình trạng</option>
+                    <option value="Mở" selected>Mở</option>
+                    <option value="Khóa">Khóa</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm khách hàng" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
+        </div>
+    </div>
+</div> *@

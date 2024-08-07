@@ -4,10 +4,28 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
-
-<h1>Edit</h1>
-
-<h4>KHUYENMAI</h4>
+@* @if(ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if(ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@section EditKhuyenMaiScripts {
+    <script>
+        if(@(ViewBag.SuccessMessage != null ? "true" : "false")){
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index")';
+                }, 2000);
+        }
+    </script>
+} *@
+<h4>SỬA THÔNG TIN KHUYẾN MÃI</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,25 +44,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="ThoiGianStart" class="control-label"></label>
-                <input asp-for="ThoiGianStart" class="form-control" />
-                <span asp-validation-for="ThoiGianStart" class="text-danger"></span>
+                <input asp-for="ThoiGianStart" type="date" class="form-control" />
+                <span asp-validation-for="ThoiGianStart"  class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ThoiGianEnd" class="control-label"></label>
-                <input asp-for="ThoiGianEnd" class="form-control" />
+                <input asp-for="ThoiGianEnd" type="date" class="form-control" />
                 <span asp-validation-for="ThoiGianEnd" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
+            
         </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

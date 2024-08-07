@@ -1,5 +1,6 @@
-﻿@model IEnumerable<Du_An_One.Models.HOADON>
-
+﻿@* @model IEnumerable<Du_An_One.Models.HOADON> *@
+@model X.PagedList.IPagedList<Du_An_One.Models.HOADON>
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/_LayoutAdmin.cshtml";
@@ -65,71 +66,82 @@
     </tbody>
 </table>
  *@
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <div class="page-inner">
 
 
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Hóa đơn</h1>
-</div>
-<div class="row">
-
-    <div class="col-md-9">
-
-        <a class="btn btn-primary" href="HOADONS/Create">Thêm hóa đơn</a>
-        <div class="row">
-
-            <div class="col-sm-12" style="margin:20px 0 0 0; ">
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
-            </div>
-        </div>
-
-        <table class="table table-bordered table-hover" style="width:135%;">
-            <thead>
-                <tr style="font-size:.9em">
-                    <th class="text-center" style="width:auto">Mã HĐ</th>
-                    <th class="text-center" style="width:auto">Địa chỉ nhận hàng</th>
-
-                    <th class="text-center" style="width:auto">Ngày tạo</th>
-                    <th class="text-center" style="width:auto">HTTT</th>
-                    <th class="text-center" style="width:auto">Tình trạng</th>
-
-                    <th class="text-center" style="width:auto">Thu ngân</th>
-                    <th class="text-center" style="width:auto">Sở hữu</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var hoadon in Model)
-                {
-                    <tr style="font-size:.9em">
-                        <td name="DisplayMaNhanVien">@hoadon.MaHoaDon</td>
-                        <td>@hoadon.DiaChiNhanHang</td>
-
-                        <td>@hoadon.NgayTao.ToShortDateString()</td>
-                        <td>@hoadon.HTTT</td>
-                        <td>@hoadon.TinhTrang</td>
-                        <td>@hoadon.MaNV</td>
-                        <td>@hoadon.MaKH</td>
-                        <!-- Sửa -->
-
-                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@hoadon.MaHoaDon"><i class="bi bi-pencil"></i></a></td>
-
-                        <!-- Xóa -->
-                         <td>
-                                <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@hoadon.MaHoaDon">Delete</a>
-                         </td>
-        
-
-
-                    </tr>
-                }
-            </tbody>
-        </table>
-
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">HÓA ĐƠN</h1>
     </div>
+    <div class="row">
 
+        <div class="col-md-9">
+            <div class="row">
+
+                <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                    <form asp-controller="HOADONs" asp-action="Index">
+                        <input type="input" id="searchInput" name="keywords" class="form-control mb-3" placeholder="Tìm kiếm">
+                        <button style="margin-bottom: 20px"><a class="btn btn-primary">Tìm kiếm</a></button>
+
+                    </form>
+                    <a style="color:green" asp-controller="CHITIETHOADONs" asp-action="Index">Chuyển tới chi tiết hóa đơn</a>
+                    @*  <button type="button" class="btn btn-primary editButton" asp-action="Edit"><i class="bi bi-pencil"></i></button> *@
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover" style="width:135%;">
+
+        </div>
+        <thead>
+            <tr style="font-size:.9em">
+                <th class="text-center" style="width:auto">Mã Hóa Đơn</th>
+                <th class="text-center" style="width:auto">Địa chỉ nhân hàng</th>
+                <th class="text-center" style="width:auto">Ngày tạo</th>
+                <th class="text-center" style="width:auto">HTTT</th>
+                <th class="text-center" style="width:auto">Thu ngân</th>
+                <th class="text-center" style="width:auto">Khách hàng</th>
+                <th class="text-center" style="width:auto">Tình trạng</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hoadon in Model)
+            {
+                <tr style="font-size:.9em">
+                    <td name="DisplayMaHoaDon">@hoadon.MaHoaDon</td>
+                    <td>@hoadon.DiaChiNhanHang</td>
+                    <td>@hoadon.NgayTao.ToString("dd/MM/yyyy")</td>
+                    <td>@hoadon.HTTT</td>
+                    <td>@hoadon.MaNV</td>
+                    <td>@hoadon.MaKH</td>
+                    <td>@hoadon.TinhTrang</td>
+
+                    <!-- Sửa -->
+
+                    <td><a type="button" class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@hoadon.MaHoaDon">Sửa</a></td>
+                    <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@hoadon.MaHoaDon">Chi tiết</a></td>
+
+                    <!-- Xóa -->
+                    <td>
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@hoadon.MaHoaDon">Xóa</a>
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       LiElementClasses = new List<string> { "page-item" },
+       PageClasses = new List<string> { "page-link" }
+   })
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

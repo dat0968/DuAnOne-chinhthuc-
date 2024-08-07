@@ -1,53 +1,95 @@
-﻿@model IEnumerable<Du_An_One.Models.CHITIETHOADON>
-
+﻿
+ @model X.PagedList.IPagedList<Du_An_One.Models.CHITIETHOADON>
+@using X.PagedList.Mvc.Core
+ 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<div class="page-inner">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MaHoaDon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaSP)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoLuongMua)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DonGia)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaHoaDon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaSP)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoLuongMua)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DonGia)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">CHI TIẾT HÓA ĐƠN</h1>
+    </div>
+    <div class="row">
+
+        <div class="col-md-9">
+
+            
+            <a href="CHITIETHOADONs/ExportExcelHoaDon" class="btn btn-label-success btn-round btn-sm me-2">
+                <span class="btn-label">
+                    <i class="fa fa-download"></i>
+                </span>
+                Xuất danh sách hóa đơn
+            </a>
+            <div class="row">
+
+                <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                    <form asp-controller="CHITIETHOADONs" asp-action="Index">
+                        <input type="input" id="searchInput" name="keywords" class="form-control mb-3" placeholder="Tìm kiếm">
+                        <button style="margin-bottom: 20px"><a class="btn btn-primary">Tìm kiếm</a></button>
+
+                    </form>
+                    <a href="HOADONs/index"><button style="color:green">Chuyển tới hóa đơn</button></a>
+                    @*  <button type="button" class="btn btn-primary editButton" asp-action="Edit"><i class="bi bi-pencil"></i></button> *@
+                </div>
+            </div>
+
+            <table class="table table-bordered table-hover" style="width:135%;">
+
+        </div>
+        <thead>
+            <tr style="font-size:.9em">
+                <th class="text-center" style="width:auto">Mã Hóa đơn</th>
+                <th class="text-center" style="width:auto">Mã sản phẩm</th>
+                <th class="text-center" style="width:auto">Số lượng mua</th>
+                <th class="text-center" style="width:auto">Đơn giá</th>
+                <th class="text-center" style="width:auto">Ngày tạo</th>
+                <th class="text-center" style="width:auto">Tổng tiền</th>
+                <th class="text-center" style="width:auto">Khách hàng</th>
+                <th class="text-center" style="width:auto">Tình trạng</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chitiethoadon in Model)
+            {
+                <tr style="font-size:.9em">
+                    <td>@chitiethoadon.MaHoaDon</td>
+                    <td>@chitiethoadon.MaSP</td>
+                    <td>@chitiethoadon.SoLuongMua</td>
+                    <td>@((chitiethoadon.SANPHAM?.DonGiaBan ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))</td>
+                    <td>@chitiethoadon.HOADON?.NgayTao.ToString("dd/MM/yyyy")</td>
+                    <td>@((chitiethoadon.SANPHAM?.DonGiaBan ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * (chitiethoadon.SoLuongMua))</td>
+                    <td>@chitiethoadon.HOADON?.MaKH</td>
+                    <td>@chitiethoadon.HOADON?.TinhTrang</td>
+
+                    <!-- Sửa -->
+                    <td><a type="button" class="btn btn-sm btn-info" asp-action="Edit" asp-controller="CHITIETHOADONs" asp-route-id="@chitiethoadon.ID">Sửa</a></td>
+                    <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-controller="CHITIETHOADONs" asp-route-id="@chitiethoadon.ID">Chi tiết</a></td>
+
+                    <!-- Xóa -->
+                    <td>
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@chitiethoadon.ID">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
+     <div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+   {
+       LiElementClasses = new List<string> { "page-item" },
+       PageClasses = new List<string> { "page-link" }
+   })
+    </div> 
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</div>

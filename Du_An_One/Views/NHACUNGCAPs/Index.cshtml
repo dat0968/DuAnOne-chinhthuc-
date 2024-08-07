@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Du_An_One.Models.NHACUNGCAP>
+﻿@* @model IEnumerable<Du_An_One.Models.NHACUNGCAP> *@
+    @model X.PagedList.IPagedList<Du_An_One.Models.NHACUNGCAP>
+ @using X.PagedList.Mvc.Core
 
 @{
     ViewData["Title"] = "Index";
@@ -76,8 +78,8 @@
 }
     </tbody>
 </table> *@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+@* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> *@
 <div class="page-inner">
 
 
@@ -90,11 +92,21 @@
     <div class="col-md-9">
 
         <a class="btn btn-primary" href="NHACUNGCAPs/Create">Thêm nhà cung cấp</a>
+            <a href="NHACUNGCAPs/ExportExcelNhaCungCap" class="btn btn-label-success btn-round btn-sm me-2">
+                <span class="btn-label">
+                    <i class="fa fa-download"></i>
+                </span>
+                Xuất danh sách nhà cung cấp
+            </a>
         <div class="row">
 
-            <div class="col-sm-12" style="margin:20px 0 0 0; ">
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Tìm kiếm">
-            </div>
+                <div class="col-sm-12" style="margin:20px 0 0 0; ">
+                    <form asp-controller="NHACUNGCAPs" asp-action="Index">
+                        <input type="input" id="searchInput" name="keywords" class="form-control mb-3" placeholder="Tìm kiếm">
+                        <button style="margin-bottom: 20px"><a class="btn btn-primary">Tìm kiếm</a></button>
+
+                    </form>
+                </div>
         </div>
 
         <table class="table table-bordered table-hover" style="width:135%;">
@@ -109,6 +121,9 @@
 
                     <th class="text-center" style="width:auto">Thời gian cung cấp</th>
                     <th class="text-center" style="width:auto">Tình trạng</th>
+                    <th></th>
+                        <th></th>
+                        <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -123,15 +138,14 @@
                         <td>@nhacc.SDT</td>
                         <td>@nhacc.ThoiGianCungCap.ToShortDateString()</td>
                         <td>@nhacc.TinhTrang</td>
-
-
+                          
                         <!-- Sửa -->
 
-                        <td><a type="button" class="btn btn-primary editButton"  asp-action="Edit" asp-route-id="@nhacc.MaNhaCC"><i class="bi bi-pencil"></i></a></td>
-
+                            <td><a type="button" class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@nhacc.MaNhaCC"><i class="bi bi-pencil">Sửa</i></a></td>
+                            <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@nhacc.MaNhaCC">Chi tiết</a></td>
                         <!-- Xóa -->
                          <td>
-                            <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@nhacc.MaNhaCC">Delete</a>
+                            <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@nhacc.MaNhaCC">Xóa</a>
                          </td>
         
 
@@ -143,7 +157,13 @@
 
     </div>
 
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</div>
+        <div>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+       {
+           LiElementClasses = new List<string> { "page-item" },
+           PageClasses = new List<string> { "page-link" }
+       })
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </div>

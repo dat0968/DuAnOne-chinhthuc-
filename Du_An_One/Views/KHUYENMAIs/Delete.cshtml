@@ -4,37 +4,55 @@
     ViewData["Title"] = "Delete";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
+@* @if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+@section Scripts {
+    <script>
+        // Chuyển hướng đến trang Index sau 2 giây nếu có thông báo thành công
+        if (@(ViewBag.SuccessMessage != null ? "true" : "false")) {
+            setTimeout(function() {
+                window.location.href = '@Url.Action("Index")';
+            }, 2000);
+        }
+    </script>
+} *@
+<h1>XÓA THÔNG TIN KHUYẾN MÃI</h1>
 
-<h1>Delete</h1>
+<h3>Bạn có muốn xóa thông tin khuyến mãi này?</h3>
+<form asp-action="Delete">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="MaKhuyenMai" class="control-label">Mã khuyến mãi</label>
+        <input asp-for="MaKhuyenMai" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PhanTramKhuyenMai" class="control-label"> Phần trăm</label>
+        <input asp-for="PhanTramKhuyenMai" readonly class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ThoiGianStart" class="control-label">Thời gian bắt đầu</label>
+        <input asp-for="ThoiGianStart" readonly type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ThoiGianEnd" class="control-label">Thời gian kết thúc</label>
+        <input asp-for="ThoiGianEnd" readonly type="date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Xóa thông tin" class="btn btn-danger" /> |
+        
+    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>KHUYENMAI</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhanTramKhuyenMai)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhanTramKhuyenMai)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianStart)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianStart)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ThoiGianEnd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ThoiGianEnd)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaKhuyenMai" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+</form>
+<div class="form-group">
+    <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
 </div>
