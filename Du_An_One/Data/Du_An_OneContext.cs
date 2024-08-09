@@ -31,6 +31,7 @@ namespace Du_An_One.Data
         public DbSet<Du_An_One.Models.CHITIETNHAP>? CHITIETNHAP { get; set; }
 
         public DbSet<Du_An_One.Models.HINHANH>? HINHANH { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<SANPHAM>()
@@ -39,6 +40,7 @@ namespace Du_An_One.Data
                 .HasForeignKey(sp => sp.MaKhuyenMai)
                 .OnDelete(DeleteBehavior.SetNull);
         }
+
 
     }
 }

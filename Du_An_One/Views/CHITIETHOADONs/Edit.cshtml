@@ -33,19 +33,19 @@
 
     <div class="form-group">
         <label asp-for="DonGia" class="control-label">Đơn giá</label>
-        <input asp-for="DonGia" readonly class="form-control" value="@(Model.SANPHAM?.DonGiaBan * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))" />
+        <input asp-for="DonGia" readonly class="form-control" value="@((Model?.DonGia ?? 0) * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))" />
         <span asp-validation-for="DonGia" class="text-danger"></span>
     </div>
-
     <div class="form-group">
+        <label class="control-label">Tổng tiền</label>
+        <input readonly class="form-control" value="@((Model?.DonGia ?? 0) * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * (Model.SoLuongMua))" />
+    </div>
+    @* <div class="form-group">
         <label class="control-label">Ngày tạo</label>
         <input class="form-control" readonly value="@Model.HOADON?.NgayTao.ToString("dd/MM/yyyy")" />
     </div>
 
-    <div class="form-group">
-        <label class="control-label">Tổng tiền</label>
-        <input readonly class="form-control" value="@(Model.SANPHAM?.DonGiaBan * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * Model.SoLuongMua)" />
-    </div>
+    
 
     <div class="form-group">
         <label class="control-label">Khách hàng</label>
@@ -71,7 +71,7 @@
         <label class="control-label">Tình trạng</label>
         <input readonly class="form-control" value="@Model.HOADON?.TinhTrang" />
     </div>
-
+ *@
     <!-- Nút Submit và Quay lại -->
     <div class="form-group">
         <button type="submit" class="btn btn-danger">Sửa</button>

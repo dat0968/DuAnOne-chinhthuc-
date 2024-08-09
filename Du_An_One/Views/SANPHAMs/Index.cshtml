@@ -95,7 +95,6 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    var img = item.HinhAnh == null ? "~/img/productImage/default.jpg" : "~/img/productImage/" + item.HinhAnh;
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.MaSP)</td>
                         <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
@@ -104,7 +103,7 @@
                         <td>@item.NgayNhap.ToString("dd/MM/yyyy")</td>
                         <td>@Html.DisplayFor(modelItem => item.DanhMucHang)</td>
                         <td>
-                            <img data-imgbigurl="@Url.Content(img)" src="@Url.Content(img)" alt="No Image🖼" style="width: 100px; height: auto;" />
+                            <img data-imgbigurl="@Url.Content("~/img/productImage/" + item.HinhAnh)" src="@Url.Content("~/img/productImage/" + item.HinhAnh)"  alt="No Image🖼" style="width: 100px; height: auto;" />
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
                         <td>
@@ -133,8 +132,11 @@
     LiElementClasses = new List<string> { "page-item" },
     PageClasses = new List<string> { "page-link" }
 })
-<div id="contentThumbnail" class="justify-content-center align-items-center position-fixed w-100 h-100" style="display: none; z-index: 1000; top: 0; overflow: auto; background-color: rgba(0, 0, 0, 0.8);" onclick="if(event.target == this) document.getElementById('contentThumbnail').style.display = 'none'">
+<!--Hiển thị thông tin chi tiết sản phẩm-->
+<div id="contentThumbnail" class="justify-content-center align-items-center position-fixed w-100 h-100" style="display: none; z-index: 1000; top: 0; left:0; overflow: auto; background-color: rgba(0, 0, 0, 0.8);" onclick="if(event.target == this) document.getElementById('contentThumbnail').style.display = 'none'">
 </div>
+
+
 @section Scripts {
     <script>
         // Bắt sự kiện click của nút và gửi yêu cầu AJAX

@@ -19,10 +19,38 @@ namespace Du_An_One.Controllers
         }
         public IActionResult Index()
         {
-            return View(_context.SANPHAM.OrderByDescending(x => x.NgayNhap).Take(6).ToList());
+            DateTime today = DateTime.Now;
+            return View(_context.SANPHAM
+                .OrderByDescending(x => x.NgayNhap)
+                .Take(6)
+                .Select(sp => new SANPHAM
+                {
+                    MaSP = sp.MaSP,
+                    SoLuongBan = sp.SoLuongBan,
+                    DonGiaBan = sp.DonGiaBan,
+                    DanhMucHang = sp.DanhMucHang,
+                    HinhAnh = sp.HinhAnh,
+                    KichCo = sp.KichCo,
+                    MoTa = sp.MoTa,
+                    MaKhuyenMai = sp.MaKhuyenMai,
+                    KHUYENMAI = _context.KHUYENMAI
+                                    .Where(km => km.MaKhuyenMai == sp.MaKhuyenMai)
+                                    .Select(km => new KHUYENMAI
+                                    {
+                                        MaKhuyenMai = km.MaKhuyenMai,
+                                        PhanTramKhuyenMai = (km.ThoiGianStart <= today && km.ThoiGianEnd >= today) ? km.PhanTramKhuyenMai : 0
+                                    })
+                                    .FirstOrDefault()
+                })
+                .ToList());
         }
-        public IActionResult Temp() { return View(); }
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [Route("Error/404")]
+        public IActionResult PageNotFound()
         {
             return View();
         }
@@ -32,5 +60,7 @@ namespace Du_An_One.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }

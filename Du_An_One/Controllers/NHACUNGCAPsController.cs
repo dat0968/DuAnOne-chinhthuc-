@@ -11,8 +11,10 @@ using ClosedXML;
 using X.PagedList;
 using X.PagedList.Extensions;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 namespace Du_An_One.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class NHACUNGCAPsController : Controller
     {
         private readonly Du_An_OneContext _context;

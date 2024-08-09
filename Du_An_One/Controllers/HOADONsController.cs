@@ -9,8 +9,10 @@ using Du_An_One.Data;
 using Du_An_One.Models;
 using X.PagedList;
 using X.PagedList.Extensions;
+using Microsoft.AspNetCore.Authorization;
 namespace Du_An_One.Controllers
 {
+    [Authorize]
     public class HOADONsController : Controller
     {
         private readonly Du_An_OneContext _context;
@@ -130,32 +132,38 @@ namespace Du_An_One.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaHoaDon,DiaChiNhanHang,NgayTao,HTTT,TinhTrang, MaNV, MaKH")] HOADON hOADON)
+        public async Task<IActionResult> Edit(string id, [Bind("MaHoaDon, TinhTrang")] HOADON hOADON)
         {
             if (id != hOADON.MaHoaDon)
             {
                 return NotFound();
             }
-            bool employeeExists = await _context.NHANVIEN.AnyAsync(e => e.MaNV == hOADON.MaNV);
-            bool customerExists = await _context.KHACHHANG.AnyAsync(c => c.MaKH == hOADON.MaKH);
-            if (!employeeExists && hOADON.MaNV != null)
+
+            // Kiểm tra sự tồn tại của nhân viên và khách hàng
+            if (hOADON.MaNV != null && !await _context.NHANVIEN.AnyAsync(e => e.MaNV == hOADON.MaNV))
             {
                 ModelState.AddModelError("MaNV", "Mã nhân viên không tồn tại.");
-                return View(hOADON);
             }
 
-            if (!customerExists && hOADON.MaKH != null)
+            if (hOADON.MaKH != null && !await _context.KHACHHANG.AnyAsync(c => c.MaKH == hOADON.MaKH))
             {
                 ModelState.AddModelError("MaKH", "Mã khách hàng không tồn tại.");
-                return View(hOADON);
             }
-            if (ModelState.IsValid)
+
+            if (hOADON.TinhTrang!=null)
             {
-               
                 try
                 {
-                    
-                    _context.Update(hOADON);
+                    var existingHoaDon = await _context.HOADON.FindAsync(id);
+                    if (existingHoaDon == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Cập nhật thông tin hóa đơn, chỉ cập nhật thuộc tính TinhTrang
+                    existingHoaDon.TinhTrang = hOADON.TinhTrang;
+                    // Nếu không cần cập nhật các thuộc tính khác, không sử dụng SetValues
+                    _context.HOADON.Update(existingHoaDon); // Thay vì _context.Entry(existingHoaDon).CurrentValues.SetValues(hOADON);
                     await _context.SaveChangesAsync();
                     TempData["SuccessMessage"] = "Sửa thông tin hóa đơn thành công";
                     return RedirectToAction(nameof(Index));
@@ -165,13 +173,14 @@ namespace Du_An_One.Controllers
                     Console.WriteLine($"Error: {ex.Message}");
                     TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin hóa đơn. Vui lòng thử lại.";
                 }
-
             }
-            //ViewData["MaNV"] = new SelectList(_context.NHANVIEN, "MaNV", "MaNV", hOADON.MaNV);
-            //ViewData["MaKH"] = new SelectList(_context.KHACHHANG, "MaKH", "MaKH", hOADON.MaKH);
 
+            // Trả về view với thông tin hiện tại nếu có lỗi
             return View(hOADON);
         }
+
+
+
 
         // GET: HOADONs/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -218,6 +227,20 @@ namespace Du_An_One.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public IActionResult CancelOrder(string orderId)
+        {
+            var order = _context.HOADON.Find(orderId);
+            if (order != null)
+            {
+                _context.HOADON.Remove(order);
+                _context.SaveChanges();
+                return RedirectToAction("ListOrdersOfCustomer","KHACHHANGs"); // Hoặc trang bạn muốn chuyển đến sau khi hủy đơn
+            }
+            return NotFound();
+        }
+
 
         private bool HOADONExists(string id)
         {

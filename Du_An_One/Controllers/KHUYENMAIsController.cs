@@ -10,8 +10,10 @@ using Du_An_One.Models;
 using X.PagedList;
 using X.PagedList.Extensions;
 using ClosedXML.Excel;
+using Microsoft.AspNetCore.Authorization;
 namespace Du_An_One.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class KHUYENMAIsController : Controller
     {
         private readonly Du_An_OneContext _context;

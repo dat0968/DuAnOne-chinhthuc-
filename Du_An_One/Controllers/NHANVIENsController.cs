@@ -14,9 +14,10 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using ClosedXML.Excel;
 using X.PagedList.Extensions;
 using X.PagedList;
+
 namespace Du_An_One.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Quản lý")]
     public class NHANVIENsController : Controller
     {
         private readonly Du_An_OneContext _context;
@@ -280,6 +281,7 @@ namespace Du_An_One.Controllers
                 }
             }
         }
+    
         private bool NHANVIENExists(string id)
         {
             return (_context.NHANVIEN?.Any(e => e.MaNV == id)).GetValueOrDefault();

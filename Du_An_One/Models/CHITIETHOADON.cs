@@ -7,7 +7,7 @@ namespace Du_An_One.Models
     {
         [Key]
         public int ID { get; set; }
-        [StringLength(5)]
+        [StringLength(50)]
         [ForeignKey("MaHoaDon")]
         public string? MaHoaDon { get; set; }
 

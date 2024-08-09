@@ -6,7 +6,7 @@ namespace Du_An_One.Models
     public class HOADON
     {
         [Key]
-        [StringLength(5, ErrorMessage = "Mã hóa đơn phải có đúng 5 kí tự")]
+        [StringLength(50, ErrorMessage = "Mã hóa đơn phải có đúng 5 kí tự")]
         [Required(ErrorMessage = "Mã hóa đơn không được để trống")]
         public string? MaHoaDon { get; set; }
 

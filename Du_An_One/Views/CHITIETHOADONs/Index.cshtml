@@ -33,6 +33,7 @@
                         <button style="margin-bottom: 20px"><a class="btn btn-primary">Tìm kiếm</a></button>
 
                     </form>
+                
                     <a href="HOADONs/index"><button style="color:green">Chuyển tới hóa đơn</button></a>
                     @*  <button type="button" class="btn btn-primary editButton" asp-action="Edit"><i class="bi bi-pencil"></i></button> *@
                 </div>
@@ -52,8 +53,7 @@
                 <th class="text-center" style="width:auto">Khách hàng</th>
                 <th class="text-center" style="width:auto">Tình trạng</th>
                 <th></th>
-                <th></th>
-                <th></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -63,20 +63,20 @@
                     <td>@chitiethoadon.MaHoaDon</td>
                     <td>@chitiethoadon.MaSP</td>
                     <td>@chitiethoadon.SoLuongMua</td>
-                    <td>@((chitiethoadon.SANPHAM?.DonGiaBan ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))</td>
+                    <td>@((chitiethoadon?.DonGia ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))</td>
                     <td>@chitiethoadon.HOADON?.NgayTao.ToString("dd/MM/yyyy")</td>
-                    <td>@((chitiethoadon.SANPHAM?.DonGiaBan ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * (chitiethoadon.SoLuongMua))</td>
+                    <td>@((chitiethoadon?.DonGia ?? 0) * (1 - (chitiethoadon.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * (chitiethoadon.SoLuongMua))</td>
                     <td>@chitiethoadon.HOADON?.MaKH</td>
                     <td>@chitiethoadon.HOADON?.TinhTrang</td>
 
                     <!-- Sửa -->
                     <td><a type="button" class="btn btn-sm btn-info" asp-action="Edit" asp-controller="CHITIETHOADONs" asp-route-id="@chitiethoadon.ID">Sửa</a></td>
-                    <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-controller="CHITIETHOADONs" asp-route-id="@chitiethoadon.ID">Chi tiết</a></td>
+                    @* <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-controller="CHITIETHOADONs" asp-route-id="@chitiethoadon.ID">Chi tiết</a></td> *@
 
                     <!-- Xóa -->
-                    <td>
+                    @* <td>
                         <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@chitiethoadon.ID">Xóa</a>
-                    </td>
+                    </td> *@
                 </tr>
             }
         </tbody>

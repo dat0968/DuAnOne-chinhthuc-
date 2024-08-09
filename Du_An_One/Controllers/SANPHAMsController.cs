@@ -9,9 +9,12 @@ using Du_An_One.Data;
 using Du_An_One.Models;
 using X.PagedList;
 using ClosedXML.Excel;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Du_An_One.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class SANPHAMsController : Controller
     {
         private readonly Du_An_OneContext _context;
@@ -103,6 +106,7 @@ namespace Du_An_One.Controllers
             return View(sanPham);
         }
         #endregion
+        
         #region//Hiển thị thumbnail chi tiết sản phẩm
         public IActionResult DetailsViewThubnail(string MaSP)
         {
@@ -119,6 +123,7 @@ namespace Du_An_One.Controllers
             return PartialView(sanPham);
         }
         #endregion
+
         #region//Tạo sản phẩm
         // GET: SANPHAMs/Create
         public IActionResult Create()
@@ -146,6 +151,7 @@ namespace Du_An_One.Controllers
 
                 if (exists)
                 {
+
                     ModelState.AddModelError("MaSP", "Mã này đã tồn tại. Vui lòng nhập lại");
               
                 }
@@ -161,7 +167,7 @@ namespace Du_An_One.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    try
+                    try              
                     {
                         if (sanPham.FileImage != null)
                         {
@@ -174,6 +180,7 @@ namespace Du_An_One.Controllers
 
                             sanPham.HinhAnh = sanPham.FileImage.FileName;
                         }
+
 
                         _context.SANPHAM.Add(sanPham);
                         _context.SaveChanges();
@@ -212,6 +219,9 @@ namespace Du_An_One.Controllers
                         TempData["ErrorMessage"] = "Có lỗi xảy ra khi thêm sản phẩm. Vui lòng thử lại.";
                     }
                 }                
+
+                        
+
             }
             else
             {
@@ -224,6 +234,8 @@ namespace Du_An_One.Controllers
                     }
                 }
             }
+            
+            createAgain: //Mã bắt đầu tạo lại
 
             // Re-initialize SelectLists if ModelState is invalid
             var danhMucHang = new List<string> { "TUFT", "Adidas", "Adius", "Surius" };
@@ -234,6 +246,8 @@ namespace Du_An_One.Controllers
 
             var nhanVienList = _context.NHANVIEN.ToList();
             ViewBag.MaNv = new SelectList(nhanVienList, "MaNV", "HoTen");
+
+            TempData["FailMessage"] = "Vui lòng kiểm tra thông tin nhập vào.";
 
             return View(sanPham);
         }
@@ -305,7 +319,11 @@ namespace Du_An_One.Controllers
                         _context.Entry(sanPham).State = EntityState.Modified;
                         await _context.SaveChangesAsync();
                     }
+
                     TempData["SuccessMessage"] = "Sửa thông tin sản phẩm thành công";
+
+                    
+
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
@@ -313,7 +331,6 @@ namespace Du_An_One.Controllers
                     Console.WriteLine($"Error: {ex.Message}");
                     TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin sản phẩm. Vui lòng thử lại.";
                 }
-
 
 
             }
@@ -328,6 +345,7 @@ namespace Du_An_One.Controllers
                     }
                 }
             }
+            TempData["AlertMessage"] = JsonConvert.SerializeObject(new { type = "warning", title = "Thông báo", message = "Sửa thất bại" });
 
             // Nạp lại ViewBag nếu ModelState không hợp lệ
             ViewBag.DanhMucHang = new SelectList(new string[] { "TUFT", "Adidas", "Adius", "Surius" });
@@ -465,6 +483,7 @@ namespace Du_An_One.Controllers
         }
 
         #endregion
+
 
         private bool SANPHAMExists(string id)
         {

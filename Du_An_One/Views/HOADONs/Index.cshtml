@@ -84,9 +84,8 @@
                         <button style="margin-bottom: 20px"><a class="btn btn-primary">Tìm kiếm</a></button>
 
                     </form>
-                    <a style="color:green" asp-controller="CHITIETHOADONs" asp-action="Index">Chuyển tới chi tiết hóa đơn</a>
-                    @*  <button type="button" class="btn btn-primary editButton" asp-action="Edit"><i class="bi bi-pencil"></i></button> *@
-                </div>
+                    <a style="color:green" asp-controller="HOADONs" asp-action="Index">Chuyển tới chi tiết hóa đơn</a>
+                </div>  
             </div>
 
             <table class="table table-bordered table-hover" style="width:135%;">
@@ -102,8 +101,7 @@
                 <th class="text-center" style="width:auto">Khách hàng</th>
                 <th class="text-center" style="width:auto">Tình trạng</th>
                 <th></th>
-                <th></th>
-                <th></th>
+               
             </tr>
         </thead>
         <tbody>
@@ -121,12 +119,12 @@
                     <!-- Sửa -->
 
                     <td><a type="button" class="btn btn-sm btn-info" asp-action="Edit" asp-route-id="@hoadon.MaHoaDon">Sửa</a></td>
-                    <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@hoadon.MaHoaDon">Chi tiết</a></td>
+                    @* <td><a type="button" class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@hoadon.MaHoaDon">Chi tiết</a></td>
 
                     <!-- Xóa -->
                     <td>
                         <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@hoadon.MaHoaDon">Xóa</a>
-                    </td>
+                    </td> *@
 
 
 

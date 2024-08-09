@@ -1,0 +1,190 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Du_An_One.Models.CHITIETHOADON>
+
+@{
+    ViewData["Title"] = "Danh sách sản phẩm trong giỏ hàng";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+    string idUser = ViewBag.IdUser as string;
+    // var antiforgery = Context.RequestServices.GetRequiredService<Microsoft.AspNetCore.Antiforgery.IAntiforgery>();
+    // var tokens = antiforgery.GetAndStoreTokens(Context);
+}
+
+<div class="flex">
+    <partial name="_NavCustomer.cshtml" for="@idUser"></partial>
+
+    <div class="max-w-7xl mx-auto p-6 bg-card text-card-foreground w-full">
+        <div class="cart-container">
+            <h1 class="cart-title">Giỏ Hàng</h1>
+            <form asp-action="ListProductsInBagOfCustomer" method="get">
+                <input type="text" name="textFind" class="form-control mb-3" placeholder="Tìm kiếm sản phẩm trong giỏ hàng...">
+                <input type="hidden" name="idUser" value="@ViewBag.IdUser" />
+                <button type="submit" class="btn btn-primary mb-3">Tìm kiếm</button>
+            </form>
+           @*  <form method="post" asp-controller="KHACHHANGs" asp-action="UpdateQuantity">
+                <input type="hidden" name="__RequestVerificationToken" value="@tokens.RequestToken" /> *@
+
+                <div class="flex flex-col items-center justify-center">
+                    @if (!Model.Any())
+                    {
+                        <img aria-hidden="true" alt="empty-cart" src="https://ideogram.ai/assets/image/lossless/response/VjEwrgULQXK1ZVsoGxhMfw" class="mb-4 w-20 h-20" />
+                        <span class="text-muted-foreground">Không tìm thấy sản phẩm nào trong giỏ hàng của bạn.</span>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                    {
+                        <input type="hidden" name="MaHoaDon" value="@Model.FirstOrDefault()?.MaHoaDon" />
+
+                            <div class="flex items-center p-4 bg-background rounded-lg shadow-md mb-4 w-full">
+                                <div class="relative w-24 h-24">
+                                @if (item.SANPHAM.KHUYENMAI != null &&
+                               item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai != 0 &&
+                               DateTime.Now >= item.SANPHAM.KHUYENMAI.ThoiGianStart &&
+                               DateTime.Now <= item.SANPHAM.KHUYENMAI.ThoiGianEnd)
+                                    {
+                                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
+                                    }
+                                    <img src="@Url.Content("~/img/productImage/" + item.SANPHAM.HinhAnh)" alt="@item.SANPHAM.TenSP" class="w-full h-full object-cover rounded-md">
+                                </div>
+                            <div class="ml-4 flex-1 product-row" data-price="@Math.Round((double)item.DonGia * (1 - (item.SANPHAM.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100), 2)">
+                                    <h2 class="text-lg font-semibold text-foreground">@item.SANPHAM?.TenSP</h2>
+                                    <p class="text-sm text-muted-foreground">@item.SANPHAM?.DanhMucHang / @item.SANPHAM?.KichCo</p>
+                                    <div>
+                                        @if (item.SANPHAM.KHUYENMAI != null && item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai != 0 && DateTime.Now >= item.SANPHAM.KHUYENMAI.ThoiGianStart && DateTime.Now <= item.SANPHAM.KHUYENMAI.ThoiGianEnd)
+                                        {
+                                            <span class="text-pink-500 font-bold" data-price="@Math.Round((double)item.DonGia * ((double)1 - (double)item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai / 100), 2)">
+                                                @String.Format("{0:0,0} VND", Math.Round((double)item.DonGia * ((double)1 - (double)item.SANPHAM.KHUYENMAI.PhanTramKhuyenMai / 100), 2))
+                                            </span>
+                                            <span class="line-through text-zinc-500 ml-2">@String.Format("{0:0,0} VND", item.DonGia)</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-pink-500 font-bold" data-price="@item.DonGia">
+                                                @String.Format("{0:0,0} VND", item.DonGia)
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="flex items-center mt-2">
+                                        <div class="flex items-center ml-auto">
+                                            <button type="button" class="quantity-btn bg-zinc-200 text-zinc-600 rounded-full p-2" data-action="decrement" data-id="@item.ID">-</button>
+                                            <input type="text" pattern="[0-9]*" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="mx-3 quantity w-20 text-right" value="@item.SoLuongMua">
+                                            <button type="button" class="quantity-btn bg-zinc-200 text-zinc-600 rounded-full p-2" data-action="increment" data-id="@item.ID">+</button>
+                                        </div>
+                                        <div class="ml-4 flex">
+                                            <button class="btn btn-danger btn-sm" data-id="@item.ID" asp-controller="CHITIETHOADONs" asp-action="CustomerDelete" asp-route-id="@item.ID" onclick="deleteItem(this)">Xóa</button>
+                                            <a class="btn btn-info btn-sm ml-2" asp-controller="ProductPage" asp-action="ShowDetailProduct" asp-route-idProduct="@item.MaSP">Thông tin</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+        
+
+                        <div class="text-right w-full mt-4">
+                            <h4 class="font-lg">Tổng: <span id="totalPrices">@String.Format("{0:0,0} VND", Model.Sum(item => item.SoLuongMua * Math.Round((double)item.DonGia * ((double)1 - (item.SANPHAM.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100.0), 2)))</span></h4>
+                        <button type="button" class="btn btn-success" onclick="redirectToCheckout()">Thanh Toán</button>
+
+                        </div>         
+                    }
+
+                </div>
+            @* </form> *@
+        </div>
+    </div>
+</div>
+
+<script>
+    var isDeleting = false;
+
+    function redirectToCheckout() {
+        var idUser = '@idUser';
+        var maHoaDon = $('input[name="MaHoaDon"]').val();
+        window.location.href = '@Url.Action("Checkout", "checkOut")' + '?idUser=' + idUser + '&MaHoaDon=' + maHoaDon;;
+    }
+
+
+    function deleteItem(button) {
+        if (!isDeleting) {
+            if (confirm("Bạn có chắc chắn muốn xóa mục này không?")) {
+                isDeleting = true;
+                var itemId = $(button).data('id');
+
+                $.ajax({
+                    url: '/CHITIETHOADONs/CustomerDelete/' + itemId,
+                    type: 'POST',
+                    data: {
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            // Remove the item from the DOM
+                            $(button).closest('.flex.items-center.p-4').remove();
+                        }
+                        // Display alert message
+                        showAlert(response.alert.type, response.alert.title, response.alert.message, function () {
+                            isDeleting = false;
+                        });
+                    },
+                    error: function () {
+                        showAlert('danger', 'Lỗi', 'Có lỗi xảy ra khi xóa sản phẩm.', function () {
+                            isDeleting = false;
+                        });
+                    }
+                });
+            } else {
+                isDeleting = false;
+            }
+        }
+    }
+    $('.quantity-btn').click(function () {
+        var action = $(this).data('action');
+        var id = $(this).data('id');
+        var $quantityInput = $(this).siblings('.quantity');
+        var currentQuantity = parseInt($quantityInput.val());
+
+        // Xác định giá trị mới dựa trên hành động
+        var newQuantity = (action === 'increment') ? currentQuantity + 1 : currentQuantity - 1;
+
+        // Gửi AJAX request để cập nhật số lượng
+        if (newQuantity >= 0) { // Đảm bảo số lượng không âm
+            $.ajax({
+                url: '@Url.Action("UpdateNumberProductInCart", "KHACHHANGs")',
+                type: 'POST',
+                data: { MaHoaDon: id, valueChange: newQuantity },
+                success: function (result) {
+                    // Cập nhật số lượng trong giao diện
+                    // $quantityInput.val(+result.SoLuongMua);
+                    $quantityInput.val(newQuantity);
+                    updateTotalPrice();
+
+                },
+                error: function (xhr) {
+                    alert(xhr.responseJSON.message || 'Có lỗi xảy ra khi cập nhật số lượng.');
+                }
+            });
+        } else {
+            alert('Số lượng không thể nhỏ hơn 0.');
+        }
+    });
+    // Hàm cập nhật tổng giá
+    function updateTotalPrice() {
+        var total = 0;
+
+        $('.product-row').each(function () {
+            var quantity = parseInt($(this).find('.quantity').val());
+            var price = parseFloat($(this).data('price')); // Lấy giá đã được tính toán và lưu trữ
+
+            // Tính giá của từng sản phẩm
+            if (!isNaN(quantity) && !isNaN(price)) {
+                total += quantity * price;
+            }
+        });
+
+        // Cập nhật tổng giá hiển thị
+        $('#totalPrices').text(total.toLocaleString() + ' VND');
+    }
+
+
+</script>

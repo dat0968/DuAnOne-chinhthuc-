@@ -34,11 +34,11 @@ namespace Du_An_One.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("HOADONMaHoaDon")
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MaHoaDon")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MaSP")
                         .HasMaxLength(5)
@@ -124,8 +124,8 @@ namespace Du_An_One.Migrations
             modelBuilder.Entity("Du_An_One.Models.HOADON", b =>
                 {
                     b.Property<string>("MaHoaDon")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("DiaChiNhanHang")
                         .IsRequired()

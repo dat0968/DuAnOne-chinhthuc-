@@ -1,0 +1,86 @@
+﻿
+<body>
+    <footer class="bg-black text-white py-8">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    <img src="~/img/kaiadmin/logo_dark.png"
+                         alt="No Image🖼️" class="img-fluid object-fit-contain"
+                         style="height: 100px" />
+                </div>
+                <div class="col">
+                    <ul>
+                        <li class="text-white">Info</li>
+                        <li><a href="#">Find a store</a></li>
+                        <li><a href="#">Gift</a></li>
+                        <li><a href="#">Feedback</a></li>
+                        <li><a href="#">Become a member</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li class="text-white">Shop</li>
+                        <li><a href="#">TUFT</a></li>
+                        <li><a href="#">Sirius</a></li>
+                        <li><a href="#">Collections</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li class="text-white">About</li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul style="display: flex; justify-content: space-around">
+                        <li>
+                            <a href="#"><i class="fi fi-brands-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-twitter-alt-circle"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-telegram"></i></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fi fi-brands-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    © 2019 NIKE <br />
+                    All Rights Reserved
+                </div>
+                <div>Private & Cookie Policy</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Hộp thoại xác nhận đăng xuất -->
+    <div id="confirmLogout" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center" style="display:none;"
+         onclick="if(event.target == document.getElementById('confirmLogout')){document.getElementById('confirmLogout').style.display = 'none'}">
+        <div class="bg-white p-6 rounded shadow-lg w-80">
+            <h2 class="text-2xl font-bold mb-4 text-center">Xác nhận đăng xuất</h2>
+            <div class="flex justify-between">
+                <form asp-controller="Login" asp-action="LogOut" method="post" class="inline">
+                    <button type="submit" class="btn btn-danger">Xác nhận</button>
+                </form>
+                <button class="btn btn-secondary" onclick="document.getElementById('confirmLogout').style.display = 'none'">Hủy</button>
+            </div>
+        </div>
+    </div> 
+    <script>
+        document.querySelectorAll('img').forEach((img) => {
+            img.onerror = function () {
+                this.src = 'https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg';
+            };
+        });
+    </script>
+</body>

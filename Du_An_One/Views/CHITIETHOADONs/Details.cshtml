@@ -28,17 +28,17 @@
 
     <div class="form-group">
         <label class="control-label">Đơn giá</label>
-        <input readonly class="form-control" value="@(Model.SANPHAM?.DonGiaBan * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))" />
+        <input readonly class="form-control" value="@((Model?.DonGia ?? 0 ) * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100))" />
     </div>
 
     <div class="form-group">
         <label class="control-label">Ngày tạo</label>
-        <input readonly class="form-control" value="@Model.HOADON?.NgayTao.ToString("dd/MM/yyyy")" />
+        <input readonly class="form-control" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
     </div>
 
     <div class="form-group">
         <label class="control-label">Tổng tiền</label>
-        <input readonly class="form-control" value="@(Model.SANPHAM?.DonGiaBan * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * Model.SoLuongMua)" />
+        <input readonly class="form-control" value="@((Model?.DonGia ?? 0 ) * (1 - (Model.SANPHAM?.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * (Model.SoLuongMua))" />
     </div>
 
     <div class="form-group">
@@ -58,7 +58,7 @@
 
     <div class="form-group">
         <label class="control-label">Địa chỉ nhận hàng</label>
-        <input readonly class="form-control" value="@Model.HOADON?.DiaChiNhanHang" />
+        <input readonly class="form-control" value="@Model?.HOADON?.DiaChiNhanHang" />
     </div>
 
     <div class="form-group">

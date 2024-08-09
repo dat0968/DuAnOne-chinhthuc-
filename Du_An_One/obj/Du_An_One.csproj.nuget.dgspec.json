@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj": {}
+    "D:\\One\\DuAnOnenew (1)\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj": {}
   },
   "projects": {
-    "D:\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj": {
+    "D:\\One\\DuAnOnenew (1)\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj",
+        "projectUniqueName": "D:\\One\\DuAnOnenew (1)\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj",
         "projectName": "Du_An_One",
-        "projectPath": "D:\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\DuAnOnenew\\Du_An_One\\obj\\",
+        "projectPath": "D:\\One\\DuAnOnenew (1)\\DuAnOnenew\\Du_An_One\\Du_An_One.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\One\\DuAnOnenew (1)\\DuAnOnenew\\Du_An_One\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,11 +39,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -76,6 +71,10 @@
               "target": "Package",
               "version": "[6.0.17, )"
             },
+            "System.Security.Cryptography.Algorithms": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
             "X.PagedList": {
               "target": "Package",
               "version": "[10.0.3, )"
@@ -83,6 +82,14 @@
             "X.PagedList.Mvc.Core": {
               "target": "Package",
               "version": "[10.0.3, )"
+            },
+            "itext7": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "itext7.bouncy-castle-adapter": {
+              "target": "Package",
+              "version": "[8.0.5, )"
             },
             "toastr": {
               "target": "Package",
@@ -108,7 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -11,8 +11,10 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using ClosedXML.Excel;
 using X.PagedList.Extensions;
 using X.PagedList;
+using Microsoft.AspNetCore.Authorization;
 namespace Du_An_One.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class CHITIETNHAPsController : Controller
     {
         private readonly Du_An_OneContext _context;
@@ -144,42 +146,55 @@ namespace Du_An_One.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("MaChiTietNhap,MaNhaCC,MaSP,SoLuongNhap,DonGiaNhap")] CHITIETNHAP cHITIETNHAP)
+        public async Task<IActionResult> Edit(string id, [Bind("MaHoaDon, DiaChiNhanHang, NgayTao, HTTT, TinhTrang, MaNV, MaKH")] HOADON hOADON)
         {
-            if (id != cHITIETNHAP.MaChiTietNhap)
+            if (id != hOADON.MaHoaDon)
             {
                 return NotFound();
             }
-           
-            if (ModelState.IsValid)
+
+            // Kiểm tra sự tồn tại của nhân viên và khách hàng
+            if (hOADON.MaNV != null && !await _context.NHANVIEN.AnyAsync(e => e.MaNV == hOADON.MaNV))
             {
-                bool checkmanhacungcap = await _context.NHACUNGCAP.AnyAsync(p => p.MaNhaCC == cHITIETNHAP.MaNhaCC);
-                bool checkmasp = await _context.SANPHAM.AnyAsync(p => p.MaSP == cHITIETNHAP.MaSP);
-                if (!checkmanhacungcap && cHITIETNHAP.MaNhaCC != null)
-                {
-                    ModelState.AddModelError("MaNhaCC", "Mã này không tồn tại. Vui lòng nhập lại");
-                    return View(cHITIETNHAP);
-                }
-                if (!checkmasp && cHITIETNHAP.MaSP != null)
-                {
-                    ModelState.AddModelError("MaSP", "Mã này không tồn tại. Vui lòng nhập lại");
-                    return View(cHITIETNHAP);
-                }
+                ModelState.AddModelError("MaNV", "Mã nhân viên không tồn tại.");
+            }
+
+            if (hOADON.MaKH != null && !await _context.KHACHHANG.AnyAsync(c => c.MaKH == hOADON.MaKH))
+            {
+                ModelState.AddModelError("MaKH", "Mã khách hàng không tồn tại.");
+            }
+
+            if (hOADON.TinhTrang!=null)
+            {
                 try
                 {
-                    _context.Update(cHITIETNHAP);
+                    var existingHoaDon = await _context.HOADON.FindAsync(id);
+                    if (existingHoaDon == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Cập nhật thông tin hóa đơn, chỉ cập nhật thuộc tính TinhTrang
+                    existingHoaDon.TinhTrang = hOADON.TinhTrang;
+
+                    // Không sử dụng SetValues, chỉ cập nhật thuộc tính TinhTrang
+                    // _context.Entry(existingHoaDon).CurrentValues.SetValues(hOADON);
+
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Sửa thông tin phiếu nhập thành công";
+                    TempData["SuccessMessage"] = "Sửa thông tin hóa đơn thành công";
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
-                    TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin phiếu nhập. Vui lòng thử lại.";
+                    TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin hóa đơn. Vui lòng thử lại.";
                 }
             }
-            return View();
+
+            // Trả về view với thông tin hiện tại nếu có lỗi
+            return View(hOADON);
         }
+
 
         // GET: CHITIETNHAPs/Delete/5
         public async Task<IActionResult> Delete(string id)

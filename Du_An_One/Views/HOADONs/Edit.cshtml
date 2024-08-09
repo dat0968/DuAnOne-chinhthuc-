@@ -1,7 +1,7 @@
 ﻿@model Du_An_One.Models.HOADON
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Sửa thông tin hóa đơn";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
@@ -17,44 +17,43 @@
             </div>
             <div class="form-group">
                 <label asp-for="DiaChiNhanHang" class="control-label">Địa chỉ nhận hàng</label>
-                <input asp-for="DiaChiNhanHang" class="form-control" />
+                <input asp-for="DiaChiNhanHang" readonly class="form-control" />
                 <span asp-validation-for="DiaChiNhanHang" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NgayTao" class="control-label">Ngày tạo</label>
-                <input asp-for="NgayTao" type="date" class="form-control" />
+                <input asp-for="NgayTao" readonly type="date" class="form-control" />
                 <span asp-validation-for="NgayTao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>HTTT</label>
-                <select asp-for="HTTT" class="form-select" aria-label="Default select example">
-                    <option value="Tiền mặt" selected>Tiền mặt</option>
+                <select asp-for="HTTT" disabled class="form-select" aria-label="Chọn phương thức thanh toán">
+                    <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
                     <option value="Chuyển khoản">Chuyển khoản</option>
                 </select>
             </div>
             <div class="form-group">
                 <label asp-for="MaNV" class="control-label">Thu ngân</label>
-                <input asp-for="MaNV" class="form-control" />
-                @* <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNV"></select> *@
-
+                <input asp-for="MaNV" readonly class="form-control" />
                 <span asp-validation-for="MaNV" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaKH" class="control-label">Khách hàng</label>
-                <input asp-for="MaKH" class="form-control" />
+                <input asp-for="MaKH" readonly class="form-control" />
                 <span asp-validation-for="MaKH" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label>Tình trạng</label>
-                <select asp-for="TinhTrang" class="form-select" aria-label="Default select example">
-                    <option value="Chuẩn bị hàng" selected>Chuẩn bị hàng</option>
+                <label asp-for="TinhTrang">Tình trạng</label>
+                <select asp-for="TinhTrang" class="form-select">
+                    <option value="Chuẩn bị hàng">Chuẩn bị hàng</option>
                     <option value="Chờ giao hàng">Chờ giao hàng</option>
                     <option value="Đang giao hàng">Đang giao hàng</option>
-                    <option value="Chờ thanh toán">Chờ thanh toán</option>
+                    <option value="Đã giao hàng">Đã giao hàng</option>
                     <option value="Đã thanh toán">Đã thanh toán</option>
                     <option value="Đã hủy">Đã hủy</option>
                     <option value="Hoàn trả/Hoàn tiền">Hoàn trả/Hoàn tiền</option>
                 </select>
+                <span asp-validation-for="TinhTrang" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Lưu" class="btn btn-primary" />
@@ -65,8 +64,6 @@
         </div>
     </div>
 </div>
-
-
 
 @section Scripts {
     @{

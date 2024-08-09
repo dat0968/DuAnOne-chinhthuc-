@@ -1,7 +1,7 @@
 ﻿@model Du_An_One.Models.SANPHAM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tạo sản phẩm";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
@@ -10,12 +10,25 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @if (TempData["FailMessage"] != null)
+        {
+            <div class="alert alert-warning">
+                <span data-notify="icon">🟠</span>
+                <span data-notify="title">Lỗi tạo sản phẩm</span>
+                <span data-notify="message">@TempData["FailMessage"].</span>
+                <p class="btn btn-secondary cursor-default" onclick="" title="Vui lòng nhập lại Mã sản phẩm, mã có thể bị lặp.
+Thay đổi tên hình ảnh ngắn hơn 50 chữ, hình ảnh không lấy tên quá dài.">
+                    Chú thích
+                </p>
+            </div>
+        }
+
         <form method="post" asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
                 <input asp-for="MaSP" class="form-control" />
-                <span asp-validation-for="MaSP" class="text-danger"></span>
+                    <span class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
@@ -37,9 +50,11 @@
                 <input asp-for="NgayNhap" type="date" class="form-control" />
                 <span asp-validation-for="NgayNhap" class="text-danger"></span>
             </div>
+
              <div class="form-group">
                 <label asp-for="DanhMucHang" class="control-label">Danh mục hãng</label>
                
+
                 <select asp-for="DanhMucHang" class="form-control" asp-items="ViewBag.DanhMucHang"></select>
                 <span asp-validation-for="DanhMucHang" class="text-danger"></span>
             </div> 
@@ -61,7 +76,7 @@
                 <span asp-validation-for="FileImage" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh</label>
+                <label asp-for="FileImages" class="control-label">Chọn nhiều hình ảnh phụ</label>
                 <input asp-for="FileImages" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="takeFiles" multiple />
                 <div id="showImages" style="display:flex;gap:20px;"></div>
                 <span asp-validation-for="FileImages" class="text-danger"></span>
@@ -92,6 +107,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -136,6 +153,20 @@
             });
         });
     </script>
+
+    <!--<script>
+        $(document).ready(function () {
+            var successAlert = $('#success-alert');
+            if (successAlert.length) {
+                successAlert.slideDown();
+
+                // Ẩn thanh thông báo sau 3 giây
+                setTimeout(function () {
+                    successAlert.slideUp();
+                }, 3000);
+            }
+        });
+    </script>-->
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
