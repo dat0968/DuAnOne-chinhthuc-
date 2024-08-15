@@ -78,6 +78,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
+                    <th>Mã sản phẩm</th>
                     <th>Tên sản phẩm</th>
                     <th>Số lượng bán</th>
                     <th>Đơn giá bán</th>
@@ -86,27 +87,34 @@
                     <th>Hình ảnh</th>
                     <th>Mô tả</th>
                     <th></th>
+                    <th></th>
+                    <th></th>
+              
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    var img = item.HinhAnh == null ? "~/img/productImage/default.jpg" : "~/img/productImage/" + item.HinhAnh;
                     <tr>
+                        <td>@Html.DisplayFor(modelItem => item.MaSP)</td>
                         <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
                         <td>@Html.DisplayFor(modelItem => item.SoLuongBan)</td>
                         <td>@Html.DisplayFor(modelItem => item.DonGiaBan)</td>
-                        <td>@Html.DisplayFor(modelItem => item.NgayNhap)</td>
+                        <td>@item.NgayNhap.ToString("dd/MM/yyyy")</td>
                         <td>@Html.DisplayFor(modelItem => item.DanhMucHang)</td>
                         <td>
-                            <img data-imgbigurl="@Url.Content(img)" src="@Url.Content(img)" alt="No Image🖼" style="width: 100px; height: auto;" />
+                            <img data-imgbigurl="@Url.Content("~/img/productImage/" + item.HinhAnh)" src="@Url.Content("~/img/productImage/" + item.HinhAnh)"  alt="No Image🖼" style="width: 100px; height: auto;" />
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
                         <td>
-                            <a asp-action="Edit" asp-route-MaSP="@item.MaSP" class="btn btn-sm btn-info">Sửa</a> |
-                            <a asp-route-MaSP="@item.MaSP" id="@item.MaSP" class="btn btn-sm btn-primary showDetailsButton">Chi tiết</a> |
-                            <a asp-action="Delete" asp-route-id="@item.MaSP" class="btn btn-sm btn-danger"> Xóa</a>
+                            <a asp-action="Edit" asp-route-MaSP="@item.MaSP" class="btn btn-sm btn-info">Sửa</a>
+                            
                         </td>
+                        <td>
+                            <a asp-action="Details" asp-route-MaSP="@item.MaSP" id="@item.MaSP" class="btn btn-sm btn-primary showDetailsButton">Chi tiết</a>
+                            
+                        </td>
+                        <td><a asp-action="Delete" asp-route-id="@item.MaSP" class="btn btn-sm btn-danger"> Xóa</a></td>
                         @* <-- asp-action="Details" --> *@
                     </tr>
                 }
@@ -124,8 +132,11 @@
     LiElementClasses = new List<string> { "page-item" },
     PageClasses = new List<string> { "page-link" }
 })
-<div id="contentThumbnail" class="justify-content-center align-items-center position-fixed w-100 h-100" style="display: none; z-index: 1000; top: 0; overflow: auto; background-color: rgba(0, 0, 0, 0.8);" onclick="if(event.target == this) document.getElementById('contentThumbnail').style.display = 'none'">
+<!--Hiển thị thông tin chi tiết sản phẩm-->
+<div id="contentThumbnail" class="justify-content-center align-items-center position-fixed w-100 h-100" style="display: none; z-index: 1000; top: 0; left:0; overflow: auto; background-color: rgba(0, 0, 0, 0.8);" onclick="if(event.target == this) document.getElementById('contentThumbnail').style.display = 'none'">
 </div>
+
+
 @section Scripts {
     <script>
         // Bắt sự kiện click của nút và gửi yêu cầu AJAX

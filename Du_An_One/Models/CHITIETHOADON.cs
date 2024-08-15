@@ -7,7 +7,7 @@ namespace Du_An_One.Models
     {
         [Key]
         public int ID { get; set; }
-        [StringLength(5)]
+        [StringLength(50)]
         [ForeignKey("MaHoaDon")]
         public string? MaHoaDon { get; set; }
 
@@ -15,10 +15,11 @@ namespace Du_An_One.Models
         [ForeignKey("MaSP")]
         public string? MaSP { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Số lượng mua không được để trống")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "Số lượng mua phải lớn hơn 0 và không được chứa ký tự đặc biệt ")]
         public int SoLuongMua { get; set; }
 
-        [Required]
+      
         public double DonGia { get; set; }
 
         public HOADON? HOADON { get; set; }

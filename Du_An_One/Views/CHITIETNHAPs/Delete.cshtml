@@ -5,42 +5,45 @@
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
 
-<h1>Delete</h1>
+<h1>XÓA PHIẾU NHẬP</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>CHITIETNHAP</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNhaCC)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNhaCC)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaSP)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaSP)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuongNhap)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuongNhap)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGiaNhap)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGiaNhap)
-        </dd>
-    </dl>
+<h3>Bạn có chắc chắn muốn xóa thông tin phiếu nhập này không?</h3>
+<form asp-action="Delete">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="MaChiTietNhap" class="control-label">Mã chi tiết nhập</label>
+        <input asp-for="MaChiTietNhap" readonly class="form-control" />
+        <span asp-validation-for="MaChiTietNhap" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MaNhaCC" class="control-label">Mã nhà cung cấp</label>
+        <input asp-for="MaNhaCC" readonly class="form-control" />
+        <span asp-validation-for="MaNhaCC" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
+        <input asp-for="MaSP" readonly class="form-control" />
+        <span asp-validation-for="MaSP" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SoLuongNhap" class="control-label">Số lượng nhập</label>
+        <input asp-for="SoLuongNhap" readonly class="form-control" />
+        <span asp-validation-for="SoLuongNhap" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DonGiaNhap" class="control-label">Đơn giá nhập</label>
+        <input asp-for="DonGiaNhap" readonly class="form-control" />
+        <span asp-validation-for="DonGiaNhap" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tổng tiền</label>
+        <input readonly class="form-control" value="@(Model.SoLuongNhap * Model.DonGiaNhap)" />
     
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaChiTietNhap" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Xóa" class="btn btn-primary" />
+    </div>
+</form>
+<div class="form-group">
+    <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
 </div>

@@ -34,11 +34,11 @@ namespace Du_An_One.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("HOADONMaHoaDon")
-                        .HasColumnType("nvarchar(5)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MaHoaDon")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("MaSP")
                         .HasMaxLength(5)
@@ -124,8 +124,8 @@ namespace Du_An_One.Migrations
             modelBuilder.Entity("Du_An_One.Models.HOADON", b =>
                 {
                     b.Property<string>("MaHoaDon")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("DiaChiNhanHang")
                         .IsRequired()
@@ -373,9 +373,6 @@ namespace Du_An_One.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("KHUYENMAIMaKhuyenMai")
-                        .HasColumnType("nvarchar(5)");
-
                     b.Property<string>("KichCo")
                         .IsRequired()
                         .HasMaxLength(3)
@@ -409,7 +406,7 @@ namespace Du_An_One.Migrations
 
                     b.HasKey("MaSP");
 
-                    b.HasIndex("KHUYENMAIMaKhuyenMai");
+                    b.HasIndex("MaKhuyenMai");
 
                     b.HasIndex("NHANVIENMaNV");
 
@@ -474,7 +471,8 @@ namespace Du_An_One.Migrations
                 {
                     b.HasOne("Du_An_One.Models.KHUYENMAI", "KHUYENMAI")
                         .WithMany("SANPHAMs")
-                        .HasForeignKey("KHUYENMAIMaKhuyenMai");
+                        .HasForeignKey("MaKhuyenMai")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Du_An_One.Models.NHANVIEN", "NHANVIEN")
                         .WithMany("SANPHAMs")

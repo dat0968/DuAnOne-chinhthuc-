@@ -281,6 +281,10 @@
       "PackagePath": "staticwebassets\\img\\examples\\logoinvoice.svg"
     },
     {
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\examples\\panel_Image.png",
+      "PackagePath": "staticwebassets\\img\\examples\\panel_Image.png"
+    },
+    {
       "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\examples\\product1.jpg",
       "PackagePath": "staticwebassets\\img\\examples\\product1.jpg"
     },
@@ -323,6 +327,10 @@
     {
       "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\examples\\product8.jpg",
       "PackagePath": "staticwebassets\\img\\examples\\product8.jpg"
+    },
+    {
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\favicon.ico",
+      "PackagePath": "staticwebassets\\img\\favicon.ico"
     },
     {
       "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\flags\\ad.png",
@@ -1401,6 +1409,10 @@
       "PackagePath": "staticwebassets\\img\\kaiadmin\\logo_light.svg"
     },
     {
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\logo_light.png",
+      "PackagePath": "staticwebassets\\img\\logo_light.png"
+    },
+    {
       "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\logoproduct.svg",
       "PackagePath": "staticwebassets\\img\\logoproduct.svg"
     },
@@ -1421,108 +1433,28 @@
       "PackagePath": "staticwebassets\\img\\productImage\\00d0f527af6b500283cb9dbc9f9e1140.jpg"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\0a2bcc66573a5e560fe9229145c6d72f.gif",
-      "PackagePath": "staticwebassets\\img\\productImage\\0a2bcc66573a5e560fe9229145c6d72f.gif"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\20230619_g56PqYH9vP.jpeg",
+      "PackagePath": "staticwebassets\\img\\productImage\\20230619_g56PqYH9vP.jpeg"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\0b7aff74ac8920fcde23375a060f770f.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\0b7aff74ac8920fcde23375a060f770f.jpg"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\360_F_597940292_dmaVD664ccNHMDJqi0Wv0SCSexklLyhO.jpg",
+      "PackagePath": "staticwebassets\\img\\productImage\\360_F_597940292_dmaVD664ccNHMDJqi0Wv0SCSexklLyhO.jpg"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\0d09ef9c7b27ecc44054f5493244c0b2.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\0d09ef9c7b27ecc44054f5493244c0b2.jpg"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\AKK4688_GHI__2__thumb.jfif",
+      "PackagePath": "staticwebassets\\img\\productImage\\AKK4688_GHI__2__thumb.jfif"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\0efd879026174d92465d0bd73fcdbe88.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\0efd879026174d92465d0bd73fcdbe88.jpg"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\devuvri-72d83bb8-2c95-4c1e-8e80-408a5fc90c63.gif",
+      "PackagePath": "staticwebassets\\img\\productImage\\devuvri-72d83bb8-2c95-4c1e-8e80-408a5fc90c63.gif"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\0ff25ec2bd477d672044fb1705256bfa.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\0ff25ec2bd477d672044fb1705256bfa.jpg"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\download (2).jpg",
+      "PackagePath": "staticwebassets\\img\\productImage\\download (2).jpg"
     },
     {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1_5f3c87c66ef19.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\1_5f3c87c66ef19.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1ad2394c5ed8670780cade2b3062a9ec.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\1ad2394c5ed8670780cade2b3062a9ec.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1bd9541fe1a279e81151e3d19a7f9e38.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\1bd9541fe1a279e81151e3d19a7f9e38.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1c199b9cfbba115c52fecdb461eb3a8b.gif",
-      "PackagePath": "staticwebassets\\img\\productImage\\1c199b9cfbba115c52fecdb461eb3a8b.gif"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1d4bae1edd4a5f089ce6b7f5480a15be.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\1d4bae1edd4a5f089ce6b7f5480a15be.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\1f7105ac1dc41df1f3b2cad178c48f62.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\1f7105ac1dc41df1f3b2cad178c48f62.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\2a15ffdef3c1ec505fe2a35291f57f8f.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\2a15ffdef3c1ec505fe2a35291f57f8f.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\2a403d971dbd014df3d2c3c4d1d6e865.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\2a403d971dbd014df3d2c3c4d1d6e865.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\342612655_1333510283896561_2375452339420527132_n.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\342612655_1333510283896561_2375452339420527132_n.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\3b7a0f099fc01f1ec16c0eaec13767c1.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\3b7a0f099fc01f1ec16c0eaec13767c1.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\3bc24a4cae9419391e071483155d882e.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\3bc24a4cae9419391e071483155d882e.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\3d420df70ab544f1d393847c1e646bb6.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\3d420df70ab544f1d393847c1e646bb6.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\7f4e1d31121ca92c52e1124c268236e9.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\7f4e1d31121ca92c52e1124c268236e9.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\8ae0534a563aa3a778ce869b2ed522d9.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\8ae0534a563aa3a778ce869b2ed522d9.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\8cfb6e705e3116c5547a6ae151ce46dd.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\8cfb6e705e3116c5547a6ae151ce46dd.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\Default_vibrant_highcontrast_images_of_sleek_sports_shoe_produ_0.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\Default_vibrant_highcontrast_images_of_sleek_sports_shoe_produ_0.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\book-open-cover.png",
-      "PackagePath": "staticwebassets\\img\\productImage\\book-open-cover.png"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\c1464369e9ddb234afbe55d6df7c4b16_pixian_ai.png",
-      "PackagePath": "staticwebassets\\img\\productImage\\c1464369e9ddb234afbe55d6df7c4b16_pixian_ai.png"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\club-sandwich-3538455.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\club-sandwich-3538455.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\default.jpg",
-      "PackagePath": "staticwebassets\\img\\productImage\\default.jpg"
-    },
-    {
-      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\nMU.png",
-      "PackagePath": "staticwebassets\\img\\productImage\\nMU.png"
+      "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\productImage\\wallhaven-jxl31y_1920x1200.png",
+      "PackagePath": "staticwebassets\\img\\productImage\\wallhaven-jxl31y_1920x1200.png"
     },
     {
       "Id": "D:\\DuAnOnenew\\Du_An_One\\wwwroot\\img\\profile.jpg",

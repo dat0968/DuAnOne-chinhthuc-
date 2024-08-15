@@ -1,0 +1,78 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Quả Thanh Toán</title>
+    <style>
+        body {
+            background-color: #ecf0f1;
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: @ViewBag.Success ? "#27ae60" : "#e74c3c";
+            margin-bottom: 30px;
+            position: relative;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn {
+            background-color: @ViewBag.Success ? "#27ae60" : "#e74c3c";
+            border: none;
+            color: #000;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .btn:hover {
+                background-color: @ViewBag.Success ? "#219150" : "#c0392b";
+                transform: translateY(-3px);
+                box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>@(ViewBag.Success ? "Thanh Toán Thành Công" : "Thanh Toán Thất Bại")</h2>
+        <p>@(ViewBag.Success ? "Cảm ơn bạn đã mua sắm. Đơn hàng của bạn đã được thanh toán thành công." : "Rất tiếc, thanh toán của bạn đã thất bại. Vui lòng thử lại sau hoặc liên hệ với chúng tôi để được hỗ trợ.")</p>
+        <a href="/" class="btn" >Quay về trang chủ</a>
+    </div>
+</body>
+</html>

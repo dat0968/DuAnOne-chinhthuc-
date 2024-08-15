@@ -9,9 +9,12 @@ using Du_An_One.Data;
 using Du_An_One.Models;
 using X.PagedList;
 using ClosedXML.Excel;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Du_An_One.Controllers
 {
+    [Authorize(Roles = "Quản lý")]
     public class SANPHAMsController : Controller
     {
         private readonly Du_An_OneContext _context;
@@ -103,6 +106,7 @@ namespace Du_An_One.Controllers
             return View(sanPham);
         }
         #endregion
+        
         #region//Hiển thị thumbnail chi tiết sản phẩm
         public IActionResult DetailsViewThubnail(string MaSP)
         {
@@ -119,6 +123,7 @@ namespace Du_An_One.Controllers
             return PartialView(sanPham);
         }
         #endregion
+
         #region//Tạo sản phẩm
         // GET: SANPHAMs/Create
         public IActionResult Create()
@@ -139,57 +144,84 @@ namespace Du_An_One.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SANPHAM sanPham)
         {
+           
             if (ModelState.IsValid)
             {
-                try
+                bool exists = await _context.SANPHAM.AnyAsync(p => p.MaSP == sanPham.MaSP);
+
+                if (exists)
                 {
-                    if (sanPham.FileImage != null)
+
+                    ModelState.AddModelError("MaSP", "Mã này đã tồn tại. Vui lòng nhập lại");
+              
+                }
+                if (sanPham.SoLuongBan < 0)
+                {
+                    ModelState.AddModelError("SoLuongBan", "Số lượng bán không được nhỏ hơn 0. Vui lòng nhập lại");
+
+                }
+                if (sanPham.DonGiaBan < 0)
+                {
+                    ModelState.AddModelError("DonGiaBan", "Đơn giá bán không được nhỏ hơn o. Vui lòng nhập lại");
+
+                }
+                if (ModelState.IsValid)
+                {
+                    try              
                     {
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/productImage/", sanPham.FileImage.FileName);
-
-                        using (var stream = new FileStream(path, FileMode.Create))
+                        if (sanPham.FileImage != null)
                         {
-                            await sanPham.FileImage.CopyToAsync(stream);
-                        }
+                            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/productImage/", sanPham.FileImage.FileName);
 
-                        sanPham.HinhAnh = sanPham.FileImage.FileName;
-                    }
-
-                    _context.SANPHAM.Add(sanPham);
-                    _context.SaveChanges();
-
-                    if (sanPham.FileImages != null && sanPham.FileImages.Count > 0)
-                    {
-                        foreach (var file in sanPham.FileImages)
-                        {
-                            if (file.Length > 0)
+                            using (var stream = new FileStream(path, FileMode.Create))
                             {
-                                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/productImage/", file.FileName);
-                                using (var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    await file.CopyToAsync(stream);
-                                }
-
-                                var hinhAnh = new HINHANH
-                                {
-                                    HinhAnh = file.FileName,
-                                    MaSP = sanPham.MaSP
-                                };
-
-                                _context.HINHANH.Add(hinhAnh);
+                                await sanPham.FileImage.CopyToAsync(stream);
                             }
+
+                            sanPham.HinhAnh = sanPham.FileImage.FileName;
                         }
 
-                        await _context.SaveChangesAsync();
-                    }
 
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
+                        _context.SANPHAM.Add(sanPham);
+                        _context.SaveChanges();
+
+                        if (sanPham.FileImages != null && sanPham.FileImages.Count > 0)
+                        {
+                            foreach (var file in sanPham.FileImages)
+                            {
+                                if (file.Length > 0)
+                                {
+                                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/productImage/", file.FileName);
+                                    using (var stream = new FileStream(filePath, FileMode.Create))
+                                    {
+                                        await file.CopyToAsync(stream);
+                                    }
+
+                                    var hinhAnh = new HINHANH
+                                    {
+                                        HinhAnh = file.FileName,
+                                        MaSP = sanPham.MaSP
+                                    };
+
+                                    _context.HINHANH.Add(hinhAnh);
+                                }
+                            }
+
+                            await _context.SaveChangesAsync();
+                        }
+                        TempData["SuccessMessage"] = "Thêm sản phẩm thành công";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the exception
+                        Console.WriteLine($"Error: {ex.Message}");
+                        TempData["ErrorMessage"] = "Có lỗi xảy ra khi thêm sản phẩm. Vui lòng thử lại.";
+                    }
+                }                
+
+                        
+
             }
             else
             {
@@ -202,6 +234,8 @@ namespace Du_An_One.Controllers
                     }
                 }
             }
+            
+            createAgain: //Mã bắt đầu tạo lại
 
             // Re-initialize SelectLists if ModelState is invalid
             var danhMucHang = new List<string> { "TUFT", "Adidas", "Adius", "Surius" };
@@ -212,6 +246,8 @@ namespace Du_An_One.Controllers
 
             var nhanVienList = _context.NHANVIEN.ToList();
             ViewBag.MaNv = new SelectList(nhanVienList, "MaNV", "HoTen");
+
+            TempData["FailMessage"] = "Vui lòng kiểm tra thông tin nhập vào.";
 
             return View(sanPham);
         }
@@ -255,6 +291,16 @@ namespace Du_An_One.Controllers
 
             if (ModelState.IsValid)
             {
+                if (sanPham.SoLuongBan < 0)
+                {
+                    ModelState.AddModelError("SoLuongBan", "Số lượng bán không được nhỏ hơn 0. Vui lòng nhập lại");
+                    return View(sanPham);
+                }
+                if (sanPham.DonGiaBan < 0)
+                {
+                    ModelState.AddModelError("DonGiaBan", "Đơn giá bán không được nhỏ hơn o. Vui lòng nhập lại");
+                    return View(sanPham);
+                }
                 try
                 {
                     if (sanPham.FileImage != null && sanPham.FileImage.FileName != sanPham.HinhAnh)
@@ -270,16 +316,23 @@ namespace Du_An_One.Controllers
 
                         // Cập nhật đường dẫn file ảnh vào thuộc tính HinhAnh
                         sanPham.HinhAnh = sanPham.FileImage.FileName;
+                        _context.Entry(sanPham).State = EntityState.Modified;
+                        await _context.SaveChangesAsync();
                     }
+
+                    TempData["SuccessMessage"] = "Sửa thông tin sản phẩm thành công";
+
+                    
+
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Error: {ex.Message}");
+                    TempData["ErrorMessage"] = "Có lỗi xảy ra khi sửa thông tin sản phẩm. Vui lòng thử lại.";
                 }
 
-                _context.Entry(sanPham).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
             }
             else
             {
@@ -292,6 +345,7 @@ namespace Du_An_One.Controllers
                     }
                 }
             }
+            TempData["AlertMessage"] = JsonConvert.SerializeObject(new { type = "warning", title = "Thông báo", message = "Sửa thất bại" });
 
             // Nạp lại ViewBag nếu ModelState không hợp lệ
             ViewBag.DanhMucHang = new SelectList(new string[] { "TUFT", "Adidas", "Adius", "Surius" });
@@ -328,18 +382,54 @@ namespace Du_An_One.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            //if (_context.SANPHAM == null)
+            //{
+            //    return Problem("Entity set 'Du_An_OneContext.SANPHAM'  is null.");
+            //}
+            //var sANPHAM = await _context.SANPHAM.FindAsync(id);
+            //try
+            //{
+            //    if (sANPHAM != null)
+            //    {
+            //        _context.SANPHAM.Remove(sANPHAM);
+            //    }
+
+            //    await _context.SaveChangesAsync();
+
+            //    ViewBag.SuccessMessage = "Xóa thành công!";
+            //}
+            //catch(Exception ex)
+            //{
+            //    ViewBag.ErrorMessage = "Có lỗi xảy ra khi xóa dữ liệu. Vui lòng thử lại.";
+            //}
+            //return View();
             if (_context.SANPHAM == null)
             {
-                return Problem("Entity set 'Du_An_OneContext.SANPHAM'  is null.");
+                return Problem("DbContext is null.");
             }
+
             var sANPHAM = await _context.SANPHAM.FindAsync(id);
-            if (sANPHAM != null)
+
+            if (sANPHAM == null)
+            {
+                return NotFound();
+            }
+
+            try
             {
                 _context.SANPHAM.Remove(sANPHAM);
+                await _context.SaveChangesAsync();
+
+                // Sử dụng TempData để lưu thông báo thành công
+                TempData["SuccessMessage"] = "Xóa sản phẩm thành công!";
+                return RedirectToAction("Index"); // Hoặc trang bạn muốn chuyển hướng đến
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (Exception ex)
+            {
+                // Sử dụng TempData để lưu thông báo lỗi
+                TempData["ErrorMessage"] = "Có lỗi xảy ra khi xóa dữ liệu. Vui lòng thử lại.";
+                return RedirectToAction("Index"); // Hoặc trang bạn muốn chuyển hướng đến
+            }
         }
         #endregion
 
@@ -393,6 +483,7 @@ namespace Du_An_One.Controllers
         }
 
         #endregion
+
 
         private bool SANPHAMExists(string id)
         {

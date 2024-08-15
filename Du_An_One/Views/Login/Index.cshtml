@@ -5,15 +5,22 @@
     Layout = null;
 }
 <head>
-    @*
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+     <link rel="stylesheet" href="~/css/style_LRF.css" asp-append-version="true" />
+    <link rel="icon"
+          href="~/img/kaiadmin/favicon.ico"
+          type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script> <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="~/css/style_LRF.css" asp-append-version="true" />
-    @* <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js"
-    defer
-    init></script>*@
+    <!-- Fonts and icons -->
+    <script src="~/js/plugin/webfont/webfont.min.js"></script>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/plugins.min.css" />
+    <link rel="stylesheet" href="~/css/kaiadmin.min.css" /> *@
 </head>
 @model LoginViewModel;
 
@@ -50,7 +57,46 @@
         <a href="#">Tìm hiểu.</a>
     </small>
 </div>
-
+<!--
+<div class="login">
+    <div class="wrapper wrapper-login">
+        <div class="container-login">
+            <h2 class="text-center">Đăng nhập</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="form3Example3">Email hoặc Số điện thoại</label>
+                    <input type="text" asp-for="TenTaiKhoan" class="form-control" id="form3Example3" required title="Vui lòng nhập email hoặc số điện thoại." />
+                </div>
+                <div class="form-group" style="position: relative;">
+                    <label for="form3Example4">Mật khẩu</label>
+                    <input type="password" asp-for="MatKhau" class="form-control" id="form3Example4" required title="Vui lòng nhập mật khẩu." />
+                    <i class="fa fa-eye" id="togglePassword" style="position: absolute; top: 50%; right: 10px; cursor: pointer; transform: translateY(-50%);" onclick="togglePasswordVisibility(this)"></i>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+                <div class="form-group form-sub d-flex">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="remember-me" />
+                        <label class="custom-control-label" for="remember-me">Nhớ mật khẩu</label>
+                    </div>
+                    <a asp-controller="Login" asp-action="ForgotPassword">Quên mật khẩu?</a>
+                </div>
+                <p style="color:orangered;padding-block:10px;text-align:center">@TempData["SwalTitle"]&nbsp;</p>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-login">Đăng nhập</button>
+                </div>
+            </form>
+            <p class="login-account">
+                Mới đăng nhập lần đầu?
+                <a asp-controller="Login" asp-action="Register">Đăng kí ngay</a>
+            </p>
+            <small class="d-block text-center mt-3">
+                Trang web này được bảo vệ bởi Google reCAPTCHA để đảm bảo bạn không phải là bot
+                <a href="#">Tìm hiểu.</a>
+            </small>
+        </div>
+    </div>
+</div>
+-->
 @* <section class="vh-100">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">

@@ -1,9 +1,10 @@
-﻿@using System.Security.Claims;
+﻿@using Newtonsoft.Json;
+@using System.Security.Claims;
 @{
     var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
     var userName = User.FindFirst(ClaimTypes.UserData)?.Value;
 }
-@if (User.Identity.IsAuthenticated && userRole != "Nhân viên" && User.Identity.IsAuthenticated && userRole != "Quản lý")
+@if ((User.Identity.IsAuthenticated && userRole != "Nhân viên" && User.Identity.IsAuthenticated && userRole != "Quản lý"))
 {
     Layout = null;
     <script type="text/javascript">
@@ -13,16 +14,19 @@
 
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Trang chủ admin</title>
-    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-          name="viewport" />
+    <title>@TempData["Title"] | TUFT</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     @await RenderSectionAsync("head", required: false)
-    <link rel="icon"
-          href="~/img/kaiadmin/favicon.ico"
-          type="image/x-icon" />
+    <link rel="icon" href="~/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- Sử dụng jQuery từ local hoặc CDN, không cả hai -->
+    <script src="~/js/core/jquery-3.7.1.min.js"></script>
+
+    <!-- jQuery Validation -->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
@@ -34,19 +38,37 @@
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/plugins.min.css" />
     <link rel="stylesheet" href="~/css/kaiadmin.min.css" />
+    <!--Thêm Toastr mục đích hiển thị thông báo dưới góc màn hình-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    @* chatbot *@
+     <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/83ab0b9a-fc63-45d7-9374-c8b93d98b6f3/webchat/config.js" defer></script>  
+   
 </head>
+<style>
+    /*True begin add*/
+        .sidebar-content .nav-item a h3 {
+            margin: 0 0 0 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sidebar-content .nav-item a i {
+            width: 10px;
+        }
+    /*True end add*/
+    </style>
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar" data-background-color="dark">
+        <div class="sidebar pt-4" data-background-color="dark">
             <div class="sidebar-logo">
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
-                    <a href="index.html" class="logo">
-                        <img src="~/img/kaiadmin/logo_light.svg"
+                    <a asp-controller="Home" asp-action="Index" class="logo">
+                        <img src="~/img/kaiadmin/logo_dark.png"
                              alt="navbar brand"
-                             class="navbar-brand"
-                             height="20" />
+                             class="navbar-brand w-100"/>
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -65,55 +87,103 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a asp-controller="Admin" asp-action="TongQuan">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>TÔNG QUAN</h3>
+                        @if (User.IsInRole("Quản lý"))
+                        {
+
+
+                            <li class="nav-item">
+                                <a asp-controller="Admin" asp-action="TongQuan">
+
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <h6>TÔNG QUAN</h6>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="NHANVIENs" asp-action="Index">
+                                    <i class="fa-solid fa-house"></i>
+                                    <h6>QUẢN LÝ NHÂN VIÊN</h6>
+
+                                    @* <i class="fas fa-tachometer-alt"></i>
+                                <h3>TỔNG QUAN</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="Admin" asp-action="NHANVIENS">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ NHÂN VIÊN</h3>
-                            </a>
-                        </li>
+                                <i class="fas fa-users"></i>
+                                <h3>QUẢN LÝ NHÂN VIÊN</h3> *@
+
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a asp-controller="SANPHAMs" asp-action="Index">
+
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h6>QUẢN LÝ SẢN PHẨM</h6>
+
+                                    @* <i class="fas fa-shopping-bag"></i>
+                                <h3>QUẢN LÝ SẢN PHẨM</h3> *@
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="KHUYENMAIs" asp-action="Index">
+
+                                    <i class="fas fa-tags"></i>
+                                    <h6>QUẢN LÝ KHYẾN MÃI</h6>
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a asp-controller="NHACUNGCAPs" asp-action="Index">
+
+                                    <i class="fas fa-truck"></i>
+                                    <h6>QUẢN LÝ NHÀ CUNG CẤP</h6>
+
+                                    @* <i class="fas fa-truck"></i>
+                                <h3>QUẢN LÝ NHÀ CUNG CẤP</h3> *@
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="CHITIETNHAPs" asp-action="Index">
+
+                                    <i class="fas fa-receipt"></i>
+                                    <h6>QUẢN LÝ PHIẾU NHẬP</h6>
+
+                                    @* <i class="fas fa-receipt"></i>
+                                <h3>QUẢN LÝ PHIẾU NHẬP</h3> *@
+
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a asp-controller="KHACHHANGs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ KHÁCH HÀNG</h3>
-                            </a>
-                        </li>
-                          <li class="nav-item">
-                            <a asp-controller="SANPHAMs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ SẢN PHẨM</h3>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-controller="KHUYENMAIs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ KHYẾN MÃI</h3>
+                                <a asp-controller="KHACHHANGs" asp-action="Index">
+
+                                    <i class="fas fa-user-friends"></i>
+                                    <h6>QUẢN LÝ KHÁCH HÀNG</h6>
+
+                                    @* <i class="fas fa-user-friends"></i>
+                                <h3>QUẢN LÝ KHÁCH HÀNG</h3> *@
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="CHITIETHOADONs" asp-action="Index">
+                                    <i class="fa-solid fa-house"></i>
+                                    <h6>QUẢN LÝ HÓA ĐƠN</h6>
+
+                                @* <i class="fas fa-tags"></i>
+                                <h3>QUẢN LÝ KHUYẾN MÃI</h3>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a asp-controller="HOADONs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ HÓA ĐƠN</h3>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-controller="NHACUNGCAPs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ NHÀ CUNG CẤP</h3>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-controller="CHITIETNHAPs" asp-action="Index">
-                                <i class="fa-solid fa-house"></i>
-                                <h3>QUẢN LÝ PHIẾU NHẬP</h3>
-                            </a>
-                        </li>
-                        
+                                <i class="fas fa-file-invoice"></i>
+                                <h3>QUẢN LÝ HÓA ĐƠN</h3> *@
+
+                                </a>
+                            </li>
                     </ul>
                 </div>
             </div>
@@ -128,8 +198,7 @@
                         <a href="index.html" class="logo">
                             <img src="~/img/kaiadmin/logo_light.svg"
                                  alt="navbar brand"
-                                 class="navbar-brand"
-                                 height="20" />
+                                 class="navbar-brand h-50" />
                         </a>
                         <div class="nav-toggle">
                             <button class="btn btn-toggle toggle-sidebar">
@@ -148,301 +217,27 @@
                 <!-- Navbar Header -->
                 <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
                     <div class="container-fluid">
-                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="submit" class="btn btn-search pe-1">
-                                        <i class="fa fa-search search-icon"></i>
-                                    </button>
-                                </div>
-                                <input type="text"
-                                       placeholder="Search ..."
-                                       class="form-control" />
-                            </div>
-                        </nav>
+                       
 
                         <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                             <li class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none">
-                                <a class="nav-link dropdown-toggle"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   role="button"
-                                   aria-expanded="false"
-                                   aria-haspopup="true">
-                                    <i class="fa fa-search"></i>
-                                </a>
+                                
                                 <ul class="dropdown-menu dropdown-search animated fadeIn">
                                     <form class="navbar-left navbar-form nav-search">
                                         <div class="input-group">
                                             <input type="text"
                                                    placeholder="Search ..."
-                                                   class="form-control" />
+                                                   class="form-control" /> 
                                         </div>
                                     </form>
                                 </ul>
                             </li>
-                            <li class="nav-item topbar-icon dropdown hidden-caret">
-                                <a class="nav-link dropdown-toggle"
-                                   href="#"
-                                   id="messageDropdown"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <i class="fa fa-envelope"></i>
-                                </a>
-                                <ul class="dropdown-menu messages-notif-box animated fadeIn"
-                                    aria-labelledby="messageDropdown">
-                                    <li>
-                                        <div class="dropdown-title d-flex justify-content-between align-items-center">
-                                            Messages
-                                            <a href="#" class="small">Mark all as read</a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="message-notif-scroll scrollbar-outer">
-                                            <div class="notif-center">
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="~/img/jm_denis.jpg"
-                                                             alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Jimmy Denis</span>
-                                                        <span class="block"> How are you ? </span>
-                                                        <span class="time">5 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="~/img/chadengle.jpg"
-                                                             alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Chad</span>
-                                                        <span class="block"> Ok, Thanks ! </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="~/img/mlane.jpg"
-                                                             alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Jhon Doe</span>
-                                                        <span class="block">
-                                                            Ready for the meeting today...
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="~/img/talha.jpg"
-                                                             alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="subject">Talha</span>
-                                                        <span class="block"> Hi, Apa Kabar ? </span>
-                                                        <span class="time">17 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="see-all" href="javascript:void(0);">
-                                            See all messages<i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item topbar-icon dropdown hidden-caret">
-                                <a class="nav-link dropdown-toggle"
-                                   href="#"
-                                   id="notifDropdown"
-                                   role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    <i class="fa fa-bell"></i>
-                                    <span class="notification">4</span>
-                                </a>
-                                <ul class="dropdown-menu notif-box animated fadeIn"
-                                    aria-labelledby="notifDropdown">
-                                    <li>
-                                        <div class="dropdown-title">
-                                            You have 4 new notification
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="notif-scroll scrollbar-outer">
-                                            <div class="notif-center">
-                                                <a href="#">
-                                                    <div class="notif-icon notif-primary">
-                                                        <i class="fa fa-user-plus"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block"> New user registered </span>
-                                                        <span class="time">5 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-icon notif-success">
-                                                        <i class="fa fa-comment"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block">
-                                                            Rahmad commented on Admin
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-img">
-                                                        <img src="~/img/profile2.jpg"
-                                                             alt="Img Profile" />
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block">
-                                                            Reza send messages to you
-                                                        </span>
-                                                        <span class="time">12 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="notif-icon notif-danger">
-                                                        <i class="fa fa-heart"></i>
-                                                    </div>
-                                                    <div class="notif-content">
-                                                        <span class="block"> Farrah liked Admin </span>
-                                                        <span class="time">17 minutes ago</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="see-all" href="javascript:void(0);">
-                                            See all notifications<i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item topbar-icon dropdown hidden-caret">
-                                <a class="nav-link"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   aria-expanded="false">
-                                    <i class="fas fa-layer-group"></i>
-                                </a>
-                                <div class="dropdown-menu quick-actions animated fadeIn">
-                                    <div class="quick-actions-header">
-                                        <span class="title mb-1">Quick Actions</span>
-                                        <span class="subtitle op-7">Shortcuts</span>
-                                    </div>
-                                    <div class="quick-actions-scroll scrollbar-outer">
-                                        <div class="quick-actions-items">
-                                            <div class="row m-0">
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-danger rounded-circle">
-                                                            <i class="far fa-calendar-alt"></i>
-                                                        </div>
-                                                        <span class="text">Calendar</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-warning rounded-circle">
-                                                            <i class="fas fa-map"></i>
-                                                        </div>
-                                                        <span class="text">Maps</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-info rounded-circle">
-                                                            <i class="fas fa-file-excel"></i>
-                                                        </div>
-                                                        <span class="text">Reports</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-success rounded-circle">
-                                                            <i class="fas fa-envelope"></i>
-                                                        </div>
-                                                        <span class="text">Emails</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-primary rounded-circle">
-                                                            <i class="fas fa-file-invoice-dollar"></i>
-                                                        </div>
-                                                        <span class="text">Invoice</span>
-                                                    </div>
-                                                </a>
-                                                <a class="col-6 col-md-4 p-0" href="#">
-                                                    <div class="quick-actions-item">
-                                                        <div class="avatar-item bg-secondary rounded-circle">
-                                                            <i class="fas fa-credit-card"></i>
-                                                        </div>
-                                                        <span class="text">Payments</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                      
+                         
 
-                            <li class="nav-item topbar-user dropdown hidden-caret">
-                                <a class="dropdown-toggle profile-pic"
-                                   data-bs-toggle="dropdown"
-                                   href="#"
-                                   aria-expanded="false">
-                                    <div class="avatar-sm">
-                                        <img src="~/img/profile.jpg"
-                                             alt="..."
-                                             class="avatar-img rounded-circle" />
-                                    </div>
-                                    <span class="profile-username">
-                                        <span class="op-7">Hi,</span>
-                                        <span class="fw-bold">Hizrian</span>
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                    <div class="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div class="user-box">
-                                            <div class="avatar-lg">
-                                                <img src="~/img/profile.jpg"
-                                                     alt="image profile"
-                                                     class="avatar-img rounded" />
-                                            </div>
-                                            <div class="u-text">
-                                                <h4>Hizrian</h4>
-                                                <p class="text-muted">hello@example.com</p>
-                                                <a href="profile.html"
-                                                   class="btn btn-xs btn-secondary btn-sm">View Profile</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">My Profile</a>
-                                        <a class="dropdown-item" href="#">My Balance</a>
-                                        <a class="dropdown-item" href="#">Inbox</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Account Setting</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" asp-action="LogOut" asp-controller="Login">Đăng xuất</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            
+                            <a class="dropdown-item" asp-action="LogOut" asp-controller="Login"><button class="btn btn-sm btn-info">ĐĂNG XUẤT</button></a>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="ProductPage"><button class="btn btn-sm btn-info">CHUYỂN ĐẾN TRANG CHỦ</button></a>
                         </ul>
                     </div>
                 </nav>
@@ -455,6 +250,77 @@
         </div>
         <!-- End Custom template -->
     </div>
+
+    
+    <!-- Thêm phần thanh thông báo -->
+    @{
+        var alertMessageJson = TempData["AlertMessage"] as string;
+        var alertMessage = alertMessageJson != null ? JsonConvert.DeserializeObject<dynamic>(alertMessageJson) : null;
+    }
+    @if (alertMessageJson != null)
+    {
+        <div id="action-alert" class="alert alert-@alertMessage.Type fixed text-center cursor-pointer" style="display: none; bottom: 0; right: 0;" onclick="this.style.display='none'">
+            <span data-notify="icon">
+                @{
+                    switch ((string)alertMessage.type)
+                    {
+                        case "success":
+                            @:🟢
+                        break;
+                        case "primary":
+                            @:🔵
+                        break;
+                        case "secondary":
+                            @:🟣
+                        break;
+                        case "info":
+                            @:🔷
+                        break;
+                        case "warning":
+                            @:🟠
+                        break;
+                        case "danger":
+                            @:🔴
+                        break;
+                        case "black":
+                            @:⚫
+                        break;
+                        default:
+                                @:ℹ️
+                            break;
+                    }
+                }
+            </span>
+            <span data-notify="title">@alertMessage.title</span>
+            <span data-notify="message">@alertMessage.message</span>
+        
+        </div>
+    }
+    <script>
+        $(document).ready(function () {
+            var alertDiv = $('#action-alert');
+
+            if (alertDiv.length) {
+                alertDiv.slideDown();
+                setTimeout(function () {
+                    alertDiv.slideUp(400, function () {
+                        alertDiv.remove();
+                    });
+                }, 3000);
+            }
+        });
+
+    </script>
+
+    <!-- Đặt mặc định cho sản phẩm không có hình ảnh -->
+    <script>
+        document.querySelectorAll('img').forEach((img) => {
+            img.onerror = function () {
+                this.src = 'https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg';
+            };
+        });
+    </script>
+
     <!--   Core JS Files   -->
     <script src="~/js/core/jquery-3.7.1.min.js"></script>
     <script src="~/js/core/popper.min.js"></script>
@@ -482,15 +348,64 @@
     <script src="~/js/plugin/jsvectormap/jsvectormap.min.js"></script>
     <script src="~/js/plugin/jsvectormap/world.js"></script>
 
+    <!-- jQuery Validate -->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    
     <!-- Sweet Alert -->
     <script src="~/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Kaiadmin JS -->
     <script src="~/js/kaiadmin.min.js"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="~/js/demo.js"></script>
 
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right", // Hiển thị ở góc dưới bên phải
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+
+            var successMessage = '@TempData["SuccessMessage"]';
+            if (successMessage) {
+                toastr.success(successMessage);
+         
+            }
+
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                toastr.error(errorMessage);
+            }
+           
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+   @*  @RenderSection("AdditionalCustomScripts", required: false)
+    @RenderSection("EditCustomScripts", required: false)
+    @RenderSection("AddKhuyenMaiScripts", required: false)
+    @RenderSection("EditKhuyenMaiScripts", required: false)
+    @RenderSection("AdditionalNhanVienScripts", required: false)
+    @RenderSection("EditNhanVienScripts", required: false)
+    @RenderSection("DeleteNhanVienScripts", required: false)
+    @RenderSection("AdditionalSanPhamScripts", required: false)
+    @RenderSection("EditSanPhamScripts", required: false)
+    @RenderSection("DeleteSanPhamScripts", required: false) *@
 </body>
 </html>

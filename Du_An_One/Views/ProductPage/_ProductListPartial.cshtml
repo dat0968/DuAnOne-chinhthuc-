@@ -1,0 +1,24 @@
+﻿@model IEnumerable<dynamic>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@foreach (var product in Model)
+{
+    var item = product.ldp;
+    var discountedPrice = Math.Round(item.DonGiaBan * (1 - product.PhanTramKhuyenMai / 100) * 100) / 100;
+
+    <a asp-action="ShowDetailProduct" asp-route-idProduct="@item.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+        <div class="relative">
+            @if (product.PhanTramKhuyenMai != 0)
+            {
+                <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@product.PhanTramKhuyenMai% OFF</span>
+            }
+            <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+            <img src="/img/productImage/@item.HinhAnh" alt="@item.TenSP"  class="w-full h-80 object-cover rounded-md">
+        </div>
+        <h4 class="font-semibold mt-2">@item.TenSP</h4>
+        <div class="flex items-center mt-1">
+            <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+        </div>
+        <p class="text-lg font-bold mt-2">@discountedPrice VND</p>
+        <p class="line-through text-zinc-500">@item.DonGiaBan VND</p>
+    </a>
+}

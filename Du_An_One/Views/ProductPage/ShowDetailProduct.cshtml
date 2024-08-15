@@ -1,0 +1,107 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model (Du_An_One.Models.SANPHAM, IEnumerable<SANPHAM>)
+@{
+    ViewData["Title"] = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+}
+<div class="flex flex-wrap justify-evenly items-center my-4 bg-white rounded-lg shadow-lg p-4">
+    <a href="@Url.Content(Model.Item1.HinhAnh)" data-lightbox="product-images">
+        <img src="@Url.Content("~/img/productImage/" + Model.Item1.HinhAnh)" alt="Main product image" class="object-contain w-500 h-500 md:w-500 md:h-500" id="mainImage" />
+    </a>
+    <div class="flex flex-col space-y-4">
+        <div class="overflow-y-auto max-h-96 flex flex-col space-y-4">
+            @foreach (string aPicture in ViewBag.anhSanPham)
+            {
+                <a href="@Url.Content(aPicture)" data-lightbox="product-images">
+                    <img src="@Url.Content(aPicture)"
+                         class="object-contain w-[150px] h-[150px]" />
+                </a>
+            }
+        </div>
+    </div>
+    <div class="max-w-md space-y-4 pl-5" style="border-left:1px solid var(--border)">
+            <p class="text-muted-foreground">@Model.Item1.DanhMucHang</p>
+            <h1 class="font-extrabold text-3xl">@Model.Item1.TenSP</h1>
+            <p>
+                @Model.Item1.MoTa
+            </p>
+            <p>Số lượng còn: @Model.Item1.SoLuongBan</p>
+        <button class="bg-primary text-primary-foreground border-none cursor-pointer px-4 py-2" data-product-id="@Model.Item1.MaSP">Thêm vào giỏ</button>
+
+        @if (Model.Item1.KHUYENMAI != null && Model.Item1.KHUYENMAI.PhanTramKhuyenMai != 0)
+        {
+            var donGiaBan = (double)Model.Item1.DonGiaBan;
+            var phanTramKhuyenMai = (double)Model.Item1.KHUYENMAI.PhanTramKhuyenMai;
+            var giaSauKhuyenMai = donGiaBan * (1 - phanTramKhuyenMai / 100);
+
+            <p class="text-lg font-bold mt-2">@Math.Round(giaSauKhuyenMai, 2) VND</p>
+            <p class="line-through text-zinc-500">@Model.Item1.DonGiaBan VND</p>
+        }
+        else
+        {
+            <p class="text-lg font-bold mt-2">@Model.Item1.DonGiaBan VND</p>
+        }
+    </div>
+</div>
+
+<h2 class="text-2xl font-bold mb-4 pt-2">
+    Danh sách sản phẩm liên quan</h2>
+@* View sản phẩm có overlayout-x auto *@
+<div class="grid grid-cols-1 overflow-x-auto py-3">
+    <div class="flex flex-nowrap">
+
+        @foreach (var oneProduct in Model.Item2)
+        {
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@oneProduct.MaSP" class="cursor-point bg-white rounded-lg shadow-md p-4 hover:scale-105 overflow-hidden flex-shrink-0 mr-4" style="min-width: 300px;">
+                <div class="relative">
+                    @if (oneProduct.KHUYENMAI?.PhanTramKhuyenMai != 0 && oneProduct.KHUYENMAI?.PhanTramKhuyenMai !=null)
+                    {
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@oneProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
+                    }<span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                    <img src="@Url.Content("~/img/productImage/" + oneProduct.HinhAnh)" alt="@oneProduct.TenSP"  class="w-full h-80 object-cover rounded-md">
+                </div>
+                <h4 class="font-semibold mt-2">@oneProduct.TenSP</h4>
+                <div class="flex items-center mt-1">
+                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                </div>
+                @if (oneProduct.KHUYENMAI?.PhanTramKhuyenMai != 0 && oneProduct.KHUYENMAI?.PhanTramKhuyenMai != null)
+                {
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@oneProduct.DonGiaBan * ((double)1 - (double)@oneProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2) VND</p>
+                    <p class="line-through text-zinc-500">@oneProduct.DonGiaBan VND</p>
+                }
+                else
+                {
+                    <p class="text-lg font-bold mt-2">@oneProduct.DonGiaBan VND</p>
+                }
+            </a>
+        }
+    </div>
+</div>
+@section Scripts {
+    <script>
+    $('.bg-primary').click(function() {
+        var productId = $(this).data('product-id');
+
+        $.ajax({
+            url: '@Url.Action("CustomerAdd", "CHITIETHOADONs")',
+        type: 'POST',
+        data: { MaSP: productId },
+        success: function(response) {
+            if (response.success) {
+                // Hiển thị thông báo thành công
+                showAlert(response.alert.type, response.alert.title, response.alert.message);
+            } else {
+                // Hiển thị thông báo lỗi
+                showAlert(response.alert.type, response.alert.title, response.alert.message);
+            }
+        },
+        error: function() {
+            // Hiển thị thông báo lỗi
+            showAlert('danger', 'Lỗi', 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');
+        }
+    });
+        })
+        </script>
+}
+<script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+<script src="https://mediafiles.botpress.cloud/83ab0b9a-fc63-45d7-9374-c8b93d98b6f3/webchat/config.js" defer></script>  

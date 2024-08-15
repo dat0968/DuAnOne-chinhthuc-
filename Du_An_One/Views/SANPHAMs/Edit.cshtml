@@ -5,16 +5,40 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Views/_LayoutAdmin.cshtml";
 }
+@* @if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+} *@
+@* @section EditSanPhamScripts {
+    <script>
+        // Chuyển hướng đến trang Index sau 2 giây nếu có thông báo thành công
+        if (@(ViewBag.SuccessMessage != null ? "true" : "false")) {
+            setTimeout(function() {
+                window.location.href = '@Url.Action("Index")';
+            }, 2000);
+        }
+    </script>
+} *@
 
-<h1>Sửa sản phẩm</h1>
-
-<h4>Sản phẩm</h4>
+<h1>SỬA THÔNG TIN SẢN PHẨM</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="text" readonly asp-for="MaSP" />
+            <div class="form-group">
+                <label asp-for="MaSP" class="control-label">Mã sản phẩm</label>
+                <input asp-for="MaSP" readonly class="form-control" />
+                <span asp-validation-for="TenSP" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="TenSP" class="control-label">Tên sản phẩm</label>
                 <input asp-for="TenSP" class="form-control" />
@@ -32,7 +56,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
-                <input asp-for="NgayNhap" class="form-control" />
+                <input asp-for="NgayNhap" type="date" class="form-control" />
                 <span asp-validation-for="NgayNhap" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -61,7 +85,7 @@
                 <div style="display:flex;gap:10px;">
                     @foreach (var aPartImage in ViewBag.PartImages)
                     {
-                        <img data-imgbigurl="@Url.Content("~/img/productImage/" + aPartImage)" src="@Url.Content("~/img/productImage/"+aPartImage)" alt="No Image🖼" style="width: 100px; height: auto;" />
+                        <img data-imgbigurl="@Url.Content("~/img/productImage/" + aPartImage)" src="@Url.Content("~/img/productImage/"+aPartImage)"  alt="No Image🖼" style="width: 100px; height: auto;" />
                     }
                 </div>
             </div>
@@ -82,20 +106,20 @@
                 <span asp-validation-for="MaKhuyenMai" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MaNV" class="control-label">Mã nhân viên</label>
+                <label asp-for="MaNV" class="control-label">Mã nhân viên nhập hàng</label>
                 <select asp-for="MaNV" class="form-control" asp-items="ViewBag.MaNv"></select>
                 <span asp-validation-for="MaNV" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
             </div>
         </form>
+        <div class="form-group">
+            <a asp-action="Index"> <button class="btn btn-primary">Quay lại</button></a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @* Show hình ảnh *@

@@ -1,0 +1,177 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Du_An_One.Models.SANPHAM>
+<!-- Fix: Correct the type to IEnumerable<SANPHAM> -->
+@{
+    ViewData["Title"] = "Tìm kiếm";
+    Layout = "~/Views/Shared/_TempLayout.cshtml";
+}
+
+<div id="mainFindProduct" class="py-8">
+    <div class="flex justify-between items-center mb-4" id="headerFind">
+        <h1 class="text-2xl font-bold">Tìm kiếm</h1>
+        <button id="filterButton" class="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/80" style="color:white;">
+            Lọc sản phẩm
+        </button>
+    </div>
+
+    <div id="filterBoard" class="hidden bg-card p-4 rounded shadow-md mb-4">
+        <!-- Begin Nav Navigation to Type Product -->
+        <div class="container px-5">
+            <form id="filterForm" method="get" asp-action="ToolFindProduct">
+                <div class="form-section">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-2 form-check">
+                            <input type="checkbox" id="tuft" name="firms" value="TUFT">
+                            <label for="tuft">TUFT</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input type="checkbox" id="adius" name="firms" value="Adius">
+                            <label for="adius">Adius</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input type="checkbox" id="surius" name="firms" value="Surius">
+                            <label for="surius">Surius</label>
+                        </div>
+                        <div class="col-md-2 form-check">
+                            <input type="checkbox" id="adidas" name="firms" value="Adidas">
+                            <label for="adidas">Adidas</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-4 form-group">
+                            <select name="quantitySold" class="form-control">
+                                <option value="" selected>Chọn phạm vi số lượng sản phẩm bán</option>
+                                <option value="1-50">1 - 50</option>
+                                <option value="51-100">51 - 100</option>
+                                <option value="101-200">101 - 200</option>
+                                <option value="201+">201+</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <select name="price" class="form-control">
+                                <option value="" selected>Chọn phạm vi giá</option>
+                                <option value="0-100000">0 - 100.000 VND</option>
+                                <option value="100001-200000">100.001 - 200.000 VND</option>
+                                <option value="200001-500000">200.001 - 500.000 VND</option>
+                                <option value="500001+">500.001 VND+</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="row justify-content-center text-center">
+                        <div class="col-md-8 nav-search">
+                            <div class="input-group">
+                                <input type="text" name="searchText" placeholder="Tìm kiếm sản phẩm..." class="form-control">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-search">
+                                        <i class="search-icon fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End Nav Navigation to Type Product -->
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-3" id="productGrid">
+        @foreach (var aProduct in Model)
+        {
+            <a asp-action="ShowDetailProduct" asp-route-idProduct="@aProduct.MaSP" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+                <div class="relative">
+                    @if (@aProduct.KHUYENMAI?.PhanTramKhuyenMai != 0 && @aProduct.KHUYENMAI?.PhanTramKhuyenMai != null)
+                    {
+                        <span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-@aProduct.KHUYENMAI.PhanTramKhuyenMai% OFF</span>
+                    }
+                    <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                    <img src="@Url.Content("~/img/productImage/" + aProduct.HinhAnh)" alt="@aProduct.TenSP"  class="w-full h-80 object-cover rounded-md">
+                </div>
+                <h4 class="font-semibold mt-2">@aProduct.TenSP</h4>
+                <div class="flex items-center mt-1">
+                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                </div>
+                @if (@aProduct.KHUYENMAI?.PhanTramKhuyenMai != 0 && @aProduct.KHUYENMAI?.PhanTramKhuyenMai != null)
+                {
+                    <p class="text-lg font-bold mt-2">@Math.Round((double)@aProduct.DonGiaBan * ((double)1 - (double)@aProduct.KHUYENMAI.PhanTramKhuyenMai / 100), 2) VND</p>
+                    <p class="line-through text-zinc-500">@aProduct.DonGiaBan VND</p>
+                }
+                else
+                {
+                    <p class="text-lg font-bold mt-2">@aProduct.DonGiaBan VND</p>
+                }
+            </a>
+        }
+    </div>
+    @if (Model.Count() == 0)
+    {
+        <h1 class="text-lg font-bold mt-2 text-gray text-center">Không tìm thấy sản phẩm.</h1>
+    }
+    @Html.PagedListPager(Model, page => Url.Action("ToolFindProduct", new { page }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string> { "page-item" },
+    PageClasses = new List<string> { "page-link" }
+})
+    @* <div id="footerSeeMore" class="text-center mt-8">
+        <button id="showMoreButton" class="bg-primary text-primary-foreground px-6 py-2 rounded hover:bg-primary/80" style="color:white;">
+            Nhiều hơn
+        </button>
+        <p id="hetSanPham" class="text-center text-danger font-weight-bold my-4" style="display:none;">Sản phẩm tìm kiếm đã hết</p>
+    </div> *@
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("filterButton").addEventListener("click", function () {
+            const filterBoard = document.getElementById("filterBoard");
+            filterBoard.classList.toggle("hidden");
+        });
+
+        // Serialize the products list into a JavaScript array
+        const products = @Html.Raw(Json.Serialize(Model));
+        let numProduct = 0;
+
+        document.getElementById("showMoreButton").addEventListener("click", function () {
+            const productGrid = document.getElementById("productGrid");
+            const newItems = [];
+
+            for (let num = numProduct; num < numProduct + 3; num++) {
+                if (num >= products.length) {
+                    this.style.display = 'none';
+                    document.getElementById('hetSanPham').style.display = '';
+                    break;
+                } else {
+                    const item = products[num];
+                    const discountedPrice = Math.round(item.DonGiaBan * (1 - (item.KHUYENMAI?.PhanTramKhuyenMai ?? 0) / 100) * 100) / 100;
+
+                    const productCard = `
+                                    <a href="/ShowDetailProduct/${item.MaSP}" class="cursor-pointer bg-white rounded-lg shadow-lg p-4 flex justify-content-between hover:scale-105" style="flex-direction: column;">
+                                                <div class="relative">
+                                                            ${item.KHUYENMAI?.PhanTramKhuyenMai !== 0 ? `<span class="absolute top-0 left-0 bg-red-500 text-white text-xs font-bold px-2 py-1">🔥-${item.KHUYENMAI.PhanTramKhuyenMai}% OFF</span>` : ""}
+                                                    <span class="absolute top-0 right-0 bg-yellow-500 text-white text-xs font-bold px-2 py-1">Hot</span>
+                                                                    <img src="${'/img/productImage/' + item.HinhAnh}" alt="${item.TenSP}"  class="w-full h-80 object-cover rounded-md" onerror="this.src = 'https://cdn.leonardo.ai/users/95219c13-f990-4541-addb-090c7c03d405/generations/77ed9f7c-fb62-4f73-a9de-17ddc965e777/Default_create_an_image_with_the_main_color_being_gray_and_whi_1.jpg'">
+                                                </div>
+                                                        <h4 class="font-semibold mt-2">${item.TenSP}</h4>
+                                                <div class="flex items-center mt-1">
+                                                    <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                                                </div>
+                                                <p class="text-lg font-bold mt-2">${discountedPrice} VND</p>
+                                                        <p class="line-through text-zinc-500">${item.DonGiaBan} VND</p>
+                                    </a>
+                                            `;
+
+                    productGrid.innerHTML += productCard;
+                    newItems.push(item);
+                }
+            }
+
+            numProduct += newItems.length;
+        });
+    </script>
+}
+<script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+<script src="https://mediafiles.botpress.cloud/83ab0b9a-fc63-45d7-9374-c8b93d98b6f3/webchat/config.js" defer></script>  

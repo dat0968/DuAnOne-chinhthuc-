@@ -9,19 +9,24 @@ namespace Du_An_One.Controllers
     public class AdminController : Controller
     {
         private readonly Du_An_OneContext _context;
-        public AdminController(Du_An_OneContext context) { 
+        public AdminController(Du_An_OneContext context)
+        {
             _context = context;
         }
+        [Authorize(Roles = "Quản lý")]
         public IActionResult TongQuan(string? MaNV = "")
         {
             #region//Thống kê đơn giản
+            string[] listHoaDon = _context.HOADON.Where(hd => hd.TinhTrang == "Đã thanh toán").Select(hd => hd.MaHoaDon).ToArray();
             ViewBag.CountData = new
             {
                 Users = _context.KHACHHANG.Count(),
                 ActiveUsers = _context.KHACHHANG.Count(x => x.TinhTrang == "Mở"),
                 Staffs = _context.NHANVIEN.Count(),
-                Sales = 666,
-                FinishOrder = _context.HOADON.Count(hd => hd.TinhTrang == "Đã thanh toán")
+                Sales = _context.CHITIETHOADON
+                        .Where(ct => listHoaDon.Contains(ct.MaHoaDon))
+                        .Sum(ct => ct.SoLuongMua * ct.DonGia),
+                FinishOrder = listHoaDon.Length
             };
             #endregion
 
@@ -68,9 +73,9 @@ namespace Du_An_One.Controllers
 
             ViewBag.WeekSales = new
             {
-                Today = _context.CHITIETHOADON
+                Today = Math.Round(_context.CHITIETHOADON
                     .Where(ct => listCodeOrderToday.Contains(ct.MaHoaDon))
-                    .Sum(ct => ct.SoLuongMua * ct.DonGia),
+                    .Sum(ct => ct.SoLuongMua * ct.DonGia),2),
                 Week = weekSales
             };
 

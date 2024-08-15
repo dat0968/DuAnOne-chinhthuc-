@@ -26,6 +26,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVG9uZ1F1YW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/checkOut/Checkout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcY2hlY2tPdXRcQ2hlY2tvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/checkOut/Result.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcY2hlY2tPdXRcUmVzdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/CHITIETHOADONs/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ0hJVElFVEhPQURPTnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -110,12 +118,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Home/PageNotFound.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQYWdlTm90Rm91bmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Home/Temp.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUZW1wLmNzaHRtbA==
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Create.cshtml]
@@ -136,6 +144,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/InfoCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xJbmZvQ3VzdG9tZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/ListOrdersOfCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xMaXN0T3JkZXJzT2ZDdXN0b21lci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/ListProductsInBagOfCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xMaXN0UHJvZHVjdHNJbkJhZ09mQ3VzdG9tZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHACHHANGs/_NavCustomer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS0hBQ0hIQU5Hc1xfTmF2Q3VzdG9tZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/KHUYENMAIs/Create.cshtml]
@@ -210,6 +234,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTkhBTlZJRU5zXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/ProductPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFBhZ2VcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/ProductPage/ShowDetailProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFBhZ2VcU2hvd0RldGFpbFByb2R1Y3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/ProductPage/ToolFindProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFBhZ2VcVG9vbEZpbmRQcm9kdWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/ProductPage/_ProductListPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFBhZ2VcX1Byb2R1Y3RMaXN0UGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/SANPHAMs/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0FOUEhBTXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -236,6 +276,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Shared/_FooterLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXJMYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/DUAN1/DuAnOnenew/Du_An_One/Views/Shared/_HeaderLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXJMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/DUAN1/DuAnOnenew/Du_An_One/Views/Shared/_ValidationScriptsPartial.cshtml]
